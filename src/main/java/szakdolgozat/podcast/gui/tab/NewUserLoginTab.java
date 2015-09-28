@@ -4,11 +4,11 @@ import javafx.scene.control.Tab;
 import szakdolgozat.podcast.gui.gridpane.NewLoginGridPane;
 
 public class NewUserLoginTab extends Tab {
-	//private NewLoginGridPane newLoginGridPane;
+	private NewLoginGridPane newLoginGridPane;
 
 	public NewUserLoginTab() {
-		//newLoginGridPane = new NewLoginGridPane();
+		newLoginGridPane = new NewLoginGridPane();
 		setClosable(false);
-		setContent(new NewLoginGridPane());
+		setContent(newLoginGridPane);
 	}
 }
