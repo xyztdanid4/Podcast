@@ -48,13 +48,11 @@ public class DownloadBorderPane extends BorderPaneSample {
 	private RssFeedParser rssFeedParser;
 
 	public DownloadBorderPane() {
-		searchTextFieldSample = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT,
-				SEARCHTEXTFIELD_TOOLTIP);
+		searchTextFieldSample = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP);
 		searchTextFieldSample.setPrefWidth(SEARCHTEXTFIELD_WIDTH);
-		searchButtonSample = new ButtonSample(SEARCHBUTTON_TEXT,
-				SEARCHBUTTON_TOOLTIP);
-		searchTextFieldSampleAndSearchButtonSampleContainerHbox = new HBoxSample(
-				searchTextFieldSample, searchButtonSample);
+		searchButtonSample = new ButtonSample(SEARCHBUTTON_TEXT, SEARCHBUTTON_TOOLTIP);
+		searchTextFieldSampleAndSearchButtonSampleContainerHbox = new HBoxSample(searchTextFieldSample,
+				searchButtonSample);
 		setTop(searchTextFieldSampleAndSearchButtonSampleContainerHbox);
 
 		setButtonDisability();
@@ -75,8 +73,7 @@ public class DownloadBorderPane extends BorderPaneSample {
 	}
 
 	private void setButtonDisability() {
-		searchButtonSample.disableProperty().bind(
-				Bindings.isEmpty(searchTextFieldSample.textProperty()));
+		searchButtonSample.disableProperty().bind(Bindings.isEmpty(searchTextFieldSample.textProperty()));
 	}
 
 	private void setSearchButtonFunctionality() {
@@ -86,8 +83,7 @@ public class DownloadBorderPane extends BorderPaneSample {
 	}
 
 	private void startSearchPodcast() {
-		String searchText = "https://itunes.apple.com/search?term="
-				+ searchTextFieldSample.getText()
+		String searchText = "https://itunes.apple.com/search?term=" + searchTextFieldSample.getText()
 				+ "&entity=podcast&media=podcast&limit=5";
 		jsonParser = new JsonParser(searchText);
 		searchResultContainer = jsonParser.getSearchResultContainer();
@@ -97,28 +93,22 @@ public class DownloadBorderPane extends BorderPaneSample {
 
 	private void showSearchResult() {
 		searchResultList = FXCollections.observableArrayList();
-		rootItemHBoxSample = new TreeItem<HBoxSample>(new HBoxSample(new Label(
-				"root")));
+		rootItemHBoxSample = new TreeItem<HBoxSample>(new HBoxSample(new Label("root")));
 		rootItemHBoxSample.setExpanded(true);
 		for (int i = 0; i < searchResultContainer.getResults().size(); i++) {
-			SearchListItemBuilder searchResultItem = new SearchListItemBuilder(
-					searchResultContainer, i);
-			treeItemHBoxSample = new TreeItem<HBoxSample>(
-					searchResultItem.getSearchResultItem());
+			SearchListItemBuilder searchResultItem = new SearchListItemBuilder(searchResultContainer, i);
+			treeItemHBoxSample = new TreeItem<HBoxSample>(searchResultItem.getSearchResultItem());
 			rootItemHBoxSample.getChildren().add(treeItemHBoxSample);
-			for (int j = 0; j < searchResultContainer.getResults().get(i)
-					.getPodcastEpisode().size(); j++) {
-				Text title = new Text(searchResultContainer.getResults().get(i)
-						.getPodcastEpisode().get(j).getTitle());
-				Text author = new Text(searchResultContainer.getResults()
-						.get(i).getPodcastEpisode().get(j).getAuthor());
-				Text subtitle = new Text(searchResultContainer.getResults()
-						.get(i).getPodcastEpisode().get(j).getPubdate());
+			for (int j = 0; j < searchResultContainer.getResults().get(i).getPodcastEpisode().size(); j++) {
+				Text title = new Text(searchResultContainer.getResults().get(i).getPodcastEpisode().get(j).getTitle());
+				Text author = new Text(
+						searchResultContainer.getResults().get(i).getPodcastEpisode().get(j).getAuthor());
+				Text subtitle = new Text(
+						searchResultContainer.getResults().get(i).getPodcastEpisode().get(j).getPubdate());
 				ImageView imageView = new ImageView();
 				Image image;
 				try {
-					image = new Image(searchResultContainer.getResults().get(i)
-							.getPodcastEpisode().get(j).getImage());
+					image = new Image(searchResultContainer.getResults().get(i).getPodcastEpisode().get(j).getImage());
 				} catch (Exception e) {
 					e.printStackTrace();
 					continue;
@@ -126,24 +116,11 @@ public class DownloadBorderPane extends BorderPaneSample {
 				imageView.setImage(image);
 				imageView.setFitHeight(30);
 				imageView.setFitWidth(30);
-				HBoxSample h = new HBoxSample(imageView, author, title,
-						subtitle);
+				HBoxSample h = new HBoxSample(imageView, author, title, subtitle);
 				TreeItem<HBoxSample> t = new TreeItem<HBoxSample>(h);
 				treeItemHBoxSample.getChildren().add(t);
 			}
-			// rssFeedParser = new RssFeedParser(searchResultContainer
-			// .getResults().get(i).getFeedUrl());
-			// Feed feed = rssFeedParser.readFeed();
-			// for (int j = 0; j < feed.getMessages().size(); j++) {
-			// ImageView searchResultItemimageView = new ImageView();
-			// Image searchResultItemImage = new Image(feed.getMessages()
-			// .get(j).getGuid());
-			// searchResultItemimageView.setImage(searchResultItemImage);
-			// Text title = new Text(feed.getMessages().get(j).getTitle());
-			// HBoxSample h = new HBoxSample(title);
-			// TreeItem<HBoxSample> t = new TreeItem<HBoxSample>(h);
-			// treeItemHBoxSample.getChildren().add(t);
-			// }
+
 		}
 		treeView = new TreeViewSample(rootItemHBoxSample);
 		setAlignment(treeView, Pos.CENTER_LEFT);
