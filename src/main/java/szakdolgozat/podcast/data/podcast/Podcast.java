@@ -2,9 +2,6 @@ package szakdolgozat.podcast.data.podcast;
 
 import java.util.List;
 
-import org.mongodb.morphia.annotations.Entity;
-
-@Entity("Podcast")
 public class Podcast {
 
 	private String wrapperType;
@@ -543,28 +540,19 @@ public class Podcast {
 	 */
 	@Override
 	public String toString() {
-		return "SearchResultItem [wrapperType=" + wrapperType + ", kind="
-				+ kind + ", collectionId=" + collectionId + ", trackId="
-				+ trackId + ", artistName=" + artistName + ", collectionName="
-				+ collectionName + ", trackName=" + trackName
-				+ ", collectionCensoredName=" + collectionCensoredName
-				+ ", trackCensoredName=" + trackCensoredName
-				+ ", collectionViewUrl=" + collectionViewUrl + ", feedUrl="
-				+ feedUrl + ", trackViewUrl=" + trackViewUrl + ", artworkUrl="
-				+ artworkUrl + ", artworkUrl60=" + artworkUrl60
-				+ ", artworkUrl100=" + artworkUrl100 + ", collectionPrice="
-				+ collectionPrice + ", trackPrice=" + trackPrice
-				+ ", trackRentalPrice=" + trackRentalPrice
-				+ ", collectionHdPrice=" + collectionHdPrice
-				+ ", trackHdPrice=" + trackHdPrice + ", trackHdRentalPrice="
-				+ trackHdRentalPrice + ", releaseDate=" + releaseDate
-				+ ", collectionExplicitness=" + collectionExplicitness
-				+ ", trackExplicitness=" + trackExplicitness + ", trackCount="
-				+ trackCount + ", country=" + country + ", currency="
-				+ currency + ", primaryGenreName=" + primaryGenreName
-				+ ", radioStationUrl=" + radioStationUrl + ", artworkUrl600="
-				+ artworkUrl600 + ", genreIds=" + genreIds + ", genres="
-				+ genres + ", podcastEpisode=" + podcastEpisodes + "]";
+		return "SearchResultItem [wrapperType=" + wrapperType + ", kind=" + kind + ", collectionId=" + collectionId
+				+ ", trackId=" + trackId + ", artistName=" + artistName + ", collectionName=" + collectionName
+				+ ", trackName=" + trackName + ", collectionCensoredName=" + collectionCensoredName
+				+ ", trackCensoredName=" + trackCensoredName + ", collectionViewUrl=" + collectionViewUrl + ", feedUrl="
+				+ feedUrl + ", trackViewUrl=" + trackViewUrl + ", artworkUrl=" + artworkUrl + ", artworkUrl60="
+				+ artworkUrl60 + ", artworkUrl100=" + artworkUrl100 + ", collectionPrice=" + collectionPrice
+				+ ", trackPrice=" + trackPrice + ", trackRentalPrice=" + trackRentalPrice + ", collectionHdPrice="
+				+ collectionHdPrice + ", trackHdPrice=" + trackHdPrice + ", trackHdRentalPrice=" + trackHdRentalPrice
+				+ ", releaseDate=" + releaseDate + ", collectionExplicitness=" + collectionExplicitness
+				+ ", trackExplicitness=" + trackExplicitness + ", trackCount=" + trackCount + ", country=" + country
+				+ ", currency=" + currency + ", primaryGenreName=" + primaryGenreName + ", radioStationUrl="
+				+ radioStationUrl + ", artworkUrl600=" + artworkUrl600 + ", genreIds=" + genreIds + ", genres=" + genres
+				+ ", podcastEpisode=" + podcastEpisodes + "]";
 	}
 
 }

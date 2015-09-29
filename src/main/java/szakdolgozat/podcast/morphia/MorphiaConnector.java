@@ -3,10 +3,10 @@ package szakdolgozat.podcast.morphia;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
+import com.mongodb.MongoClient;
+
 import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.data.podcast.Podcast;
-
-import com.mongodb.MongoClient;
 
 public class MorphiaConnector {
 
@@ -18,8 +18,7 @@ public class MorphiaConnector {
 		morphia = new Morphia();
 		morphia.mapPackage("szakdolgozat.podcast.data.podcast");
 		InformationContainer.getInstance();
-		dataStore = morphia.createDatastore(new MongoClient(),
-				InformationContainer.getInstance().getOwner());
+		dataStore = morphia.createDatastore(new MongoClient(), InformationContainer.getInstance().getOwner());
 	}
 
 	public static void setDataStore(Datastore dataStore) {

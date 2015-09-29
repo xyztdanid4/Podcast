@@ -56,36 +56,23 @@ public class NewLoginGridPane extends GridPaneSample {
 	private final String ERRORMAILFORMAT = "Wrong e-mail format!";
 
 	public NewLoginGridPane() {
-		nameLabelSample = new LabelSample(NAMELABELSAMPLETEXT,
-				NAMELABELSAMPLE_TOOLTIP);
-		passwordLabelSample = new LabelSample(PASSWORDLABELSAMPLETEXT,
-				PASSWORDLABELSAMPLE_TOOLTIP);
-		nameTextFieldSample = new TextFieldSample(
-				NAMETEXTFIELDSAMPLE_PROMPTEXT, NAMETEXTFIELDSAMPLE_TOOLTP);
-		passwordTextFieldSample = new TextFieldSample(
-				PASSWORDTEXTFIELDSAMPLE_PROMPTEXT,
+		nameLabelSample = new LabelSample(NAMELABELSAMPLETEXT, NAMELABELSAMPLE_TOOLTIP);
+		passwordLabelSample = new LabelSample(PASSWORDLABELSAMPLETEXT, PASSWORDLABELSAMPLE_TOOLTIP);
+		nameTextFieldSample = new TextFieldSample(NAMETEXTFIELDSAMPLE_PROMPTEXT, NAMETEXTFIELDSAMPLE_TOOLTP);
+		passwordTextFieldSample = new TextFieldSample(PASSWORDTEXTFIELDSAMPLE_PROMPTEXT,
 				PASSWORDTEXTFIELDSAMPLE_TOOLTIP);
-		okButtonSample = new ButtonSample(OKBUTTONSAMPLETEXT,
-				OKBUTTONSMAPLE_TOOLTIP);
-		cancelButtonSample = new ButtonSample(CANCELBUTTONTEXT,
-				CANCELBUTTONSAMPLE_TOOLTIP);
-		messageLabelSample = new LabelSample(MESSAGELABELSAMPLETEXT,
-				MESSAGELABELSAMPLE_TOOLTIP);
-		passwordAgainTextFieldSample = new TextFieldSample(
-				PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
+		okButtonSample = new ButtonSample(OKBUTTONSAMPLETEXT, OKBUTTONSMAPLE_TOOLTIP);
+		cancelButtonSample = new ButtonSample(CANCELBUTTONTEXT, CANCELBUTTONSAMPLE_TOOLTIP);
+		messageLabelSample = new LabelSample(MESSAGELABELSAMPLETEXT, MESSAGELABELSAMPLE_TOOLTIP);
+		passwordAgainTextFieldSample = new TextFieldSample(PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
 				PASSWORDAGAINTEXTFIELDSAMPLE_TOOLTIP);
-		passwordAgainLabelSample = new LabelSample(
-				PASSWORDAGAINLABELSAMPLETEXT, PASSWORDAGAINLABELSAMPLE_TOOLTIP);
-		emailLabelSample = new LabelSample(EMAILLABELSAMPLETEXT,
-				EMAILLABELSAMPLE_TOOLTIP);
-		passwordAgainTextFieldSample = new TextFieldSample(
-				PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
+		passwordAgainLabelSample = new LabelSample(PASSWORDAGAINLABELSAMPLETEXT, PASSWORDAGAINLABELSAMPLE_TOOLTIP);
+		emailLabelSample = new LabelSample(EMAILLABELSAMPLETEXT, EMAILLABELSAMPLE_TOOLTIP);
+		passwordAgainTextFieldSample = new TextFieldSample(PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
 				PASSWORDAGAINTEXTFIELDSAMPLE_TOOLTIP);
-		passwordAgainTextFieldSample = new TextFieldSample(
-				PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
+		passwordAgainTextFieldSample = new TextFieldSample(PASSWORDAGAINTEXTFIELDSAMPLEPROMPTTEXT,
 				PASSWORDAGAINTEXTFIELDSAMPLE_TOOLTIP);
-		emailTextFieldSample = new TextFieldSample(
-				EMAILTEXTFIELDSAMPLEPROMTTEXT, EMAILTTEXTFIELDSAMPLE_TOOLTIP);
+		emailTextFieldSample = new TextFieldSample(EMAILTEXTFIELDSAMPLEPROMTTEXT, EMAILTTEXTFIELDSAMPLE_TOOLTIP);
 		add(messageLabelSample, 1, 1);
 		add(nameLabelSample, 1, 2);
 		add(passwordLabelSample, 1, 3);
@@ -112,19 +99,16 @@ public class NewLoginGridPane extends GridPaneSample {
 		okButtonSample.setOnAction((ActionEvent event) -> {
 			if (!(nameTextFieldSample.getText().matches("[a-zA-Z]+"))) {
 				LoginErrorDialogStage.getInstance().show();
-			} else if (!(passwordTextFieldSample.getText()
-					.equals(passwordAgainTextFieldSample.getText()))) {
+			} else if (!(passwordTextFieldSample.getText().equals(passwordAgainTextFieldSample.getText()))) {
 				ErrorDialog errorDialog = new ErrorDialog(ERRORPASSWORD);
-			} else if (!(emailTextFieldSample.getText()
-					.matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
+			} else if (!(emailTextFieldSample.getText().matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
 				ErrorDialog errorDialog = new ErrorDialog(ERRORMAILFORMAT);
 			} else {
 				if (checkValuesInDB()) {
-					MorphiaLoginConnector.save(new User(nameTextFieldSample
-							.getText(), passwordAgainTextFieldSample.getText(),
-							emailTextFieldSample.getText()));
-					InformationContainer.getInstance().setOwner(
-							nameTextFieldSample.getText());
+					MorphiaLoginConnector.save(new User(nameTextFieldSample.getText(),
+							passwordAgainTextFieldSample.getText(), emailTextFieldSample.getText()));
+					InformationContainer.getInstance().setOwner(nameTextFieldSample.getText());
+					System.out.println(InformationContainer.getOwner());
 					LoginStage.getInstance().hide();
 					MainStage.getInstance().show();
 				} else {
@@ -135,28 +119,21 @@ public class NewLoginGridPane extends GridPaneSample {
 	}
 
 	private void setButtonDisability() {
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(nameTextFieldSample.textProperty()));
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(passwordTextFieldSample.textProperty()));
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(passwordAgainTextFieldSample.textProperty()));
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(emailTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(nameTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(passwordTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(passwordAgainTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(emailTextFieldSample.textProperty()));
 	}
 
 	private boolean checkValuesInDB() {
 		return MorphiaLoginConnector.getDataStore().createQuery(User.class)
-				.filter("name = ", nameTextFieldSample.getText()).asList()
-				.isEmpty()
+				.filter("name = ", nameTextFieldSample.getText()).asList().isEmpty()
 				&& MorphiaLoginConnector.getDataStore().createQuery(User.class)
-						.filter("email = ", emailTextFieldSample.getText())
-						.asList().isEmpty();
+						.filter("email = ", emailTextFieldSample.getText()).asList().isEmpty();
 	}
 
 	private void selectAll() {
-		List<User> query = MorphiaLoginConnector.getDataStore()
-				.createQuery(User.class).asList();
+		List<User> query = MorphiaLoginConnector.getDataStore().createQuery(User.class).asList();
 		for (int i = 0; i < query.size(); i++) {
 			System.out.println(query.get(i).getName());
 			System.out.println(query.get(i).getPassword());

@@ -42,21 +42,14 @@ public class LoginGridPane extends GridPaneSample {
 	private final String ERRORMESSAGE = "Name or Password is incorrect!";
 
 	public LoginGridPane() {
-		nameLabelSample = new LabelSample(NAMELABELSAMPLETEXT,
-				NAMELABELSAMPLE_TOOLTIP);
-		passwordLabelSample = new LabelSample(PASSWORDLABELSAMPLETEXT,
-				PASSWORDLABELSAMPLE_TOOLTIP);
-		nameTextFieldSample = new TextFieldSample(
-				NAMETEXTFIELDSAMPLE_PROMPTEXT, NAMETEXTFIELDSAMPLE_TOOLTP);
-		passwordTextFieldSample = new TextFieldSample(
-				PASSWORDTEXTFIELDSAMPLE_PROMPTEXT,
+		nameLabelSample = new LabelSample(NAMELABELSAMPLETEXT, NAMELABELSAMPLE_TOOLTIP);
+		passwordLabelSample = new LabelSample(PASSWORDLABELSAMPLETEXT, PASSWORDLABELSAMPLE_TOOLTIP);
+		nameTextFieldSample = new TextFieldSample(NAMETEXTFIELDSAMPLE_PROMPTEXT, NAMETEXTFIELDSAMPLE_TOOLTP);
+		passwordTextFieldSample = new TextFieldSample(PASSWORDTEXTFIELDSAMPLE_PROMPTEXT,
 				PASSWORDTEXTFIELDSAMPLE_TOOLTIP);
-		okButtonSample = new ButtonSample(OKBUTTONSAMPLETEXT,
-				OKBUTTONSMAPLE_TOOLTIP);
-		cancelButtonSample = new ButtonSample(CANCELBUTTONTEXT,
-				CANCELBUTTONSAMPLE_TOOLTIP);
-		messageLabelSample = new LabelSample(MESSAGELABELSAMPLETEXT,
-				MESSAGELABELSAMPLE_TOOLTIP);
+		okButtonSample = new ButtonSample(OKBUTTONSAMPLETEXT, OKBUTTONSMAPLE_TOOLTIP);
+		cancelButtonSample = new ButtonSample(CANCELBUTTONTEXT, CANCELBUTTONSAMPLE_TOOLTIP);
+		messageLabelSample = new LabelSample(MESSAGELABELSAMPLETEXT, MESSAGELABELSAMPLE_TOOLTIP);
 		add(messageLabelSample, 1, 1);
 		add(nameLabelSample, 1, 2);
 		add(passwordLabelSample, 1, 3);
@@ -82,8 +75,8 @@ public class LoginGridPane extends GridPaneSample {
 			} else {
 				if (checkUserAndPassword()) {
 					MainStage.getInstance().show();
-					InformationContainer.getInstance().setOwner(
-							nameTextFieldSample.getText());
+					InformationContainer.getInstance().setOwner(nameTextFieldSample.getText());
+					System.out.println(InformationContainer.getOwner());
 					LoginStage.getInstance().hide();
 				} else {
 					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
@@ -93,25 +86,20 @@ public class LoginGridPane extends GridPaneSample {
 	}
 
 	private void setButtonDisability() {
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(nameTextFieldSample.textProperty()));
-		okButtonSample.disableProperty().bind(
-				Bindings.isEmpty(passwordTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(nameTextFieldSample.textProperty()));
+		okButtonSample.disableProperty().bind(Bindings.isEmpty(passwordTextFieldSample.textProperty()));
 	}
 
 	private boolean checkUserAndPassword() {
 		return !(MorphiaLoginConnector.getDataStore().createQuery(User.class)
 				.filter("name = ", nameTextFieldSample.getText())
-				.filter("password = ", passwordTextFieldSample.getText())
-				.asList().isEmpty());
+				.filter("password = ", passwordTextFieldSample.getText()).asList().isEmpty());
 	}
 
 	private void selectAll() {
-		List<User> query = MorphiaLoginConnector.getDataStore()
-				.createQuery(User.class)
+		List<User> query = MorphiaLoginConnector.getDataStore().createQuery(User.class)
 				.filter("name = ", nameTextFieldSample.getText())
-				.filter("password = ", passwordTextFieldSample.getText())
-				.asList();
+				.filter("password = ", passwordTextFieldSample.getText()).asList();
 		for (int i = 0; i < query.size(); i++) {
 			System.out.println(query.get(i).getName());
 			System.out.println(query.get(i).getPassword());
