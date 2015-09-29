@@ -108,7 +108,6 @@ public class NewLoginGridPane extends GridPaneSample {
 					MorphiaLoginConnector.save(new User(nameTextFieldSample.getText(),
 							passwordAgainTextFieldSample.getText(), emailTextFieldSample.getText()));
 					InformationContainer.getInstance().setOwner(nameTextFieldSample.getText());
-					System.out.println(InformationContainer.getOwner());
 					LoginStage.getInstance().hide();
 					MainStage.getInstance().show();
 				} else {

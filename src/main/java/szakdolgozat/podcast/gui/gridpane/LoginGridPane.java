@@ -76,7 +76,7 @@ public class LoginGridPane extends GridPaneSample {
 				if (checkUserAndPassword()) {
 					MainStage.getInstance().show();
 					InformationContainer.getInstance().setOwner(nameTextFieldSample.getText());
-					System.out.println(InformationContainer.getOwner());
+					// System.out.println(InformationContainer.getOwner());
 					LoginStage.getInstance().hide();
 				} else {
 					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
