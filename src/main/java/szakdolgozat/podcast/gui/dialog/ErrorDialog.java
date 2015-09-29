@@ -14,15 +14,13 @@ public class ErrorDialog extends GridPaneSample {
 	private final String OKBUTTONTOOLTIP = "Press this to try again!";
 	private ButtonSample okButtonSample;
 	private LabelSample messageLabelSample;
-	// private final String MESSAGELABELSAMPLETEXT = "";
 	private final String MESSAGELABELSAMPLE_TOOLTIP = "Interact with ok button!";
 
 	public ErrorDialog(final String message) {
 		dialog = new Stage();
-		scene = new Scene(this, 400, 100);
+		scene = new Scene(this, 300, 100);
 		okButtonSample = new ButtonSample(OKBUTTONTEXT, OKBUTTONTOOLTIP);
-		messageLabelSample = new LabelSample(message,
-				MESSAGELABELSAMPLE_TOOLTIP);
+		messageLabelSample = new LabelSample(message, MESSAGELABELSAMPLE_TOOLTIP);
 
 		okButtonSample.setOnAction((ActionEvent event) -> {
 			dialog.close();

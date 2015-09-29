@@ -11,7 +11,6 @@ import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.GridPaneSample;
 import szakdolgozat.podcast.gui.samples.LabelSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
-import szakdolgozat.podcast.gui.stage.LoginErrorDialogStage;
 import szakdolgozat.podcast.gui.stage.LoginStage;
 import szakdolgozat.podcast.gui.stage.MainStage;
 import szakdolgozat.podcast.morphia.MorphiaLoginConnector;
@@ -22,24 +21,25 @@ public class LoginGridPane extends GridPaneSample {
 	private TextFieldSample passwordTextFieldSample;
 	private LabelSample nameLabelSample;
 	private LabelSample passwordLabelSample;
-	private final String NAMELABELSAMPLE_TOOLTIP = "Interact with name textfield!";
-	private final String PASSWORDLABELSAMPLE_TOOLTIP = "Interact with password textfield!";
-	private final String NAMETEXTFIELDSAMPLE_TOOLTP = "Enter your name!";
-	private final String PASSWORDTEXTFIELDSAMPLE_TOOLTIP = "Enter your password!";
-	private final String NAMETEXTFIELDSAMPLE_PROMPTEXT = "Name";
-	private final String PASSWORDTEXTFIELDSAMPLE_PROMPTEXT = "Password";
-	private final String NAMELABELSAMPLETEXT = "Name";
-	private final String PASSWORDLABELSAMPLETEXT = "Password";
-	private final String OKBUTTONSAMPLETEXT = "Login";
-	private final String CANCELBUTTONTEXT = "Cancel (exit)";
-	private final String OKBUTTONSMAPLE_TOOLTIP = "Press this to login!";
-	private final String CANCELBUTTONSAMPLE_TOOLTIP = "Press this to cancel, and exit!";
+	private static final String NAMELABELSAMPLE_TOOLTIP = "Interact with name textfield!";
+	private static final String PASSWORDLABELSAMPLE_TOOLTIP = "Interact with password textfield!";
+	private static final String NAMETEXTFIELDSAMPLE_TOOLTP = "Enter your name!";
+	private static final String PASSWORDTEXTFIELDSAMPLE_TOOLTIP = "Enter your password!";
+	private static final String NAMETEXTFIELDSAMPLE_PROMPTEXT = "Name";
+	private static final String PASSWORDTEXTFIELDSAMPLE_PROMPTEXT = "Password";
+	private static final String NAMELABELSAMPLETEXT = "Name";
+	private static final String PASSWORDLABELSAMPLETEXT = "Password";
+	private static final String OKBUTTONSAMPLETEXT = "Login";
+	private static final String CANCELBUTTONTEXT = "Cancel (exit)";
+	private static final String OKBUTTONSMAPLE_TOOLTIP = "Press this to login!";
+	private static final String CANCELBUTTONSAMPLE_TOOLTIP = "Press this to cancel, and exit!";
 	private ButtonSample okButtonSample;
 	private ButtonSample cancelButtonSample;
 	private LabelSample messageLabelSample;
-	private final String MESSAGELABELSAMPLETEXT = "Welcome, please Login!";
-	private final String MESSAGELABELSAMPLE_TOOLTIP = "Hey Buddy welcome!";
-	private final String ERRORMESSAGE = "Name or Password is incorrect!";
+	private static final String MESSAGELABELSAMPLETEXT = "Welcome, please Login!";
+	private static final String MESSAGELABELSAMPLE_TOOLTIP = "Hey Buddy welcome!";
+	private static final String ERRORMESSAGE = "Name or Password is incorrect!";
+	private static final String MATCHERROR = "You should use only englush abc letters!";
 
 	public LoginGridPane() {
 		nameLabelSample = new LabelSample(NAMELABELSAMPLETEXT, NAMELABELSAMPLE_TOOLTIP);
@@ -71,12 +71,11 @@ public class LoginGridPane extends GridPaneSample {
 	private void setOkButtonSampleFunctionality() {
 		okButtonSample.setOnAction((ActionEvent event) -> {
 			if (!(nameTextFieldSample.getText().matches("[a-zA-Z]+"))) {
-				LoginErrorDialogStage.getInstance().show();
+				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
 			} else {
 				if (checkUserAndPassword()) {
 					MainStage.getInstance().show();
 					InformationContainer.getInstance().setOwner(nameTextFieldSample.getText());
-					// System.out.println(InformationContainer.getOwner());
 					LoginStage.getInstance().hide();
 				} else {
 					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
