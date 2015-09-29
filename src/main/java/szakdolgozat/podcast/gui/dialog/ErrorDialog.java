@@ -22,14 +22,25 @@ public class ErrorDialog extends GridPaneSample {
 		okButtonSample = new ButtonSample(OKBUTTONTEXT, OKBUTTONTOOLTIP);
 		messageLabelSample = new LabelSample(message, MESSAGELABELSAMPLE_TOOLTIP);
 
+		setOkButtonFunctinolity();
+
+		add(messageLabelSample, 1, 1);
+		add(okButtonSample, 2, 2);
+		dialog.setTitle("Something went wrong!");
+		dialog.setScene(scene);
+		dialog.setResizable(false);
+		setOkButtonSampleEnterEvent();
+		dialog.show();
+
+	}
+
+	private void setOkButtonSampleEnterEvent() {
+		okButtonSample.defaultButtonProperty().bind(okButtonSample.focusedProperty());
+	}
+
+	private void setOkButtonFunctinolity() {
 		okButtonSample.setOnAction((ActionEvent event) -> {
 			dialog.close();
 		});
-		add(messageLabelSample, 1, 1);
-		add(okButtonSample, 2, 2);
-		dialog.setTitle("Something went wrong");
-		dialog.setScene(scene);
-		dialog.setResizable(false);
-		dialog.show();
 	}
 }

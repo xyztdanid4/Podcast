@@ -5,6 +5,9 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.gui.dialog.ErrorDialog;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
@@ -60,6 +63,7 @@ public class LoginGridPane extends GridPaneSample {
 		setOkButtonSampleFunctionality();
 		setCancelButtonSampleFunctinality();
 		setButtonDisability();
+		setPasswordTextSampleFieldKeyEvent();
 	}
 
 	private void setCancelButtonSampleFunctinality() {
@@ -93,6 +97,17 @@ public class LoginGridPane extends GridPaneSample {
 		return !(MorphiaLoginConnector.getDataStore().createQuery(User.class)
 				.filter("name = ", nameTextFieldSample.getText())
 				.filter("password = ", passwordTextFieldSample.getText()).asList().isEmpty());
+	}
+
+	private void setPasswordTextSampleFieldKeyEvent() {
+		passwordTextFieldSample.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ENTER) {
+					okButtonSample.fire();
+				}
+			}
+		});
 	}
 
 	private void selectAll() {
