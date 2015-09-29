@@ -25,6 +25,7 @@ public class TabPaneSample extends TabPane {
 		getTabs().add(podcastListTab);
 		getTabs().add(playListTab);
 		getTabs().add(downloadTab);
+
 	}
 
 }

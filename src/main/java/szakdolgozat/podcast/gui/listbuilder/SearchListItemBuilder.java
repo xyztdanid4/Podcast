@@ -29,9 +29,9 @@ public class SearchListItemBuilder {
 		// trackName.setFont(Font.font("Arial", FontPosture.ITALIC, 13));
 		// searchResultItem = new HBoxSample(searchResultItemimageView,
 		// artistName, trackName);
-		ButtonSample subscribeButton = new ButtonSample("Subscribe!", "Click for subscribe");
+		String SUBSCRIBEBUTTONTEXT = "Subscribe!";
+		ButtonSample subscribeButton = new ButtonSample(SUBSCRIBEBUTTONTEXT, "Click for subscribe");
 		subscribeButton.setOnAction((ActionEvent event) -> {
-
 			XmlParser xmlParser = new XmlParser(searchResultContainer.getResults().get(i).getFeedUrl());
 			searchResultContainer.getResults().get(i)
 					.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));

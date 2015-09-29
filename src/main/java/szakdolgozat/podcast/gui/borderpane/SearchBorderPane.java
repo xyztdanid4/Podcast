@@ -37,7 +37,7 @@ public class SearchBorderPane extends BorderPaneSample {
 	private final String SEARCHBUTTON_TOOLTIP = "Click me for search!";
 	private final String SEARCHBUTTON_TEXT = "Search!";
 	private final HBoxSample searchItemsContainerHbox;
-	private final int SEARCHTEXTFIELD_WIDTH = 400;
+	private final int SEARCHTEXTFIELD_WIDTH = 500;
 	private SearchResultContainer searchResultContainer;
 	private ObservableList<HBoxSample> searchResultList;
 	private ListViewSample searchResultListView;
@@ -47,13 +47,10 @@ public class SearchBorderPane extends BorderPaneSample {
 	private VBox episodesListVBox;
 
 	public SearchBorderPane() {
-		searchTextFieldSample = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT,
-				SEARCHTEXTFIELD_TOOLTIP);
+		searchTextFieldSample = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP);
 		searchTextFieldSample.setPrefWidth(SEARCHTEXTFIELD_WIDTH);
-		searchButtonSample = new ButtonSample(SEARCHBUTTON_TEXT,
-				SEARCHBUTTON_TOOLTIP);
-		searchItemsContainerHbox = new HBoxSample(searchTextFieldSample,
-				searchButtonSample);
+		searchButtonSample = new ButtonSample(SEARCHBUTTON_TEXT, SEARCHBUTTON_TOOLTIP);
+		searchItemsContainerHbox = new HBoxSample(searchTextFieldSample, searchButtonSample);
 		setTop(searchItemsContainerHbox);
 		setButtonDisability();
 		setSearchButtonFunctionality();
@@ -79,8 +76,7 @@ public class SearchBorderPane extends BorderPaneSample {
 	}
 
 	private void setButtonDisability() {
-		searchButtonSample.disableProperty().bind(
-				Bindings.isEmpty(searchTextFieldSample.textProperty()));
+		searchButtonSample.disableProperty().bind(Bindings.isEmpty(searchTextFieldSample.textProperty()));
 	}
 
 	private void setSearchButtonFunctionality() {
@@ -90,8 +86,7 @@ public class SearchBorderPane extends BorderPaneSample {
 	}
 
 	private void startSearchPodcast() {
-		String searchText = "https://itunes.apple.com/search?term="
-				+ searchTextFieldSample.getText()
+		String searchText = "https://itunes.apple.com/search?term=" + searchTextFieldSample.getText()
 				+ "&entity=podcast&media=podcast&limit=10";
 		JsonParser jsonParser = new JsonParser(searchText);
 		searchResultContainer = jsonParser.getSearchResultContainer();
@@ -101,14 +96,12 @@ public class SearchBorderPane extends BorderPaneSample {
 	private void showSearchResult() {
 		clearPodcastList();
 		clearEpisodesList();
-		SearchListBuilder listBuilder = new SearchListBuilder(searchResultList,
-				searchResultContainer);
+		SearchListBuilder listBuilder = new SearchListBuilder(searchResultList, searchResultContainer);
 		if (!searchResultList.isEmpty()) {
 			searchResultListView.setItems(searchResultList);
 			searchResultListView.setDisable(false);
 		} else {
-			HBoxSample emptyHBoxSample = new HBoxSample(new Text(
-					"No result found!"));
+			HBoxSample emptyHBoxSample = new HBoxSample(new Text("No result found!"));
 			searchResultList.add(emptyHBoxSample);
 			searchResultListView.setItems(searchResultList);
 			searchResultListView.setDisable(true);
@@ -127,66 +120,38 @@ public class SearchBorderPane extends BorderPaneSample {
 	}
 
 	private void setListViewInvalidationListener() {
-		searchResultListView
-				.getSelectionModel()
-				.selectedIndexProperty()
-				.addListener(
-						(Observable o) -> {
-							clearEpisodesList();
-							XmlParser xmlParser = new XmlParser(
-									searchResultContainer
-											.getResults()
-											.get(searchResultListView
-													.getSelectionModel()
-													.getSelectedIndex())
-											.getFeedUrl());
+		searchResultListView.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+			clearEpisodesList();
+			XmlParser xmlParser = new XmlParser(searchResultContainer.getResults()
+					.get(searchResultListView.getSelectionModel().getSelectedIndex()).getFeedUrl());
 
-							searchResultContainer
-									.getResults()
-									.get(searchResultListView
-											.getSelectionModel()
-											.getSelectedIndex())
-									.setPodcastEpisode(
-											new ArrayList<PodcastEpisode>(
-													xmlParser.readFeed()));
+			searchResultContainer.getResults().get(searchResultListView.getSelectionModel().getSelectedIndex())
+					.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
 
-							for (int i = 0; i < searchResultContainer
-									.getResults()
-									.get(searchResultListView
-											.getSelectionModel()
-											.getSelectedIndex())
-									.getPodcastEpisode().size(); i++) {
-								ImageView imageView = new ImageView();
+			for (int i = 0; i < searchResultContainer.getResults()
+					.get(searchResultListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode().size(); i++) {
+				ImageView imageView = new ImageView();
 
-								Image image = null;
-								try {
-									image = new Image(searchResultContainer
-											.getResults()
-											.get(searchResultListView
-													.getSelectionModel()
-													.getSelectedIndex())
-											.getPodcastEpisode().get(i)
-											.getImage());
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-								imageView.setImage(image);
-								imageView.setFitHeight(30);
-								imageView.setFitWidth(30);
-								HBoxSample hBoxSample = new HBoxSample(
-										imageView,
-										new Text(searchResultContainer
-												.getResults()
-												.get(searchResultListView
-														.getSelectionModel()
-														.getSelectedIndex())
-												.getPodcastEpisode().get(i)
-												.getTitle()));
-								episodesList.add(hBoxSample);
-							}
+				Image image = null;
+				try {
+					image = new Image(searchResultContainer.getResults()
+							.get(searchResultListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode().get(i)
+							.getImage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				imageView.setImage(image);
+				imageView.setFitHeight(30);
+				imageView.setFitWidth(30);
+				HBoxSample hBoxSample = new HBoxSample(imageView,
+						new Text(searchResultContainer.getResults()
+								.get(searchResultListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode()
+								.get(i).getTitle()));
+				episodesList.add(hBoxSample);
+			}
 
-							episodesListView.setItems(episodesList);
-						});
+			episodesListView.setItems(episodesList);
+		});
 	}
 
 	private void showEpisodesList() {

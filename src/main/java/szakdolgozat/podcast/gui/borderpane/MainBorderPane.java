@@ -6,7 +6,6 @@ import szakdolgozat.podcast.gui.samples.TabPaneSample;
 
 public class MainBorderPane extends BorderPaneSample {
 	private TabPaneSample tabPaneSample;
-	// private StatusBar statusBar;
 	private Label rightLabel;
 
 	public MainBorderPane() {
@@ -16,8 +15,5 @@ public class MainBorderPane extends BorderPaneSample {
 		rightLabel = new Label("RIGHTSIDE");
 		setRight(rightLabel);
 
-		// statusBar = new StatusBar();
-		// statusBar.setText("STATUSBAR");
-		// setBottom(statusBar);
 	}
 }
