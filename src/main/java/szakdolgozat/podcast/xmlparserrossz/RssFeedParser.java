@@ -52,14 +52,12 @@ public class RssFeedParser {
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
-					String localPart = event.asStartElement().getName()
-							.getLocalPart();
+					String localPart = event.asStartElement().getName().getLocalPart();
 					switch (localPart) {
 					case ITEM:
 						if (isFeedHeader) {
 							isFeedHeader = false;
-							feed = new Feed(title, link, description, language,
-									pubdate);
+							feed = new Feed(title, link, description, language, pubdate);
 						}
 						event = eventReader.nextEvent();
 						break;
@@ -108,8 +106,7 @@ public class RssFeedParser {
 		return feed;
 	}
 
-	private String getCharacterData(XMLEvent event, XMLEventReader eventReader)
-			throws XMLStreamException {
+	private String getCharacterData(XMLEvent event, XMLEventReader eventReader) throws XMLStreamException {
 		String result = "";
 		event = eventReader.nextEvent();
 		if (event instanceof Characters) {
@@ -126,3 +123,5 @@ public class RssFeedParser {
 		}
 	}
 }
+
+// teszt
