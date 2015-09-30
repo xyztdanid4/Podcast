@@ -36,8 +36,7 @@ public class HBoxSample extends HBox {
 		setAlignment(Pos.CENTER_LEFT);
 	}
 
-	public HBoxSample(Node component1, Node component2, Node component3,
-			Node component4) {
+	public HBoxSample(Node component1, Node component2, Node component3, Node component4) {
 		setSpacing(DEAFUALTSPACING);
 		getChildren().add(component1);
 		getChildren().add(component2);
@@ -46,4 +45,19 @@ public class HBoxSample extends HBox {
 		// setPadding(new Insets(5, 5, 5, 30));
 		setAlignment(Pos.CENTER_LEFT);
 	}
+
+	public HBoxSample(Node component1, Node component2, Node component3, Node component4, Node component5,
+			Node component6, Node component7) {
+		setSpacing(DEAFUALTSPACING);
+		getChildren().add(component1);
+		getChildren().add(component2);
+		getChildren().add(component3);
+		getChildren().add(component4);
+		getChildren().add(component5);
+		getChildren().add(component6);
+		getChildren().add(component7);
+		// setPadding(new Insets(5, 5, 5, 30));
+		setAlignment(Pos.CENTER_LEFT);
+	}
+
 }

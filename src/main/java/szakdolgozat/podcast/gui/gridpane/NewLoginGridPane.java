@@ -137,7 +137,7 @@ public class NewLoginGridPane extends GridPaneSample {
 	}
 
 	private void setPasswordTextSampleFieldKeyEvent() {
-		passwordTextFieldSample.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		emailTextFieldSample.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.ENTER) {

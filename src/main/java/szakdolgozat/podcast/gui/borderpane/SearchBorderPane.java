@@ -98,14 +98,14 @@ public class SearchBorderPane extends BorderPaneSample {
 		clearEpisodesList();
 		SearchListBuilder listBuilder = new SearchListBuilder(searchResultList, searchResultContainer);
 		if (!searchResultList.isEmpty()) {
-			searchResultListView.setItems(searchResultList);
 			searchResultListView.setDisable(false);
 		} else {
-			HBoxSample emptyHBoxSample = new HBoxSample(new Text("No result found!"));
-			searchResultList.add(emptyHBoxSample);
-			searchResultListView.setItems(searchResultList);
+			// HBoxSample emptyHBoxSample = new HBoxSample(new Text("No result
+			// found!"));
+			searchResultList.add(new HBoxSample(new Text("No result found!")));
 			searchResultListView.setDisable(true);
 		}
+		searchResultListView.setItems(searchResultList);
 		// setAlignment(searchResultListView, Pos.CENTER_LEFT);
 		// setListViewInvalidationListener();
 		// setLeft(searchResultListView);
