@@ -2,14 +2,18 @@ package szakdolgozat.podcast.tabpane;
 
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.Tooltip;
 import szakdolgozat.podcast.gui.tab.DownloadTab;
 import szakdolgozat.podcast.gui.tab.PlayListTab;
 import szakdolgozat.podcast.gui.tab.PodcastListTab;
 import szakdolgozat.podcast.gui.tab.SearchTab;
 
 public class ApplicationTabPane extends TabPane {
+	private static final String TOOLTIP = "This is ApplicationTabPane!";
+
 	public ApplicationTabPane() {
 		setSide(Side.LEFT);
+		setTooltip(new Tooltip(TOOLTIP));
 		setTabMaxHeight(300);
 		setTabMaxWidth(300);
 		getTabs().addAll(new SearchTab(), new PodcastListTab(), new PlayListTab(), new DownloadTab());

@@ -1,9 +1,8 @@
 package szakdolgozat.podcast.gui.tab;
 
 import szakdolgozat.podcast.gui.borderpane.SearchBorderPane;
-import szakdolgozat.podcast.gui.samples.TabSample;
 
-public class SearchTab extends TabSample {
+public class SearchTab extends ApplicationTab {
 	private static final String SEARCHTAB_IMAGEPATH = "appbar.section.expand.png";
 	private static final String SEARCHTAB_TITLE = "Click here to search and subscribe for podcasts!";
 
