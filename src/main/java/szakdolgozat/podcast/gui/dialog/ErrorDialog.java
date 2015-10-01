@@ -8,30 +8,25 @@ import szakdolgozat.podcast.gui.samples.GridPaneSample;
 import szakdolgozat.podcast.gui.samples.LabelSample;
 
 public class ErrorDialog extends GridPaneSample {
+	private static final String OKBUTTONTEXT = "Ok";
+	private static final String OKBUTTONTOOLTIP = "Press this to try again!";
+	private static final String MESSAGELABELSAMPLE_TOOLTIP = "Interact with ok button!";
+	private static final int SCENE_WIDTH = 300;
+	private static final int SCENE_HIGHT = 100;
 	private Stage dialog;
-	private Scene scene;
-	private final String OKBUTTONTEXT = "Ok";
-	private final String OKBUTTONTOOLTIP = "Press this to try again!";
 	private ButtonSample okButtonSample;
-	private LabelSample messageLabelSample;
-	private final String MESSAGELABELSAMPLE_TOOLTIP = "Interact with ok button!";
 
 	public ErrorDialog(final String message) {
 		dialog = new Stage();
-		scene = new Scene(this, 300, 100);
 		okButtonSample = new ButtonSample(OKBUTTONTEXT, OKBUTTONTOOLTIP);
-		messageLabelSample = new LabelSample(message, MESSAGELABELSAMPLE_TOOLTIP);
-
 		setOkButtonFunctinolity();
-
-		add(messageLabelSample, 1, 1);
+		add(new LabelSample(message, MESSAGELABELSAMPLE_TOOLTIP), 1, 1);
 		add(okButtonSample, 2, 2);
 		dialog.setTitle("Something went wrong!");
-		dialog.setScene(scene);
+		dialog.setScene(new Scene(this, SCENE_WIDTH, SCENE_HIGHT));
 		dialog.setResizable(false);
 		setOkButtonSampleEnterEvent();
 		dialog.show();
-
 	}
 
 	private void setOkButtonSampleEnterEvent() {

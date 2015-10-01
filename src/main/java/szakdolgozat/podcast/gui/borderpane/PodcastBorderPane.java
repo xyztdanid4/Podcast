@@ -1,6 +1,5 @@
 package szakdolgozat.podcast.gui.borderpane;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.Observable;
@@ -25,15 +24,20 @@ import szakdolgozat.podcast.gui.samples.ListViewSample;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
 public class PodcastBorderPane extends BorderPane {
+	private static final String NOSUBSCRIPTIONS = "You have no subscriptions yet!";
+	private static final String GETINFO = "Choose from subscribed podcast to get information!";
+	private static final String SUBSCRIBEDPODCAST = "Subscribed Podcasts";
+	private static final String UNSUBSCRIBE = "Unsubscribe";
+	private static final String CLICKFORUNSUBSCRIBE = "Click for unsubscribe!";
+	private static final String NOPODCASTSELECTED = "Choose from subscribed podcasts!";
+	private static final String SUBSCRIBEDEPISODES = "Subscribed Episodes";
 	private List<Podcast> podcastsFromDBList;
 	private VBox podcastListVBox;
 	private VBox episodesListVBox;
-	private ObservableList<HBoxSample> podcastsContainer;
+	private ObservableList<HBox> podcastsContainer;
 	private ListViewSample podcastListView;
-	private ObservableList<HBoxSample> episodesContainer;
+	private ObservableList<HBox> episodesContainer;
 	private ListView episodeListView;
-	private static final String NOSUBSCRIPTIONS = "You have no subscriptions yet!";
-	private static final String SUBSCRIBEDPODCAST = "Subscribed Podcasts";
 	private HBox podcastInformationContainer;
 	private ListViewSample podcastInformationListView;
 	private ObservableList<HBox> podcastInformationHbox;
@@ -41,8 +45,10 @@ public class PodcastBorderPane extends BorderPane {
 
 	public PodcastBorderPane() {
 		readfromDB();
+		setMarginForElements();
 		showPodcastEmptyInformation();
 		showSubscribedPodcasts();
+		showEmptyEpisodesList();
 		setPodcastListInvalidationListener();
 	}
 
@@ -55,46 +61,42 @@ public class PodcastBorderPane extends BorderPane {
 	}
 
 	private void showPodcastEmptyInformation() {
-		podcastInformationContainer = new HBox(10);
-		Text text = new Text(new String("Choose from subscribed podcast to get information!"));
+		Text text = new Text(GETINFO);
 		text.setFont(Font.font("Arial", FontWeight.BOLD, 13));
-		podcastInformationContainer.getChildren().add(text);
+		podcastInformationContainer = new HBox(10, text);
 		podcastInformationContainer.setPrefSize(800, 100);
 		podcastInformationContainer.setMaxSize(800, 100);
 		podcastInformationContainer.setStyle("-fx-background-color: white;");
-		setMargin(podcastInformationContainer, new Insets(20));
+		// setMargin(podcastInformationContainer, new Insets(20));
 		setTop(podcastInformationContainer);
 	}
 
 	private void showSubscribedPodcasts() {
 		readfromDB();
-		podcastListVBox = new VBox(10);
-		Text podcastText = new Text("Subscribed Podcasts");
+		Text podcastText = new Text(SUBSCRIBEDPODCAST);
 		podcastText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		podcastsContainer = FXCollections.observableArrayList();
 		podcastListView = new ListViewSample();
 		podcastListView.setPrefSize(300, 300);
 		for (int i = 0; i < podcastsFromDBList.size(); i++) {
-			ImageView imageView = new ImageView();
-			Image image = new Image(podcastsFromDBList.get(i).getArtworkUrl60());
-			imageView.setImage(image);
+			ImageView imageView = new ImageView(new Image(podcastsFromDBList.get(i).getArtworkUrl60()));
 			Text name = new Text(new String(podcastsFromDBList.get(i).getArtistName()));
 			name.setFont(Font.font("Arial", FontWeight.BOLD, 13));
-			ButtonSample subscribeButton = new ButtonSample("Unsubscribe", "Click for unsubscribe!");
+			ButtonSample subscribeButton = new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE);
 			podcastsContainer.add(new HBoxSample(imageView, name));
 		}
 		if (!isEmptySubscriptions()) {
 			podcastListView.setDisable(false);
 		} else {
-			Text nosubscriptionText = new Text(new String(NOSUBSCRIPTIONS));
-			podcastsContainer.add(new HBoxSample(nosubscriptionText));
+			Text nosubscriptionText = new Text(NOSUBSCRIPTIONS);
+			nosubscriptionText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+			podcastsContainer.add(new HBox(nosubscriptionText));
 			podcastListView.setDisable(true);
 		}
 		podcastListView.setItems(podcastsContainer);
-		podcastListVBox.getChildren().addAll(podcastText, podcastListView);
+		podcastListVBox = new VBox(10, podcastText, podcastListView);
 		setMargin(podcastListVBox, new Insets(20));
 		setAlignment(podcastListVBox, Pos.CENTER_LEFT);
-		// podcastListVBox.setPrefSize(300, 300);
 		setLeft(podcastListVBox);
 	}
 
@@ -105,18 +107,13 @@ public class PodcastBorderPane extends BorderPane {
 	private void setPodcastListInvalidationListener() {
 		podcastListView.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
 			showPodcastInformation();
-			// showpodcastEpisodes();
+			showpodcastEpisodes();
 		});
 
 	}
 
 	private void showPodcastInformation() {
 		readfromDB();
-		podcastInformationContainer = new HBox(10);
-		podcastInformationContainer.setPrefSize(800, 100);
-		podcastInformationContainer.setMaxSize(800, 100);
-		podcastInformationContainer.setStyle("-fx-background-color: white;");
-		setMargin(podcastInformationContainer, new Insets(10));
 		Text artistLabel = new Text(new String("Artist name: "
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtistName()));
 		Text collectionNameLabel = new Text(new String("Title: "
@@ -140,50 +137,51 @@ public class PodcastBorderPane extends BorderPane {
 		trackCountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 		ImageView imageView = new ImageView(new Image(
 				podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtworkUrl100()));
-		podcastInformationContainer.getChildren().addAll(imageView,
+		podcastInformationContainer = new HBox(10, imageView,
 				new VBox(5, artistLabel, collectionNameLabel, countryLabel),
 				new VBox(5, feedUrlLabel, genreLabel, lastReleaseDateLabel, trackCountLabel));
+		podcastInformationContainer.setPrefSize(800, 100);
+		podcastInformationContainer.setMaxSize(800, 100);
+		podcastInformationContainer.setStyle("-fx-background-color: white;");
 		setTop(podcastInformationContainer);
 	}
 
 	private void showEmptyEpisodesList() {
-		episodesListVBox = new VBox(10);
-		episodeListView = new ListView();
-		episodesContainer = FXCollections.observableArrayList();
-
+		Text noPodcastSelectedText = new Text(NOPODCASTSELECTED);
+		noPodcastSelectedText.setFont(Font.font("Arial", FontWeight.BOLD, 13));
+		Text episodeListText = new Text(SUBSCRIBEDEPISODES);
+		episodeListText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		episodeListView = new ListView(FXCollections.observableArrayList(new HBox(10, noPodcastSelectedText)));
+		episodeListView.setPrefSize(400, 300);
+		episodeListView.setMaxSize(400, 300);
+		VBox episodeVBox = new VBox(10, episodeListText, episodeListView);
+		setMargin(episodeVBox, new Insets(20));
+		setCenter(episodeVBox);
 	}
 
 	private void showpodcastEpisodes() {
 		readfromDB();
-		System.out.println(
-				podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode());
-		selectedPodcastEpisodes = new ArrayList<PodcastEpisode>();
+		Text episodeListText = new Text(SUBSCRIBEDEPISODES);
+		episodeListText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		selectedPodcastEpisodes = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
 				.getPodcastEpisode();
-		// podcastsFromDBList.get(podcastInformationListView.getSelectionModel().getSelectedIndex());
-		Text episodeText = new Text(new String("Podcast episodes"));
-		episodesListVBox = new VBox(10);
-		episodeListView = new ListView();
 		episodesContainer = FXCollections.observableArrayList();
 		for (PodcastEpisode podcastEpisode : selectedPodcastEpisodes) {
-			String imageUrl = podcastEpisode.getImage();
-			String pubDate = podcastEpisode.getPubdate();
-			String title = podcastEpisode.getTitle();
-			Text pubDateText = new Text(pubDate);
-			Text titleText = new Text(title);
+			Text pubDateText = new Text(podcastEpisode.getPubdate());
+			Text titleText = new Text(podcastEpisode.getTitle());
 			pubDateText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 			titleText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-			ImageView imageView = new ImageView();
+			ImageView imageView = new ImageView(new Image(podcastEpisode.getImage()));
 			imageView.setFitHeight(30);
 			imageView.setFitWidth(30);
-			Image episodeImage = new Image(imageUrl);
-			imageView.setImage(episodeImage);
-			episodesContainer.add(new HBoxSample(imageView, titleText, pubDateText));
+			episodesContainer.add(new HBox(10, imageView, titleText, pubDateText));
 		}
-		episodeListView.setItems(episodesContainer);
-		episodesListVBox.getChildren().add(episodeText);
-		episodesListVBox.getChildren().add(episodeListView);
-		setCenter(episodesListVBox);
+		episodeListView = new ListView<HBox>(episodesContainer);
+		episodeListView.setPrefSize(400, 300);
+		episodeListView.setMaxSize(400, 300);
+		VBox episodeVBox = new VBox(10, episodeListText, episodeListView);
+		setMargin(episodeVBox, new Insets(20));
+		setCenter(episodeVBox);
 	}
 
 	private void task(final int i) {

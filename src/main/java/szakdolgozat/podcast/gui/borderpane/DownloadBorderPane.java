@@ -15,18 +15,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.data.podcast.SearchResultContainer;
+import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.gui.listbuilder.SearchListItemBuilder;
-import szakdolgozat.podcast.gui.samples.BorderPaneSample;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.HBoxSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 import szakdolgozat.podcast.gui.samples.TreeViewSample;
 import szakdolgozat.podcast.jsonparser.JsonParser;
-import szakdolgozat.podcast.xmlparserrossz.RssFeedParser;
 
-public class DownloadBorderPane extends BorderPaneSample {
+public class DownloadBorderPane extends BorderPane {
 	private HBoxSample hboxSample;
 	private TreeItem<HBoxSample> rootItemHBoxSample;
 	private TreeItem<HBoxSample> treeItemHBoxSample;
@@ -41,11 +40,10 @@ public class DownloadBorderPane extends BorderPaneSample {
 	private final String SEARCHBUTTON_TEXT = "Search!";
 	private final HBoxSample searchTextFieldSampleAndSearchButtonSampleContainerHbox;
 	private final int SEARCHTEXTFIELD_WIDTH = 800;
-	private SearchResultContainer searchResultContainer;
+	private PodcastContainer searchResultContainer;
 	private JsonParser jsonParser;
 	private ObservableList<HBoxSample> searchResultList;
 	private ListView searchResultlistView;
-	private RssFeedParser rssFeedParser;
 
 	public DownloadBorderPane() {
 		searchTextFieldSample = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP);
@@ -85,9 +83,7 @@ public class DownloadBorderPane extends BorderPaneSample {
 	private void startSearchPodcast() {
 		String searchText = "https://itunes.apple.com/search?term=" + searchTextFieldSample.getText()
 				+ "&entity=podcast&media=podcast&limit=5";
-		jsonParser = new JsonParser(searchText);
-		searchResultContainer = jsonParser.getSearchResultContainer();
-		// System.out.println(searchResultContainer);
+		// jsonParser = new JsonParser(searchText, searchResultContainer);
 		showSearchResult();
 	}
 

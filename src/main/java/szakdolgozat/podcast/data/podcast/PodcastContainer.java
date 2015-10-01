@@ -2,7 +2,7 @@ package szakdolgozat.podcast.data.podcast;
 
 import java.util.List;
 
-public class SearchResultContainer {
+public class PodcastContainer {
 	private int resultCount;
 	private List<Podcast> results;
 

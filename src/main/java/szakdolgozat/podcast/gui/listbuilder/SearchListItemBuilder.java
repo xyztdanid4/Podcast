@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
-import szakdolgozat.podcast.data.podcast.SearchResultContainer;
+import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.HBoxSample;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
@@ -18,7 +18,7 @@ import szakdolgozat.podcast.xmlparser.XmlParser;
 public class SearchListItemBuilder {
 	private HBoxSample searchResultItem;
 
-	public SearchListItemBuilder(SearchResultContainer searchResultContainer, int i) {
+	public SearchListItemBuilder(PodcastContainer searchResultContainer, int i) {
 		ImageView searchResultItemimageView = new ImageView();
 		Image searchResultItemImage = new Image(searchResultContainer.getResults().get(i).getArtworkUrl60());
 		searchResultItemimageView.setImage(searchResultItemImage);

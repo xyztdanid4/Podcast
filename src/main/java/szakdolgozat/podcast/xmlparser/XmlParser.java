@@ -19,7 +19,6 @@ import javax.xml.stream.events.XMLEvent;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 
 public class XmlParser {
-
 	static private String TITLE = "title";
 	static private String AUTHOR = "author";
 	static private String SUBTITLE = "subtitle";
@@ -52,7 +51,6 @@ public class XmlParser {
 
 	public List<PodcastEpisode> readFeed() {
 		episodes = new ArrayList<PodcastEpisode>();
-
 		try {
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 
@@ -71,8 +69,7 @@ public class XmlParser {
 					}
 
 					if (event.isStartElement()) {
-						if (event.asStartElement().getName().getLocalPart()
-								.equals(TITLE)) {
+						if (event.asStartElement().getName().getLocalPart().equals(TITLE)) {
 							event = eventReader.nextEvent();
 							try {
 								title = event.asCharacters().getData();
@@ -83,8 +80,7 @@ public class XmlParser {
 							continue;
 						}
 					}
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(AUTHOR)) {
+					if (event.asStartElement().getName().getLocalPart().equals(AUTHOR)) {
 						event = eventReader.nextEvent();
 						try {
 							author = event.asCharacters().getData();
@@ -95,8 +91,7 @@ public class XmlParser {
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(SUBTITLE)) {
+					if (event.asStartElement().getName().getLocalPart().equals(SUBTITLE)) {
 						event = eventReader.nextEvent();
 						try {
 							subtitle = event.asCharacters().getData();
@@ -107,22 +102,20 @@ public class XmlParser {
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(SUMMARY)) {
+					if (event.asStartElement().getName().getLocalPart().equals(SUMMARY)) {
 						event = eventReader.nextEvent();
 						try {
 							summary = event.asCharacters().getData();
 						} catch (java.lang.ClassCastException e) {
 							summary = "";
 							e.printStackTrace();
-
+							System.out.println("summary exception");
 							continue;
 						}
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(GUID)) {
+					if (event.asStartElement().getName().getLocalPart().equals(GUID)) {
 						event = eventReader.nextEvent();
 						try {
 							guid = event.asCharacters().getData();
@@ -133,8 +126,7 @@ public class XmlParser {
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(PUBDATE)) {
+					if (event.asStartElement().getName().getLocalPart().equals(PUBDATE)) {
 						event = eventReader.nextEvent();
 						try {
 							pubDate = event.asCharacters().getData();
@@ -145,8 +137,7 @@ public class XmlParser {
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(DURATION)) {
+					if (event.asStartElement().getName().getLocalPart().equals(DURATION)) {
 						event = eventReader.nextEvent();
 						try {
 							duration = event.asCharacters().getData();
@@ -157,11 +148,9 @@ public class XmlParser {
 						continue;
 					}
 
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(IMAGE)) {
+					if (event.asStartElement().getName().getLocalPart().equals(IMAGE)) {
 						event = eventReader.nextEvent();
-						Iterator<Attribute> attributes = startElement
-								.getAttributes();
+						Iterator<Attribute> attributes = startElement.getAttributes();
 						while (attributes.hasNext()) {
 							Attribute attribute = attributes.next();
 							if (attribute.getName().toString().equals(HREF)) {
@@ -181,16 +170,15 @@ public class XmlParser {
 				if (event.isEndElement()) {
 					EndElement endElement = event.asEndElement();
 					if (endElement.getName().getLocalPart() == (ITEM)) {
-						episodes.add(new PodcastEpisode(title, author,
-								subtitle, summary, guid, pubDate, duration,
-								image));
+						episodes.add(
+								new PodcastEpisode(title, author, subtitle, summary, guid, pubDate, duration, image));
 					}
 				}
 			}
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
+			System.out.println("XMLStreamExceptionSajat");
 		}
-
 		return episodes;
 	}
 

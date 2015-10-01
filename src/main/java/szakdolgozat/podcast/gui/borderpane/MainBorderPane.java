@@ -1,10 +1,10 @@
 package szakdolgozat.podcast.gui.borderpane;
 
 import javafx.scene.control.Label;
-import szakdolgozat.podcast.gui.samples.BorderPaneSample;
+import javafx.scene.layout.BorderPane;
 import szakdolgozat.podcast.tabpane.ApplicationTabPane;
 
-public class MainBorderPane extends BorderPaneSample {
+public class MainBorderPane extends BorderPane {
 	private ApplicationTabPane tabPaneSample;
 	private Label rightLabel;
 
