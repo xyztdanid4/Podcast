@@ -160,11 +160,6 @@ public class SearchBorderPane extends BorderPaneSample {
 		episodeText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		episodesList = FXCollections.observableArrayList();
 		episodesListView = new ListViewSample();
-		// episodesListView.setPadding(new Insets(-20, -20, -20, -20));
-		// Rectangle shapeOfListview = new Rectangle(400, 400);
-		// shapeOfListview.setArcHeight(30);
-		// shapeOfListview.setArcWidth(30);
-		// episodesListView.setShape(shapeOfListview);
 		setMargin(episodesListVBox, new Insets(20));
 		episodesListView.setItems(episodesList);
 		episodesListVBox.getChildren().add(episodeText);
@@ -181,10 +176,6 @@ public class SearchBorderPane extends BorderPaneSample {
 		podcastText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		searchResultList = FXCollections.observableArrayList();
 		searchResultListView = new ListViewSample();
-		// Rectangle shapeOfListView = new Rectangle(400, 400);
-		// shapeOfListView.setArcHeight(30);
-		// shapeOfListView.setArcWidth(30);
-		// searchResultListView.setShape(shapeOfListView);
 		setMargin(podcastListVBox, new Insets(20));
 		searchResultListView.setItems(searchResultList);
 		podcastListVBox.getChildren().add(podcastText);

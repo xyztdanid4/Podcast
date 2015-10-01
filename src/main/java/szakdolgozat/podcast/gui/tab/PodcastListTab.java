@@ -6,13 +6,11 @@ import szakdolgozat.podcast.gui.borderpane.PodcastBorderPane;
 import szakdolgozat.podcast.gui.samples.TabSample;
 
 public class PodcastListTab extends TabSample {
-	private PodcastBorderPane podcastBorderPane;
-	private final String PODCASTLISTTAB_IMAGEPATH = "appbar.list.png";
-	private final String PODCASTLISTTAB_TITLE = "Click here to manage your podcasts!";
+	private static final String PODCASTLISTTAB_IMAGEPATH = "appbar.list.png";
+	private static final String PODCASTLISTTAB_TITLE = "Click here to manage your podcasts!";
 
 	public PodcastListTab() {
-		// podcastBorderPane = new PodcastBorderPane();
-		super.makeTab((TabSample) this, PODCASTLISTTAB_IMAGEPATH, PODCASTLISTTAB_TITLE);
+		super(PODCASTLISTTAB_IMAGEPATH, PODCASTLISTTAB_TITLE);
 		adaptOnSelection();
 		// setContent(podcastBorderPane);
 	}
@@ -30,8 +28,7 @@ public class PodcastListTab extends TabSample {
 	}
 
 	private void onselection() {
-		podcastBorderPane = new PodcastBorderPane();
-		setContent(podcastBorderPane);
+		setContent(new PodcastBorderPane());
 	}
 
 }

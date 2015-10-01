@@ -91,8 +91,7 @@ public class PodcastBorderPane extends BorderPane {
 			podcastListView.setDisable(true);
 		}
 		podcastListView.setItems(podcastsContainer);
-		podcastListVBox.getChildren().add(podcastText);
-		podcastListVBox.getChildren().add(podcastListView);
+		podcastListVBox.getChildren().addAll(podcastText, podcastListView);
 		setMargin(podcastListVBox, new Insets(20));
 		setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 		// podcastListVBox.setPrefSize(300, 300);
@@ -106,39 +105,32 @@ public class PodcastBorderPane extends BorderPane {
 	private void setPodcastListInvalidationListener() {
 		podcastListView.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
 			showPodcastInformation();
-			showpodcastEpisodes();
+			// showpodcastEpisodes();
 		});
 
 	}
 
 	private void showPodcastInformation() {
 		readfromDB();
-		String artistname = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getArtistName();
-		String imageUrl = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getArtworkUrl100();
-		String collectionName = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getCollectionName();
-		String country = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getCountry();
-		String feedUrl = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getFeedUrl();
-		String genreName = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getPrimaryGenreName();
-		String lastReleaseDate = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getReleaseDate();
-		String trackCount = podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex())
-				.getTrackCount();
 		podcastInformationContainer = new HBox(10);
 		podcastInformationContainer.setPrefSize(800, 100);
 		podcastInformationContainer.setMaxSize(800, 100);
 		podcastInformationContainer.setStyle("-fx-background-color: white;");
-		setMargin(podcastInformationContainer, new Insets(20));
-		Text artistLabel = new Text(new String("Artist name: " + artistname));
-		Text collectionNameLabel = new Text(new String("Title: " + collectionName));
-		Text countryLabel = new Text(new String("Country: " + country));
-		Text feedUrlLabel = new Text(new String("Feed url: " + feedUrl));
-		Text genreLabel = new Text(new String("Genre: " + genreName));
-		Text lastReleaseDateLabel = new Text(new String("Last Updated: " + lastReleaseDate));
-		Text trackCountLabel = new Text(new String("Number of episodes: " + trackCount));
+		setMargin(podcastInformationContainer, new Insets(10));
+		Text artistLabel = new Text(new String("Artist name: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtistName()));
+		Text collectionNameLabel = new Text(new String("Title: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getCollectionName()));
+		Text countryLabel = new Text(new String("Country: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getCountry()));
+		Text feedUrlLabel = new Text(new String("Feed url: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getFeedUrl()));
+		Text genreLabel = new Text(new String("Genre: " + podcastsFromDBList
+				.get(podcastListView.getSelectionModel().getSelectedIndex()).getPrimaryGenreName()));
+		Text lastReleaseDateLabel = new Text(new String("Last Updated: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getReleaseDate()));
+		Text trackCountLabel = new Text(new String("Number of episodes: "
+				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getTrackCount()));
 		artistLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 		collectionNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 		countryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -146,22 +138,19 @@ public class PodcastBorderPane extends BorderPane {
 		genreLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 		lastReleaseDateLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
 		trackCountLabel.setFont(Font.font("Arial", FontWeight.BOLD, 12));
-		ImageView imageView = new ImageView();
-		Image image = new Image(imageUrl);
-		imageView.setImage(image);
-		podcastInformationContainer.getChildren().add(imageView);
-		VBox helperVbox1 = new VBox(5);
-		helperVbox1.getChildren().add(artistLabel);
-		helperVbox1.getChildren().add(collectionNameLabel);
-		helperVbox1.getChildren().add(countryLabel);
-		podcastInformationContainer.getChildren().add(helperVbox1);
-		VBox helperVbox2 = new VBox(5);
-		helperVbox2.getChildren().add(feedUrlLabel);
-		helperVbox2.getChildren().add(genreLabel);
-		helperVbox2.getChildren().add(lastReleaseDateLabel);
-		helperVbox2.getChildren().add(trackCountLabel);
-		podcastInformationContainer.getChildren().add(helperVbox2);
+		ImageView imageView = new ImageView(new Image(
+				podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtworkUrl100()));
+		podcastInformationContainer.getChildren().addAll(imageView,
+				new VBox(5, artistLabel, collectionNameLabel, countryLabel),
+				new VBox(5, feedUrlLabel, genreLabel, lastReleaseDateLabel, trackCountLabel));
 		setTop(podcastInformationContainer);
+	}
+
+	private void showEmptyEpisodesList() {
+		episodesListVBox = new VBox(10);
+		episodeListView = new ListView();
+		episodesContainer = FXCollections.observableArrayList();
+
 	}
 
 	private void showpodcastEpisodes() {
@@ -176,11 +165,10 @@ public class PodcastBorderPane extends BorderPane {
 		episodesListVBox = new VBox(10);
 		episodeListView = new ListView();
 		episodesContainer = FXCollections.observableArrayList();
-		for (int i = 0; i < selectedPodcastEpisodes.size(); i++) {
-			// for (PodcastEpisode podcastEpisode : selectedPodcastEpisodes) {
-			String imageUrl = selectedPodcastEpisodes.get(i).getImage();
-			String pubDate = selectedPodcastEpisodes.get(i).getPubdate();
-			String title = selectedPodcastEpisodes.get(i).getTitle();
+		for (PodcastEpisode podcastEpisode : selectedPodcastEpisodes) {
+			String imageUrl = podcastEpisode.getImage();
+			String pubDate = podcastEpisode.getPubdate();
+			String title = podcastEpisode.getTitle();
 			Text pubDateText = new Text(pubDate);
 			Text titleText = new Text(title);
 			pubDateText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
@@ -191,7 +179,6 @@ public class PodcastBorderPane extends BorderPane {
 			Image episodeImage = new Image(imageUrl);
 			imageView.setImage(episodeImage);
 			episodesContainer.add(new HBoxSample(imageView, titleText, pubDateText));
-
 		}
 		episodeListView.setItems(episodesContainer);
 		episodesListVBox.getChildren().add(episodeText);

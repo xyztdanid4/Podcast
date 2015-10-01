@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import szakdolgozat.podcast.tabpane.ApplicationTabPane;
 
 public class BorderPaneSample extends BorderPane {
 	// private StatusBar statusBar;
@@ -20,7 +21,7 @@ public class BorderPaneSample extends BorderPane {
 	private Button button;
 	private Image image;
 	private ImageView imageView;
-	private TabPaneSample tabPaneSample;
+	private ApplicationTabPane tabPaneSample;
 
 	public BorderPaneSample() {
 
