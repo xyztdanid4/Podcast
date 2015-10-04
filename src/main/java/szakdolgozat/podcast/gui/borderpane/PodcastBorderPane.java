@@ -2,6 +2,8 @@ package szakdolgozat.podcast.gui.borderpane;
 
 import java.util.List;
 
+import org.mongodb.morphia.query.Query;
+
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -92,26 +94,6 @@ public class PodcastBorderPane extends BorderPane {
 		setTop(podcastInformationContainer);
 	}
 
-	/*
-	 * private void setMouseEnteredEventPodcastInformation() {
-	 * podcastInformationContainer.setOnMouseEntered(new
-	 * EventHandler<MouseEvent>() {
-	 * 
-	 * @Override public void handle(MouseEvent e) {
-	 * podcastInformationContainer.setBackground( new Background(new
-	 * BackgroundFill(Color.web("#191919"), new CornerRadii(10),
-	 * Insets.EMPTY))); } }); }
-	 */
-	/*
-	 * private void setMouseExitedEventPodcastInformation() {
-	 * podcastInformationContainer.setOnMouseExited(new
-	 * EventHandler<MouseEvent>() {
-	 * 
-	 * @Override public void handle(MouseEvent e) {
-	 * podcastInformationContainer.setBackground( new Background(new
-	 * BackgroundFill(Color.web("#808080"), new CornerRadii(10),
-	 * Insets.EMPTY))); } }); }
-	 */
 	private void showSubscribedPodcasts() {
 		readfromDB();
 		Text podcastText = new Text(SUBSCRIBEDPODCAST);
@@ -124,18 +106,22 @@ public class PodcastBorderPane extends BorderPane {
 				new CornerRadii(10), new BorderWidths(3))));
 		podcastListView.setBackground(
 				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-		for (int i = 0; i < podcastsFromDBList.size(); i++) {
-
-			ImageView imageView = new ImageView(new Image(podcastsFromDBList.get(i).getArtworkUrl60()));
-
-			Text name = new Text(new String(podcastsFromDBList.get(i).getArtistName()));
+		// for (int i = 0; i < podcastsFromDBList.size(); i++) {
+		for (Podcast podcastIterator : podcastsFromDBList) {
+			ImageView imageView = new ImageView(new Image(podcastIterator.getArtworkUrl60()));
+			Text name = new Text(new String(podcastIterator.getArtistName()));
 			name.setFont(Font.font("Arial", FontWeight.BOLD, 13));
 			name.setFill(Color.web("#FFFFFF"));
 			ButtonSample subscribeButton = new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE);
 			subscribeButton.setOnAction((ActionEvent event) -> {
-
+				removefromDB(podcastIterator.getArtistName());
+				showPodcastEmptyInformation();
+				showSubscribedPodcasts();
+				showEmptyEpisodesList();
+				setPodcastListInvalidationListener();
 			});
 			HBox itemHbox = new HBox(10, imageView, name, subscribeButton);
+
 			itemHbox.setAlignment(Pos.CENTER_LEFT);
 			itemHbox.setBackground(
 					new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
@@ -230,8 +216,6 @@ public class PodcastBorderPane extends BorderPane {
 				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
 		podcastInformationContainer.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
 				new CornerRadii(10), new BorderWidths(3))));
-		// setMouseEnteredEventPodcastInformation();
-		// setMouseExitedEventPodcastInformation();
 		setMouseEnteredEventHBox(podcastInformationContainer);
 		setMouseExitedEventHBox(podcastInformationContainer);
 		setTop(podcastInformationContainer);
@@ -280,7 +264,6 @@ public class PodcastBorderPane extends BorderPane {
 		VBox episodeVBox = new VBox(10, episodeListText, itemHbox);
 		setMargin(episodeVBox, new Insets(20));
 		setCenter(episodeVBox);
-		;
 	}
 
 	private void showpodcastEpisodes() {
@@ -364,4 +347,9 @@ public class PodcastBorderPane extends BorderPane {
 		});
 	}
 
+	private void removefromDB(final String s) {
+		final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
+				.filter("artistName =", s);
+		MorphiaConnector.getDataStore().delete(deletePodcast);
+	}
 }

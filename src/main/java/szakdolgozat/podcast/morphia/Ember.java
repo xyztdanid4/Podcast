@@ -1,6 +1,5 @@
 package szakdolgozat.podcast.morphia;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Ember {
@@ -15,10 +14,10 @@ public class Ember {
 		this.kor = kor;
 		this.varos = varos;
 		this.foglalkozas = foglalkozas;
-		stringek = new ArrayList<String>();
-		stringek.add(nev);
-		stringek.add(varos);
-		stringek.add(foglalkozas);
+		// stringek = new ArrayList<String>();
+		// stringek.add(nev);
+		// stringek.add(varos);
+		// stringek.add(foglalkozas);
 	}
 
 	/*
@@ -28,9 +27,8 @@ public class Ember {
 	 */
 	@Override
 	public String toString() {
-		return "Ember [nev=" + nev + ", kor=" + kor + ", varos=" + varos
-				+ ", foglalkozas=" + foglalkozas + ", stringek=" + stringek
-				+ "]";
+		return "Ember [nev=" + nev + ", kor=" + kor + ", varos=" + varos + ", foglalkozas=" + foglalkozas
+				+ ", stringek=" + stringek + "]";
 	}
 
 	public Ember() {

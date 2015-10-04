@@ -45,6 +45,10 @@ public class MorphiaConnector {
 		dataStore.save(podcast);
 	}
 
+	public static void remove(Podcast podcast) {
+		dataStore.delete(podcast);
+	}
+
 	public static MorphiaConnector getInstance() {
 		return instance;
 	}
