@@ -9,7 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -176,15 +176,7 @@ public class NewLoginGridPane extends GridPaneSample {
 		});
 	}
 
-	private void decorateTextField(TextFieldSample textField) {
-		textField.setBackground(
-				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-		textField.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
-				new CornerRadii(3), new BorderWidths(3))));
-		textField.setStyle("-fx-text-inner-color: white;");
-	}
-
-	private void decorateTextField(PasswordField textField) {
+	private void decorateTextField(TextField textField) {
 		textField.setBackground(
 				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
 		textField.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
