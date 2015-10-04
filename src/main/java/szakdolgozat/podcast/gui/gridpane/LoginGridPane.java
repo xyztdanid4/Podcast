@@ -94,6 +94,7 @@ public class LoginGridPane extends GridPaneSample {
 	private void setOkButtonFunctionality() {
 		okButton.setOnAction((ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+				LoginStage.getInstance().hide();
 				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
 			} else {
 				if (checkUserAndPassword()) {
@@ -101,6 +102,7 @@ public class LoginGridPane extends GridPaneSample {
 					InformationContainer.getInstance().setOwner(nameTextField.getText());
 					LoginStage.getInstance().hide();
 				} else {
+					LoginStage.getInstance().hide();
 					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
 				}
 			}

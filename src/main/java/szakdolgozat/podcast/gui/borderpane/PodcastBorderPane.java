@@ -89,8 +89,6 @@ public class PodcastBorderPane extends BorderPane {
 		podcastInformationContainer.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
 				new CornerRadii(10), new BorderWidths(3))));
 		podcastInformationContainer.setAlignment(Pos.CENTER_LEFT);
-		// setMouseEnteredEventHBox(podcastInformationContainer);
-		// setMouseExitedEventHBox(podcastInformationContainer);
 		setTop(podcastInformationContainer);
 	}
 
@@ -106,9 +104,15 @@ public class PodcastBorderPane extends BorderPane {
 				new CornerRadii(10), new BorderWidths(3))));
 		podcastListView.setBackground(
 				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-		// for (int i = 0; i < podcastsFromDBList.size(); i++) {
 		for (Podcast podcastIterator : podcastsFromDBList) {
-			ImageView imageView = new ImageView(new Image(podcastIterator.getArtworkUrl60()));
+			// ImageView imageView = new ImageView(new
+			// Image(podcastIterator.getArtworkUrl60()));
+			Rectangle imageRectangle = new Rectangle();
+			imageRectangle.setArcHeight(10);
+			imageRectangle.setArcWidth(10);
+			imageRectangle.setHeight(40);
+			imageRectangle.setWidth(40);
+			imageRectangle.setFill(new ImagePattern(new Image(podcastIterator.getArtworkUrl60())));
 			Text name = new Text(new String(podcastIterator.getArtistName()));
 			name.setFont(Font.font("Arial", FontWeight.BOLD, 13));
 			name.setFill(Color.web("#FFFFFF"));
@@ -120,8 +124,7 @@ public class PodcastBorderPane extends BorderPane {
 				showEmptyEpisodesList();
 				setPodcastListInvalidationListener();
 			});
-			HBox itemHbox = new HBox(10, imageView, name, subscribeButton);
-
+			HBox itemHbox = new HBox(10, imageRectangle, name, subscribeButton);
 			itemHbox.setAlignment(Pos.CENTER_LEFT);
 			itemHbox.setBackground(
 					new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
@@ -292,6 +295,7 @@ public class PodcastBorderPane extends BorderPane {
 						new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
 				itemHbox.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
 						new CornerRadii(3), new BorderWidths(3))));
+				setStyle("-fx-background-color: #808080;");
 				setMouseEnteredEventHBox(itemHbox);
 				setMouseExitedEventHBox(itemHbox);
 				episodesContainer.add(itemHbox);

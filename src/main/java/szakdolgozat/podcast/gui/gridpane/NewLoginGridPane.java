@@ -123,11 +123,13 @@ public class NewLoginGridPane extends GridPaneSample {
 	private void setOkButtonFunctionality() {
 		okButton.setOnAction((ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
-				// LoginErrorDialogStage.getInstance().show();
+				LoginStage.getInstance().hide();
 				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
 			} else if (!(passwordTextField.getText().equals(passwordAgainTextField.getText()))) {
+				LoginStage.getInstance().hide();
 				ErrorDialog errorDialog = new ErrorDialog(ERRORPASSWORD);
 			} else if (!(emailTextField.getText().matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
+				LoginStage.getInstance().hide();
 				ErrorDialog errorDialog = new ErrorDialog(ERRORMAILFORMAT);
 			} else {
 				if (checkValuesInDB()) {
@@ -136,6 +138,7 @@ public class NewLoginGridPane extends GridPaneSample {
 					LoginStage.getInstance().hide();
 					MainStage.getInstance().show();
 				} else {
+					LoginStage.getInstance().hide();
 					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
 				}
 			}
