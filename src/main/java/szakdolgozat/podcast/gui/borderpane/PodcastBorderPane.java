@@ -59,17 +59,17 @@ public class PodcastBorderPane extends BorderPane {
 
 	public PodcastBorderPane() {
 		readfromDB();
-		setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(0), Insets.EMPTY)));
-		setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(0),
+		setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(3), Insets.EMPTY)));
+		setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(3),
 				new BorderWidths(3))));
-		setMarginForElements();
+		setPaddingForElements();
 		showPodcastEmptyInformation();
 		showSubscribedPodcasts();
 		showEmptyEpisodesList();
 		setPodcastListInvalidationListener();
 	}
 
-	private void setMarginForElements() {
+	private void setPaddingForElements() {
 		setPadding(new Insets(20, 20, 20, 20));
 	}
 

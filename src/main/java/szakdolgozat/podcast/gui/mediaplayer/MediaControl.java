@@ -16,11 +16,13 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 public class MediaControl extends BorderPane {
 
 	private MediaPlayer mp;
+	private MediaView mediaView;
 	private final boolean repeat = false;
 	private boolean stopRequested = false;
 	private boolean atEndOfMedia = false;
@@ -32,12 +34,8 @@ public class MediaControl extends BorderPane {
 
 	public MediaControl(final MediaPlayer mp) {
 		this.mp = mp;
-		// setStyle("-fx-background-color: #bfc2c7;");
-		// Pane mvPane = new Pane() {
-		// };
-		// mvPane.setStyle("-fx-background-color: black;");
-		// setCenter(mvPane);
-
+		setStyle("-fx-background-color: #bfc2c7;");
+		mediaView = new MediaView(mp);
 		mediaBar = new HBox();
 		mediaBar.setAlignment(Pos.CENTER);
 		mediaBar.setPadding(new Insets(5, 10, 5, 10));
@@ -46,7 +44,6 @@ public class MediaControl extends BorderPane {
 		final Button playButton = new Button(">");
 
 		playButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent e) {
 				Status status = mp.getStatus();
 
@@ -55,8 +52,7 @@ public class MediaControl extends BorderPane {
 					return;
 				}
 
-				if (status == Status.PAUSED || status == Status.READY
-						|| status == Status.STOPPED) {
+				if (status == Status.PAUSED || status == Status.READY || status == Status.STOPPED) {
 					// rewind the movie if we're sitting at the end
 					if (atEndOfMedia) {
 						mp.seek(mp.getStartTime());
@@ -69,14 +65,12 @@ public class MediaControl extends BorderPane {
 			}
 		});
 		mp.currentTimeProperty().addListener(new InvalidationListener() {
-			@Override
 			public void invalidated(Observable ov) {
 				updateValues();
 			}
 		});
 
 		mp.setOnPlaying(new Runnable() {
-			@Override
 			public void run() {
 				if (stopRequested) {
 					mp.pause();
@@ -88,7 +82,6 @@ public class MediaControl extends BorderPane {
 		});
 
 		mp.setOnPaused(new Runnable() {
-			@Override
 			public void run() {
 				System.out.println("onPaused");
 				playButton.setText(">");
@@ -96,7 +89,6 @@ public class MediaControl extends BorderPane {
 		});
 
 		mp.setOnReady(new Runnable() {
-			@Override
 			public void run() {
 				duration = mp.getMedia().getDuration();
 				updateValues();
@@ -105,7 +97,6 @@ public class MediaControl extends BorderPane {
 
 		mp.setCycleCount(repeat ? MediaPlayer.INDEFINITE : 1);
 		mp.setOnEndOfMedia(new Runnable() {
-			@Override
 			public void run() {
 				if (!repeat) {
 					playButton.setText(">");
@@ -130,7 +121,6 @@ public class MediaControl extends BorderPane {
 		timeSlider.setMinWidth(50);
 		timeSlider.setMaxWidth(Double.MAX_VALUE);
 		timeSlider.valueProperty().addListener(new InvalidationListener() {
-			@Override
 			public void invalidated(Observable ov) {
 				if (timeSlider.isValueChanging()) {
 					// multiply duration by percentage calculated by slider
@@ -157,7 +147,6 @@ public class MediaControl extends BorderPane {
 		volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
 		volumeSlider.setMinWidth(30);
 		volumeSlider.valueProperty().addListener(new InvalidationListener() {
-			@Override
 			public void invalidated(Observable ov) {
 				if (volumeSlider.isValueChanging()) {
 					mp.setVolume(volumeSlider.getValue() / 100.0);
@@ -172,16 +161,13 @@ public class MediaControl extends BorderPane {
 	protected void updateValues() {
 		if (playTime != null && timeSlider != null && volumeSlider != null) {
 			Platform.runLater(new Runnable() {
-				@Override
 				public void run() {
 					Duration currentTime = mp.getCurrentTime();
 					playTime.setText(formatTime(currentTime, duration));
 					timeSlider.setDisable(duration.isUnknown());
-					if (!timeSlider.isDisabled()
-							&& duration.greaterThan(Duration.ZERO)
+					if (!timeSlider.isDisabled() && duration.greaterThan(Duration.ZERO)
 							&& !timeSlider.isValueChanging()) {
-						timeSlider.setValue(currentTime.divide(duration)
-								.toMillis() * 100.0);
+						timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0);
 					}
 					if (!volumeSlider.isValueChanging()) {
 						volumeSlider.setValue((int) Math.round(mp.getVolume() * 100));
@@ -198,8 +184,7 @@ public class MediaControl extends BorderPane {
 			intElapsed -= elapsedHours * 60 * 60;
 		}
 		int elapsedMinutes = intElapsed / 60;
-		int elapsedSeconds = intElapsed - elapsedHours * 60 * 60
-				- elapsedMinutes * 60;
+		int elapsedSeconds = intElapsed - elapsedHours * 60 * 60 - elapsedMinutes * 60;
 
 		if (duration.greaterThan(Duration.ZERO)) {
 			int intDuration = (int) Math.floor(duration.toSeconds());
@@ -208,23 +193,19 @@ public class MediaControl extends BorderPane {
 				intDuration -= durationHours * 60 * 60;
 			}
 			int durationMinutes = intDuration / 60;
-			int durationSeconds = intDuration - durationHours * 60 * 60
-					- durationMinutes * 60;
+			int durationSeconds = intDuration - durationHours * 60 * 60 - durationMinutes * 60;
 			if (durationHours > 0) {
-				return String.format("%d:%02d:%02d/%d:%02d:%02d", elapsedHours,
-						elapsedMinutes, elapsedSeconds, durationHours,
-						durationMinutes, durationSeconds);
+				return String.format("%d:%02d:%02d/%d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds,
+						durationHours, durationMinutes, durationSeconds);
 			} else {
-				return String.format("%02d:%02d/%02d:%02d", elapsedMinutes,
-						elapsedSeconds, durationMinutes, durationSeconds);
+				return String.format("%02d:%02d/%02d:%02d", elapsedMinutes, elapsedSeconds, durationMinutes,
+						durationSeconds);
 			}
 		} else {
 			if (elapsedHours > 0) {
-				return String.format("%d:%02d:%02d", elapsedHours,
-						elapsedMinutes, elapsedSeconds);
+				return String.format("%d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds);
 			} else {
-				return String.format("%02d:%02d", elapsedMinutes,
-						elapsedSeconds);
+				return String.format("%02d:%02d", elapsedMinutes, elapsedSeconds);
 			}
 		}
 	}
