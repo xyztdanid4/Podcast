@@ -37,7 +37,7 @@ public class MainBorderPane extends BorderPane {
 
 		mediaButtonVolume.getChildren().addAll(new Button(new String("prev")), new Button(new String("play")),
 				new Button("next"), new Label("Volume: "), new Slider());
-		mediaButtonVolume.setAlignment(Pos.BASELINE_CENTER);
+		mediaButtonVolume.setAlignment(Pos.CENTER);
 
 		Slider slider = new Slider();
 		slider.setPrefWidth(600);
