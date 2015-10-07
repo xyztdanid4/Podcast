@@ -16,6 +16,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import szakdolgozat.podcast.tabpane.ApplicationTabPane;
 
 public class MainBorderPane extends BorderPane {
@@ -29,8 +30,6 @@ public class MainBorderPane extends BorderPane {
 		rightLabel = new Label("RIGHTSIDE");
 		setRight(rightLabel);
 
-		// setPadding(new Insets(0, 20, 20, 0));
-
 		VBox mediaController = new VBox(10);
 		HBox mediaButtonVolume = new HBox(10);
 		HBox mediaSlider = new HBox(10);
@@ -41,7 +40,11 @@ public class MainBorderPane extends BorderPane {
 
 		Slider slider = new Slider();
 		slider.setPrefWidth(600);
-		mediaSlider.getChildren().add(slider);
+		Text playedTime = new Text(new String("00:00:00"));
+		playedTime.setFill(Color.web("#FFFFFF"));
+		Text remainingTime = new Text(new String("00:00:00"));
+		remainingTime.setFill(Color.web("#FFFFFF"));
+		mediaSlider.getChildren().addAll(playedTime, slider, remainingTime);
 		mediaSlider.setAlignment(Pos.CENTER);
 		mediaSlider.setPadding(new Insets(10, 0, 5, 0)); // milyen távol legyen
 															// a többi elemtől
