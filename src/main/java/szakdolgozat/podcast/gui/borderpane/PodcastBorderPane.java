@@ -103,7 +103,8 @@ public class PodcastBorderPane extends BorderPane {
 		podcastListView.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
 				new CornerRadii(10), new BorderWidths(3))));
 		podcastListView.setBackground(
-				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
+				new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(3), Insets.EMPTY)));
+		podcastListView.setPadding(new Insets(5));
 		for (Podcast podcastIterator : podcastsFromDBList) {
 			// ImageView imageView = new ImageView(new
 			// Image(podcastIterator.getArtworkUrl60()));
@@ -320,6 +321,7 @@ public class PodcastBorderPane extends BorderPane {
 			}
 		}
 		episodeListView = new ListView<HBox>(episodesContainer);
+		episodeListView.setPadding(new Insets(5));
 		episodeListView.setPrefSize(500, 300);
 		episodeListView.setMaxSize(500, 300);
 		episodeListView.setBackground(

@@ -12,7 +12,9 @@ public class MainStage extends StageSample {
 
 	private MainStage(final String title) {
 		super(title);
-		setScene(new Scene(new MainBorderPane(), DEFAULTHSIZE, DEFAULTVSIZE));
+		Scene mainScene = new Scene(new MainBorderPane(), DEFAULTHSIZE, DEFAULTVSIZE);
+		mainScene.getStylesheets().add("listcell.css");
+		setScene(mainScene);
 	}
 
 	public static MainStage getInstance() {
