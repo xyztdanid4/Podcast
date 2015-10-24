@@ -3,7 +3,6 @@ package szakdolgozat.podcast.data.podcast;
 import java.util.List;
 
 public class Podcast {
-
 	private String wrapperType;
 	private String kind;
 	private String collectionId;
@@ -554,5 +553,4 @@ public class Podcast {
 				+ radioStationUrl + ", artworkUrl600=" + artworkUrl600 + ", genreIds=" + genreIds + ", genres=" + genres
 				+ ", podcastEpisode=" + podcastEpisodes + "]";
 	}
-
 }

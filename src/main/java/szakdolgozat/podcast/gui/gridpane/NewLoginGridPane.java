@@ -234,6 +234,5 @@ public class NewLoginGridPane extends GridPaneSample {
 			System.out.println(query.get(i).getPassword());
 			System.out.println(query.get(i).getEmail());
 		}
-
 	}
 }

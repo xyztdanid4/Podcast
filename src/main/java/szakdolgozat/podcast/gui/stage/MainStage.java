@@ -8,7 +8,7 @@ public class MainStage extends StageSample {
 	private static final String TITLE = "PodcastApp";
 	private static MainStage instance = new MainStage(TITLE);
 	private static final int DEFAULTHSIZE = 1300;
-	private static final int DEFAULTVSIZE = 600;
+	private static final int DEFAULTVSIZE = 700;
 
 	private MainStage(final String title) {
 		super(title);
