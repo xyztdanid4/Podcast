@@ -92,6 +92,7 @@ public class PodcastBorderPane extends BorderPane {
 			Text name = new Text(new String(podcastIterator.getArtistName()));
 			PodcastBPDecorator.decorateText(name, PodcastBPDecorator.SMALLTEXTSIZE);
 			ButtonSample subscribeButton = new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE);
+			PodcastBPDecorator.decorateButton(subscribeButton);
 			setSubscribeButtonAction(subscribeButton, podcastIterator);
 			HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, imageRectangle, name, subscribeButton);
 			PodcastBPDecorator.decorateHBox(itemHbox);
