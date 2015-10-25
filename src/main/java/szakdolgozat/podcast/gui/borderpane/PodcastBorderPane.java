@@ -8,86 +8,38 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.decorator.PodcastBPDecorator;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.ListViewSample;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
 public class PodcastBorderPane extends BorderPane {
-	private static final String NOSUBSCRIPTIONS = "You have no subscriptions yet!";
-	private static final String GETINFO = "Choose from subscribed podcast to get information!";
-	private static final String SUBSCRIBEDPODCAST = "Subscribed Podcasts";
-	private static final String UNSUBSCRIBE = "Unsubscribe!";
-	private static final String CLICKFORUNSUBSCRIBE = "Click for unsubscribe!";
-	private static final String NOPODCASTSELECTED = "Choose from subscribed podcasts!";
-	private static final String SUBSCRIBEDEPISODES = "Subscribed Episodes";
-	private static final int PODCASTINFORMATIONCONTAINERWIDTH = 800;
-	private static final int PODCASTINFORMATIONCONTAINERHEIGHT = 100;
-	private static final int PODCASTINFORMATIONCONTAINERMAXWIDTH = 800;
-	private static final int PODCASTINFORMATIONCONTAINERMAXHEIGHT = 100;
-	private static final int BIGTEXTSIZE = 16;
-	private static final int SMALLTEXTSIZE = 13;
-	private static final int DEFAULTPADDING = 20;
-	private static final int DEFAULTHBOXPADDING = 10;
-	private static final int DEFAULTBORDERSIZE = 3;
-	private static final int DEFAULTPODCASTLISTVIEWWIDTH = 300;
-	private static final int DEFAULTPODCASTLISTVIEHEIGHT = 300;
-	private static final int RECTANGLEARCHWIDHT = 10;
-	private static final int RECTANGLEARCHHEIGHT = 10;
-	private static final int SMALLRECTANGLEHEIGHT = 40;
-	private static final int SMALLRECTANGLEWIDTH = 40;
-	private static final int BIGRECTANGLEHEIGHT = 90;
-	private static final int BIGRECTANGLEWIDTH = 90;
-	private static final int DEFAULTCORNERRADIUS = 3;
-	private static final int LISTVIEWINSETS = 0;
-	private static final int BORDERPANEBORDERRADIUS = 0;
-	private static final String TEXTCOLOR = "#FFFFFF";
-	private static final String BORDERCOLOR = "#006666";
-	private static final String ITEMBACKGROUNDCOLOR = "#808080";
-	private static final String BACKGROUNDCOLOR = "#191919";
-	private static final int DEFAULTVBOXPADDING = 10;
-	private static final int DEFAULTNOSUBSCRIPTIONHBOXHEIGHT = 50;
-	private static final int DEFAULTMARGINFORELEMENTS = 20;
-	private static final String ARTISTLABEL = "Artist name: ";
-	private static final String COLLECTIONNAMELABEL = "Title: ";
-	private static final String COUNTRYLABEL = "Country: ";
-	private static final String FEEDURLLABEL = "Feed url: ";
-	private static final String GENRELABEL = "Genre: ";
-	private static final String LASTRELEASEDATELABEL = "Last Updated: ";
-	private static final String TRACKCOUNTLABEL = "Number of episodes: ";
-	private static final int HELPERVBOXPADDING = 5;
-	private static final int EPISODESLISTWIDTH = 500;
-	private static final int EPISODESLISTHEIGHT = 300;
-	private static final int EMPTYEPISODESLISTWIDTH = 500;
-	private static final int EMPTYEPISODESLISTHEIGHT = 50;
-	private static final int EPISODESIMAGEVIEWHEIGHT = 30;
-	private static final int EPISODESIMAGEVIEWWIDTH = 30;
-
+	public static final String NOSUBSCRIPTIONS = "You have no subscriptions yet!";
+	public static final String GETINFO = "Choose from subscribed podcast to get information!";
+	public static final String SUBSCRIBEDPODCAST = "Subscribed Podcasts";
+	public static final String UNSUBSCRIBE = "Unsubscribe!";
+	public static final String CLICKFORUNSUBSCRIBE = "Click for unsubscribe!";
+	public static final String NOPODCASTSELECTED = "Choose from subscribed podcasts!";
+	public static final String SUBSCRIBEDEPISODES = "Subscribed Episodes";
+	public static final String ARTISTLABEL = "Artist name: ";
+	public static final String COLLECTIONNAMELABEL = "Title: ";
+	public static final String COUNTRYLABEL = "Country: ";
+	public static final String FEEDURLLABEL = "Feed url: ";
+	public static final String GENRELABEL = "Genre: ";
+	public static final String LASTRELEASEDATELABEL = "Last Updated: ";
+	public static final String TRACKCOUNTLABEL = "Number of episodes: ";
 	private List<Podcast> podcastsFromDBList;
 	private VBox podcastListVBox;
 	private ObservableList<HBox> podcastsContainer;
@@ -97,7 +49,7 @@ public class PodcastBorderPane extends BorderPane {
 
 	public PodcastBorderPane() {
 		readfromDB();
-		decorate();
+		PodcastBPDecorator.decorate(this);
 		setPadding();
 		showPodcastEmptyInformation();
 		showSubscribedPodcasts();
@@ -106,7 +58,8 @@ public class PodcastBorderPane extends BorderPane {
 	}
 
 	private void setPadding() {
-		setPadding(new Insets(DEFAULTPADDING, DEFAULTPADDING, DEFAULTPADDING, DEFAULTPADDING));
+		setPadding(new Insets(PodcastBPDecorator.PADDING, PodcastBPDecorator.PADDING, PodcastBPDecorator.PADDING,
+				PodcastBPDecorator.PADDING));
 	}
 
 	private void readfromDB() {
@@ -115,47 +68,53 @@ public class PodcastBorderPane extends BorderPane {
 
 	private void showPodcastEmptyInformation() {
 		Text infoText = new Text(GETINFO);
-		decorateText(infoText, BIGTEXTSIZE);
-		HBox podcastInformationContainer = new HBox(DEFAULTHBOXPADDING, infoText);
-		decorateHBox(podcastInformationContainer, PODCASTINFORMATIONCONTAINERWIDTH, PODCASTINFORMATIONCONTAINERHEIGHT,
-				PODCASTINFORMATIONCONTAINERMAXWIDTH, PODCASTINFORMATIONCONTAINERMAXHEIGHT);
+		PodcastBPDecorator.decorateText(infoText, PodcastBPDecorator.BIGTEXTSIZE);
+		HBox podcastInformationContainer = new HBox(PodcastBPDecorator.HBOXPADDING, infoText);
+		PodcastBPDecorator.decorateHBox(podcastInformationContainer,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXWIDTH,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXHEIGHT);
 		setTop(podcastInformationContainer);
 	}
 
 	private void showSubscribedPodcasts() {
 		readfromDB();
 		Text podcastText = new Text(SUBSCRIBEDPODCAST);
-		decorateText(podcastText, BIGTEXTSIZE);
+		PodcastBPDecorator.decorateText(podcastText, PodcastBPDecorator.BIGTEXTSIZE);
 		podcastsContainer = FXCollections.observableArrayList();
 		podcastListView = new ListViewSample();
-		decorateListView(podcastListView, DEFAULTPODCASTLISTVIEWWIDTH, DEFAULTPODCASTLISTVIEHEIGHT);
+		PodcastBPDecorator.decorateListView(podcastListView, PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+				PodcastBPDecorator.PODCASTLISTVIEWHEIGHT);
 		for (Podcast podcastIterator : podcastsFromDBList) {
 			Rectangle imageRectangle = new Rectangle();
-			decorateRectangle(imageRectangle, SMALLRECTANGLEHEIGHT, SMALLRECTANGLEWIDTH,
-					podcastIterator.getArtworkUrl60());
+			PodcastBPDecorator.decorateRectangle(imageRectangle, PodcastBPDecorator.SMALLRECTANGLEHEIGHT,
+					PodcastBPDecorator.SMALLRECTANGLEWIDTH, podcastIterator.getArtworkUrl60());
 			Text name = new Text(new String(podcastIterator.getArtistName()));
-			decorateText(name, SMALLTEXTSIZE);
+			PodcastBPDecorator.decorateText(name, PodcastBPDecorator.SMALLTEXTSIZE);
 			ButtonSample subscribeButton = new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE);
 			setSubscribeButtonAction(subscribeButton, podcastIterator);
-			HBox itemHbox = new HBox(DEFAULTHBOXPADDING, imageRectangle, name, subscribeButton);
-			decorateHBox(itemHbox);
+			HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, imageRectangle, name, subscribeButton);
+			PodcastBPDecorator.decorateHBox(itemHbox);
 			podcastsContainer.add(itemHbox);
 			podcastListView.setItems(podcastsContainer);
-			podcastListVBox = new VBox(DEFAULTVBOXPADDING, podcastText, podcastListView);
-			setMargin(podcastListVBox);
-			// setAlignment(podcastListVBox);
+			podcastListVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, podcastText, podcastListView);
+			setMargin(podcastListVBox, new Insets(20));
+			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastListVBox);
 		}
 		if (!isEmptySubscriptions()) {
 			podcastListView.setDisable(false);
 		} else {
 			Text nosubscriptionText = new Text(NOSUBSCRIPTIONS);
-			decorateText(nosubscriptionText, SMALLTEXTSIZE);
-			HBox itemHbox = new HBox(DEFAULTHBOXPADDING, nosubscriptionText);
-			decorateHBox(itemHbox, DEFAULTPODCASTLISTVIEWWIDTH, DEFAULTNOSUBSCRIPTIONHBOXHEIGHT,
-					DEFAULTPODCASTLISTVIEWWIDTH, DEFAULTNOSUBSCRIPTIONHBOXHEIGHT);
-			VBox podcastHBox = new VBox(DEFAULTVBOXPADDING, podcastText, itemHbox);
-			setMargin(podcastHBox);
+			PodcastBPDecorator.decorateText(nosubscriptionText, PodcastBPDecorator.SMALLTEXTSIZE);
+			HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, nosubscriptionText);
+			PodcastBPDecorator.decorateHBox(itemHbox, PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+					PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT, PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+					PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT);
+			VBox podcastHBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, podcastText, itemHbox);
+			setMargin(podcastHBox, new Insets(20));
+			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastHBox);
 		}
 	}
@@ -175,165 +134,103 @@ public class PodcastBorderPane extends BorderPane {
 		readfromDB();
 		Text artistLabel = new Text(new String(ARTISTLABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtistName()));
-		decorateText(artistLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(artistLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text collectionNameLabel = new Text(new String(COLLECTIONNAMELABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getCollectionName()));
-		decorateText(collectionNameLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(collectionNameLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text countryLabel = new Text(new String(COUNTRYLABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getCountry()));
-		decorateText(countryLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(countryLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text feedUrlLabel = new Text(new String(FEEDURLLABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getFeedUrl()));
-		decorateText(feedUrlLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(feedUrlLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text genreLabel = new Text(new String(GENRELABEL + podcastsFromDBList
 				.get(podcastListView.getSelectionModel().getSelectedIndex()).getPrimaryGenreName()));
-		decorateText(genreLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(genreLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text lastReleaseDateLabel = new Text(new String(LASTRELEASEDATELABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getReleaseDate()));
-		decorateText(lastReleaseDateLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(lastReleaseDateLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text trackCountLabel = new Text(new String(TRACKCOUNTLABEL
 				+ podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getTrackCount()));
-		decorateText(trackCountLabel, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(trackCountLabel, PodcastBPDecorator.SMALLTEXTSIZE);
 		Rectangle imageRectangle = new Rectangle();
-		decorateRectangle(imageRectangle, BIGRECTANGLEHEIGHT, BIGRECTANGLEWIDTH,
+		PodcastBPDecorator.decorateRectangle(imageRectangle, PodcastBPDecorator.BIGRECTANGLEHEIGHT,
+				PodcastBPDecorator.BIGRECTANGLEWIDTH,
 				podcastsFromDBList.get(podcastListView.getSelectionModel().getSelectedIndex()).getArtworkUrl100());
 		VBox helperVBox3 = new VBox(imageRectangle);
-		decorateHelperVBox(helperVBox3);
-		VBox helperVBox1 = new VBox(HELPERVBOXPADDING, artistLabel, collectionNameLabel, countryLabel);
-		decorateHelperVBox(helperVBox1);
-		VBox helperVBox2 = new VBox(HELPERVBOXPADDING, feedUrlLabel, genreLabel, lastReleaseDateLabel, trackCountLabel);
-		decorateHelperVBox(helperVBox2);
-		HBox podcastInformationContainer = new HBox(DEFAULTHBOXPADDING, helperVBox3, helperVBox1, helperVBox2);
-		decorateHBox(podcastInformationContainer, PODCASTINFORMATIONCONTAINERWIDTH, PODCASTINFORMATIONCONTAINERHEIGHT,
-				PODCASTINFORMATIONCONTAINERMAXWIDTH, PODCASTINFORMATIONCONTAINERMAXHEIGHT);
+		PodcastBPDecorator.decorateHelperVBox(helperVBox3);
+		VBox helperVBox1 = new VBox(PodcastBPDecorator.HELPERVBOXPADDING, artistLabel, collectionNameLabel,
+				countryLabel);
+		PodcastBPDecorator.decorateHelperVBox(helperVBox1);
+		VBox helperVBox2 = new VBox(PodcastBPDecorator.HELPERVBOXPADDING, feedUrlLabel, genreLabel,
+				lastReleaseDateLabel, trackCountLabel);
+		PodcastBPDecorator.decorateHelperVBox(helperVBox2);
+		HBox podcastInformationContainer = new HBox(PodcastBPDecorator.HBOXPADDING, helperVBox3, helperVBox1,
+				helperVBox2);
+		PodcastBPDecorator.decorateHBox(podcastInformationContainer,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXWIDTH,
+				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXHEIGHT);
 		setTop(podcastInformationContainer);
 	}
 
 	private void showEmptyEpisodesList() {
 		Text noPodcastSelectedText = new Text(NOPODCASTSELECTED);
-		decorateText(noPodcastSelectedText, SMALLTEXTSIZE);
+		PodcastBPDecorator.decorateText(noPodcastSelectedText, PodcastBPDecorator.SMALLTEXTSIZE);
 		Text episodeListText = new Text(SUBSCRIBEDEPISODES);
-		decorateText(episodeListText, BIGTEXTSIZE);
-		HBox itemHbox = new HBox(DEFAULTHBOXPADDING, noPodcastSelectedText);
-		decorateHBox(itemHbox, EMPTYEPISODESLISTWIDTH, EMPTYEPISODESLISTHEIGHT, EMPTYEPISODESLISTWIDTH,
-				EMPTYEPISODESLISTHEIGHT);
-		VBox episodeVBox = new VBox(DEFAULTVBOXPADDING, episodeListText, itemHbox);
-		setMargin(episodeVBox);
+		PodcastBPDecorator.decorateText(episodeListText, PodcastBPDecorator.BIGTEXTSIZE);
+		HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, noPodcastSelectedText);
+		PodcastBPDecorator.decorateHBox(itemHbox, PodcastBPDecorator.EMPTYEPISODESLISTWIDTH,
+				PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT, PodcastBPDecorator.EMPTYEPISODESLISTWIDTH,
+				PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT);
+		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, episodeListText, itemHbox);
+		setMargin(episodeVBox, new Insets(20));
 		setCenter(episodeVBox);
 	}
 
 	private void showpodcastEpisodes() {
 		readfromDB();
 		Text episodeListText = new Text(SUBSCRIBEDEPISODES);
-		decorateText(episodeListText, BIGTEXTSIZE);
+		PodcastBPDecorator.decorateText(episodeListText, PodcastBPDecorator.BIGTEXTSIZE);
 		episodesContainer = FXCollections.observableArrayList();
 		for (PodcastEpisode podcastEpisode : podcastsFromDBList
 				.get(podcastListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode()) {
 			Text pubDateText = new Text(podcastEpisode.getPubdate());
-			decorateText(pubDateText, SMALLTEXTSIZE);
+			PodcastBPDecorator.decorateText(pubDateText, PodcastBPDecorator.SMALLTEXTSIZE);
 			Text titleText = new Text(podcastEpisode.getTitle());
-			decorateText(titleText, SMALLTEXTSIZE);
+			PodcastBPDecorator.decorateText(titleText, PodcastBPDecorator.SMALLTEXTSIZE);
 			Image image = new Image(podcastEpisode.getImage());
 			if (image.isError()) {
 				ImageView imageView = new ImageView(image);
-				decorateImageView(imageView, EPISODESIMAGEVIEWHEIGHT, EPISODESIMAGEVIEWWIDTH);
-				HBox itemHbox = new HBox(DEFAULTHBOXPADDING, imageView, titleText, pubDateText);
-				decorateHBox(itemHbox);
+				PodcastBPDecorator.decorateImageView(imageView, PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
+						PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH);
+				HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, imageView, titleText, pubDateText);
+				PodcastBPDecorator.decorateHBox(itemHbox);
 				episodesContainer.add(itemHbox);
 			} else {
 				Rectangle imageRectangle = new Rectangle();
-				decorateRectangle(imageRectangle, EPISODESIMAGEVIEWHEIGHT, EPISODESIMAGEVIEWWIDTH,
-						podcastEpisode.getImage());
+				PodcastBPDecorator.decorateRectangle(imageRectangle, PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
+						PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH, podcastEpisode.getImage());
 				VBox imageVbox = new VBox(imageRectangle);
 				imageVbox.setAlignment(Pos.CENTER_LEFT);
-				HBox itemHbox = new HBox(DEFAULTHBOXPADDING, imageVbox, titleText, pubDateText);
-				decorateHBox(itemHbox);
+				HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, imageVbox, titleText, pubDateText);
+				PodcastBPDecorator.decorateHBox(itemHbox);
 				episodesContainer.add(itemHbox);
 			}
 		}
 		episodeListView = new ListView<HBox>(episodesContainer);
-		decorateListView(episodeListView, EPISODESLISTWIDTH, EPISODESLISTHEIGHT);
-		VBox episodeVBox = new VBox(DEFAULTVBOXPADDING, episodeListText, episodeListView);
+		PodcastBPDecorator.decorateListView(episodeListView, PodcastBPDecorator.EPISODESLISTWIDTH,
+				PodcastBPDecorator.EPISODESLISTHEIGHT);
+		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, episodeListText, episodeListView);
 		setMargin(episodeVBox, new Insets(20));
 		setCenter(episodeVBox);
-	}
-
-	private void setMouseEnteredEventHBox(HBox itemHbox) {
-		itemHbox.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				itemHbox.setBackground(new Background(new BackgroundFill(Color.web(BACKGROUNDCOLOR),
-						new CornerRadii(DEFAULTCORNERRADIUS), Insets.EMPTY)));
-			}
-		});
-	}
-
-	private void setMouseExitedEventHBox(HBox itemHbox) {
-		itemHbox.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				itemHbox.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-						new CornerRadii(DEFAULTCORNERRADIUS), Insets.EMPTY)));
-			}
-		});
 	}
 
 	private void removefromDB(final String name) {
 		final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
 				.filter("artistName =", name);
 		MorphiaConnector.getDataStore().delete(deletePodcast);
-	}
-
-	private void decorate() {
-		setBackground(new Background(
-				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
-		setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(BORDERPANEBORDERRADIUS),
-				new BorderWidths(DEFAULTBORDERSIZE, DEFAULTBORDERSIZE, 0, DEFAULTBORDERSIZE))));
-	}
-
-	private void decorateText(Text text, final int size) {
-		text.setFill(Color.web(TEXTCOLOR));
-		text.setFont(Font.font("Arial", FontWeight.BOLD, size));
-	}
-
-	private void decorateHBox(HBox hbox, final int prefwidth, final int prefheight, final int maxwidht,
-			final int maxheight) {
-		hbox.setPrefSize(prefwidth, prefheight);
-		hbox.setMaxSize(maxwidht, maxheight);
-		hbox.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-				new CornerRadii(DEFAULTCORNERRADIUS), Insets.EMPTY)));
-		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(DEFAULTCORNERRADIUS), new BorderWidths(DEFAULTBORDERSIZE))));
-		hbox.setAlignment(Pos.CENTER_LEFT);
-	}
-
-	private void decorateHBox(HBox hbox) {
-		hbox.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-				new CornerRadii(DEFAULTCORNERRADIUS), Insets.EMPTY)));
-		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(DEFAULTCORNERRADIUS), new BorderWidths(DEFAULTBORDERSIZE))));
-		hbox.setAlignment(Pos.CENTER_LEFT);
-		setMouseEnteredEventHBox(hbox);
-		setMouseExitedEventHBox(hbox);
-	}
-
-	private void decorateListView(ListView listView, final int width, final int height) {
-		listView.setPrefSize(width, height);
-		listView.setMaxSize(width, height);
-		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(DEFAULTCORNERRADIUS), new BorderWidths(DEFAULTBORDERSIZE))));
-		listView.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-				new CornerRadii(DEFAULTCORNERRADIUS), Insets.EMPTY)));
-		listView.setPadding(new Insets(LISTVIEWINSETS));
-	}
-
-	private void decorateRectangle(Rectangle rectangle, final int height, final int width, String imageURL) {
-		rectangle.setArcHeight(RECTANGLEARCHHEIGHT);
-		rectangle.setArcWidth(RECTANGLEARCHWIDHT);
-		rectangle.setHeight(height);
-		rectangle.setWidth(width);
-		rectangle.setFill(new ImagePattern(new Image(imageURL)));
 	}
 
 	private void setSubscribeButtonAction(ButtonSample button, Podcast podcast) {
@@ -344,25 +241,5 @@ public class PodcastBorderPane extends BorderPane {
 			showEmptyEpisodesList();
 			setPodcastListInvalidationListener();
 		});
-	}
-
-	private void setMargin(Node node) {
-		setMargin(node, new Insets(DEFAULTMARGINFORELEMENTS)); // ezzel tudom
-		// beállítani a
-		// távolságot az elmeek
-		// közt
-	}
-
-	private void setAlignment(Node node) {
-		setAlignment(node, Pos.CENTER_LEFT); // igazodás elemen belül
-	}
-
-	private void decorateHelperVBox(VBox vBox) {
-		vBox.setAlignment(Pos.CENTER_LEFT);
-	}
-
-	private void decorateImageView(ImageView imageView, final int height, final int width) {
-		imageView.setFitWidth(width);
-		imageView.setFitHeight(height);
 	}
 }

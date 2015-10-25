@@ -4,22 +4,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.gui.decorator.LoginGridPaneDecorator;
 import szakdolgozat.podcast.gui.dialog.ErrorDialog;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.GridPaneSample;
@@ -58,31 +46,32 @@ public class LoginGridPane extends GridPaneSample {
 
 	public LoginGridPane() {
 		nameTextField = new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP);
-		decorateTextField(nameTextField);
+		LoginGridPaneDecorator.decorateTextField(nameTextField);
 		passwordPasswordField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
-		decorateTextField(passwordPasswordField);
+		LoginGridPaneDecorator.decorateTextField(passwordPasswordField);
 		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTONSMAPLE_TOOLTIP);
-		decorateButton(okButton);
+		LoginGridPaneDecorator.decorateButton(okButton);
 		cancelButton = new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTONS_TOOLTIP);
-		decorateButton(cancelButton);
+		LoginGridPaneDecorator.decorateButton(cancelButton);
 		messageLabel = new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP);
-		decorateLabel(messageLabel);
+		LoginGridPaneDecorator.decorateLabel(messageLabel);
 		nameLabel = new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP);
-		decorateLabel(nameLabel);
+		LoginGridPaneDecorator.decorateLabel(nameLabel);
 		passwordLabel = new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP);
-		decorateLabel(passwordLabel);
-		add(messageLabel, 1, 1);
-		add(nameLabel, 1, 2);
-		add(passwordLabel, 1, 3);
-		add(nameTextField, 2, 2);
-		add(passwordPasswordField, 2, 3);
-		add(okButton, 2, 4);
-		add(cancelButton, 2, 5);
+		LoginGridPaneDecorator.decorateLabel(passwordLabel);
+		add(messageLabel, LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
+		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
+		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
+		add(nameTextField, LoginGridPaneDecorator.NAMETEXTFIELDX, LoginGridPaneDecorator.NAMETEXTFIELDY);
+		add(passwordPasswordField, LoginGridPaneDecorator.PASSWORDFIELDX,
+				LoginGridPaneDecorator.PASSWORDFIELDY);
+		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);
+		add(cancelButton, LoginGridPaneDecorator.CANCELBUTTONX, LoginGridPaneDecorator.CANCELBUTTONY);
 		setOkButtonFunctionality();
 		setCancelButtonFunctinality();
 		setButtonDisability();
 		setPasswordTextFieldKeyEvent();
-		decorate();
+		LoginGridPaneDecorator.decorate(this);
 	}
 
 	private void setCancelButtonFunctinality() {
@@ -130,51 +119,4 @@ public class LoginGridPane extends GridPaneSample {
 		});
 	}
 
-	private void decorateTextField(TextField textField) {
-		textField.setBackground(
-				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-		textField.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID,
-				new CornerRadii(3), new BorderWidths(3))));
-		textField.setStyle("-fx-text-inner-color: white;");
-	}
-
-	private void decorateButton(Button button) {
-		button.setBackground(
-				new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-		button.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(3),
-				new BorderWidths(3))));
-		button.setTextFill(Color.web("#FFFFFF"));
-		setMouseEnteredEventButton(button);
-		setMouseExitedEventButton(button);
-	}
-
-	private void decorateLabel(Label label) {
-		label.setTextFill(Color.web("#FFFFFF"));
-	}
-
-	private void decorate() {
-		setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(0), Insets.EMPTY)));
-		setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(0),
-				new BorderWidths(3))));
-	}
-
-	private void setMouseEnteredEventButton(Button button) {
-		button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				button.setBackground(
-						new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(10), Insets.EMPTY)));
-			}
-		});
-	}
-
-	private void setMouseExitedEventButton(Button button) {
-		button.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				button.setBackground(
-						new Background(new BackgroundFill(Color.web("#808080"), new CornerRadii(10), Insets.EMPTY)));
-			}
-		});
-	}
 }
