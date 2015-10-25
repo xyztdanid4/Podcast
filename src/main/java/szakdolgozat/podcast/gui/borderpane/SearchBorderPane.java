@@ -9,7 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -17,25 +18,30 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
-import szakdolgozat.podcast.gui.listbuilder.SearchListBuilder;
+import szakdolgozat.podcast.gui.decorator.SearchBPDecorator;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
-import szakdolgozat.podcast.gui.samples.HBoxSample;
 import szakdolgozat.podcast.gui.samples.ListViewSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 import szakdolgozat.podcast.jsonparser.JsonParser;
+import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class SearchBorderPane extends BorderPane {
 	private static final String SEARCHTEXTFIELD_PROMPTTEXT = "SEARCH ME!";
 	private static final String SEARCHTEXTFIELD_TOOLTIP = "Type something, you would like to podcast!";
-	private static final int SEARCHTEXTFIELD_WIDTH = 800;
 	private static final String SEARCHBUTTON_TOOLTIP = "Click me for search!";
 	private static final String SEARCHBUTTON_TEXT = "Search!";
+	private static final String EPISODESTEXT = "Episodes";
+	private static final String PODCASTTEXT = "Podcasts";
+	private static final String SUBSCRIBED_TEXT = "Subscribe!";
+	private static final String ALREADYSUBSCRIBED_TEXT = "Already subscribed!";
+	private static final String SUBSCRIBED_TOOLTIP = "Click for subscribe!";
+	private static final String ALREADYSUBSCRIBED_TOOLTIP = "Choose from others to subscribe!";
 	private ButtonSample searchButton;
 	private HBox searchItemsContainerHbox;
 	private TextFieldSample searchTextField;
@@ -49,20 +55,24 @@ public class SearchBorderPane extends BorderPane {
 
 	public SearchBorderPane() {
 		searchTextField = new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP);
-		searchTextField.setPrefWidth(SEARCHTEXTFIELD_WIDTH);
+		SearchBPDecorator.decorateTextField(searchTextField, SearchBPDecorator.SEARCHTEXTFIELDWIDTH,
+				SearchBPDecorator.SEARCHTEXTFIELDHEIGHT);
 		searchButton = new ButtonSample(SEARCHBUTTON_TEXT, SEARCHBUTTON_TOOLTIP);
-		searchItemsContainerHbox = new HBox(10, searchTextField, searchButton);
+		SearchBPDecorator.decorateButton(searchButton);
+		searchItemsContainerHbox = new HBox(SearchBPDecorator.HBOXPADDING, searchTextField, searchButton);
 		setTop(searchItemsContainerHbox);
 		setButtonDisability();
 		setSearchButtonFunctionality();
 		setSearchTextFieldKeyEvent();
-		setMarginForElements();
+		setPadding();
 		showPodcastList();
 		showEpisodesList();
+		SearchBPDecorator.decorate(this);
 	}
 
-	private void setMarginForElements() {
-		setPadding(new Insets(20, 20, 20, 20));
+	private void setPadding() {
+		setPadding(new Insets(SearchBPDecorator.PADDING, SearchBPDecorator.PADDING, SearchBPDecorator.PADDING,
+				SearchBPDecorator.PADDING));
 	}
 
 	private void setSearchTextFieldKeyEvent() {
@@ -89,21 +99,50 @@ public class SearchBorderPane extends BorderPane {
 	private void startSearchPodcast() {
 		JsonParser jsonParser = new JsonParser(new String("https://itunes.apple.com/search?term="
 				+ searchTextField.getText() + "&entity=podcast&media=podcast&limit=5"));
-		searchPodcastContainer = jsonParser.getSearchResultContainer();
+		searchPodcastContainer = jsonParser.getSearchResult();
 		showSearchResult();
 	}
 
 	private void showSearchResult() {
 		searchResultList.clear();
 		episodesList.clear();
-		SearchListBuilder listBuilder = new SearchListBuilder(searchResultList, searchPodcastContainer);
+		for (Podcast podcast : searchPodcastContainer.getResults()) {
+			Rectangle imageRectangle = new Rectangle();
+			SearchBPDecorator.decorateRectangle(imageRectangle, SearchBPDecorator.SMALLRECTANGLEHEIGHT,
+					SearchBPDecorator.SMALLRECTANGLEWIDTH, podcast.getArtworkUrl60());
+			Text artistName = new Text(podcast.getArtistName());
+			SearchBPDecorator.decorateText(artistName, SearchBPDecorator.SMALLTEXTSIZE);
+			Button subscribeButton;
+			if (isPodcastSubscribed(podcast.getArtistName())) {
+				subscribeButton = new ButtonSample(ALREADYSUBSCRIBED_TEXT, ALREADYSUBSCRIBED_TOOLTIP);
+				SearchBPDecorator.decorateButton(subscribeButton);
+				subscribeButton.setDisable(true);
+			} else {
+				subscribeButton = new ButtonSample(SUBSCRIBED_TEXT, SUBSCRIBED_TOOLTIP);
+				SearchBPDecorator.decorateButton(subscribeButton);
+				subscribeButton.setDisable(false);
+				subscribeButton.setOnAction((ActionEvent event) -> {
+					XmlParser xmlParser = new XmlParser(podcast.getFeedUrl());
+					podcast.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
+					MorphiaConnector.getInstance().getDataStore().save(podcast);
+					subscribeButton.setDisable(true);
+					subscribeButton.setText(ALREADYSUBSCRIBED_TEXT);
+					subscribeButton.setTooltip(new Tooltip(ALREADYSUBSCRIBED_TOOLTIP));
+				});
+			}
+			HBox resultItemHBox = new HBox(SearchBPDecorator.PADDING, imageRectangle, artistName, subscribeButton);
+			SearchBPDecorator.decorateHBox(resultItemHBox);
+			searchResultList.add(resultItemHBox);
+		}
 		if (!searchResultList.isEmpty()) {
 			searchResultListView.setDisable(false);
 			episodesListView.setDisable(false);
 		} else {
 			Text text = new Text(new String("No result found!"));
-			text.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-			searchResultList.add(new HBox(text));
+			SearchBPDecorator.decorateText(text, SearchBPDecorator.BIGTEXTSIZE);
+			HBox itemHbox = new HBox(SearchBPDecorator.PADDING, text);
+			SearchBPDecorator.decorateHBox(itemHbox);
+			searchResultList.add(itemHbox);
 			searchResultListView.setDisable(true);
 			episodesListView.setDisable(true);
 		}
@@ -133,7 +172,7 @@ public class SearchBorderPane extends BorderPane {
 					imageView.setImage(image);
 					imageView.setFitHeight(30);
 					imageView.setFitWidth(30);
-					HBoxSample hBoxSample = new HBoxSample(imageView,
+					HBox hBoxSample = new HBox(imageView,
 							new Text(searchPodcastContainer.getResults()
 									.get(searchResultListView.getSelectionModel().getSelectedIndex())
 									.getPodcastEpisode().get(i).getTitle()));
@@ -145,35 +184,38 @@ public class SearchBorderPane extends BorderPane {
 	}
 
 	private void showEpisodesList() {
-		episodesListVBox = new VBox(10);
-		Text episodeText = new Text("Episodes");
-		episodeText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		episodesListVBox = new VBox(SearchBPDecorator.PADDING);
+		Text episodeText = new Text(EPISODESTEXT);
+		SearchBPDecorator.decorateText(episodeText, SearchBPDecorator.BIGTEXTSIZE);
 		episodesList = FXCollections.observableArrayList();
 		episodesListView = new ListViewSample();
-		setMargin(episodesListVBox, new Insets(20));
+		SearchBPDecorator.decorateListView(episodesListView, SearchBPDecorator.EPISODESLISTWIDTH,
+				SearchBPDecorator.EPISODESLISTHEIGHT);
+		setMargin(episodesListVBox, new Insets(SearchBPDecorator.PADDING));
 		episodesListView.setItems(episodesList);
-		episodesListVBox.getChildren().add(episodeText);
-		episodesListVBox.getChildren().add(episodesListView);
-		setAlignment(episodesListVBox, Pos.CENTER_LEFT);
-		episodesListVBox.setPrefSize(400, 600);
-		// episodesListVBox.setMaxSize(800, 800);
+		episodesListVBox.getChildren().addAll(episodeText, episodesListView);
+		// setAlignment(episodesListVBox, Pos.CENTER_LEFT);
 		setCenter(episodesListVBox);
 	}
 
 	private void showPodcastList() {
-		podcastListVBox = new VBox(10);
-		Text podcastText = new Text("Podcasts");
-		podcastText.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		podcastListVBox = new VBox(SearchBPDecorator.PADDING);
+		Text podcastText = new Text(PODCASTTEXT);
+		SearchBPDecorator.decorateText(podcastText, SearchBPDecorator.BIGTEXTSIZE);
 		searchResultList = FXCollections.observableArrayList();
 		searchResultListView = new ListViewSample();
-		setMargin(podcastListVBox, new Insets(20));
+		SearchBPDecorator.decorateListView(searchResultListView, SearchBPDecorator.PODCASTLISTWIDTH,
+				SearchBPDecorator.PODCASTLISTHEIGHT);
+		setMargin(podcastListVBox, new Insets(SearchBPDecorator.PADDING));
 		searchResultListView.setItems(searchResultList);
-		podcastListVBox.getChildren().add(podcastText);
-		podcastListVBox.getChildren().add(searchResultListView);
-		setAlignment(podcastListVBox, Pos.CENTER_LEFT);
-		podcastListVBox.setPrefSize(400, 400);
-		podcastListVBox.setMaxSize(800, 800);
+		podcastListVBox.getChildren().addAll(podcastText, searchResultListView);
+		// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 		setListViewInvalidationListener();
 		setLeft(podcastListVBox);
+	}
+
+	private boolean isPodcastSubscribed(final String name) {
+		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
+				.isEmpty());
 	}
 }

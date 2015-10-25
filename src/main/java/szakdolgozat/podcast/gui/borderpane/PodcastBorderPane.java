@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -99,7 +98,7 @@ public class PodcastBorderPane extends BorderPane {
 			podcastsContainer.add(itemHbox);
 			podcastListView.setItems(podcastsContainer);
 			podcastListVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, podcastText, podcastListView);
-			setMargin(podcastListVBox, new Insets(20));
+			setMargin(podcastListVBox, new Insets(PodcastBPDecorator.PADDING));
 			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastListVBox);
 		}
@@ -113,7 +112,7 @@ public class PodcastBorderPane extends BorderPane {
 					PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT, PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
 					PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT);
 			VBox podcastHBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, podcastText, itemHbox);
-			setMargin(podcastHBox, new Insets(20));
+			setMargin(podcastHBox, new Insets(PodcastBPDecorator.PADDING));
 			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastHBox);
 		}
@@ -185,7 +184,7 @@ public class PodcastBorderPane extends BorderPane {
 				PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT, PodcastBPDecorator.EMPTYEPISODESLISTWIDTH,
 				PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT);
 		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, episodeListText, itemHbox);
-		setMargin(episodeVBox, new Insets(20));
+		setMargin(episodeVBox, new Insets(PodcastBPDecorator.PADDING));
 		setCenter(episodeVBox);
 	}
 
@@ -213,7 +212,7 @@ public class PodcastBorderPane extends BorderPane {
 				PodcastBPDecorator.decorateRectangle(imageRectangle, PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
 						PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH, podcastEpisode.getImage());
 				VBox imageVbox = new VBox(imageRectangle);
-				imageVbox.setAlignment(Pos.CENTER_LEFT);
+				PodcastBPDecorator.decorateHelperVBox(imageVbox);
 				HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING, imageVbox, titleText, pubDateText);
 				PodcastBPDecorator.decorateHBox(itemHbox);
 				episodesContainer.add(itemHbox);
@@ -223,7 +222,7 @@ public class PodcastBorderPane extends BorderPane {
 		PodcastBPDecorator.decorateListView(episodeListView, PodcastBPDecorator.EPISODESLISTWIDTH,
 				PodcastBPDecorator.EPISODESLISTHEIGHT);
 		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING, episodeListText, episodeListView);
-		setMargin(episodeVBox, new Insets(20));
+		setMargin(episodeVBox, new Insets(PodcastBPDecorator.PADDING));
 		setCenter(episodeVBox);
 	}
 

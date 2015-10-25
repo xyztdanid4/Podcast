@@ -97,7 +97,7 @@ public class Decorator {
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		listView.setBackground(new Background(
-				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		listView.setPadding(new Insets(LISTVIEWINSETS));
 	}
 
@@ -110,6 +110,10 @@ public class Decorator {
 	}
 
 	public static void decorateHelperVBox(VBox vBox) {
+		vBox.setAlignment(Pos.CENTER_LEFT);
+	}
+
+	public static void decorateVBox(VBox vBox) {
 		vBox.setAlignment(Pos.CENTER_LEFT);
 	}
 
@@ -163,7 +167,7 @@ public class Decorator {
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		button.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-		button.setTextFill(Color.web("#FFFFFF"));
+		button.setTextFill(Color.web(TEXTCOLOR));
 		setMouseEnteredEventButton(button);
 		setMouseExitedEventButton(button);
 	}
@@ -178,6 +182,16 @@ public class Decorator {
 		textField.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		textField.setStyle("-fx-text-inner-color: white;");
+	}
+
+	public static void decorateTextField(TextField textField, final int width, final int height) {
+		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textField.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textField.setStyle("-fx-text-inner-color: white;");
+		textField.setMaxSize(width, height);
+		textField.setPrefSize(width, height);
 	}
 
 }

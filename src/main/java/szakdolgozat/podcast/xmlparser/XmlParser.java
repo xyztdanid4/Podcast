@@ -97,6 +97,7 @@ public class XmlParser {
 							subtitle = event.asCharacters().getData();
 						} catch (Exception e) {
 							e.printStackTrace();
+							System.out.println("subtitle exception");
 							continue;
 						}
 						continue;

@@ -36,7 +36,7 @@ public class JsonParser {
 		}
 	}
 
-	public PodcastContainer getSearchResultContainer() {
+	public PodcastContainer getSearchResult() {
 		return searchResultContainer;
 	}
 
