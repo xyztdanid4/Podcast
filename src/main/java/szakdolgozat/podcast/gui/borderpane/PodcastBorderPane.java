@@ -89,7 +89,9 @@ public class PodcastBorderPane extends BorderPane {
 			Rectangle imageRectangle = new Rectangle();
 			PodcastBPDecorator.decorateRectangle(imageRectangle, PodcastBPDecorator.SMALLRECTANGLEHEIGHT,
 					PodcastBPDecorator.SMALLRECTANGLEWIDTH, podcastIterator.getArtworkUrl60());
-			Text name = new Text(new String(podcastIterator.getArtistName()));
+			Text name = new Text(podcastIterator.getArtistName().length() > 20
+					? new String(new StringBuilder(podcastIterator.getArtistName().substring(0, 20)).append("..."))
+					: podcastIterator.getArtistName());
 			PodcastBPDecorator.decorateText(name, PodcastBPDecorator.SMALLTEXTSIZE);
 			ButtonSample subscribeButton = new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE);
 			PodcastBPDecorator.decorateButton(subscribeButton);
@@ -198,7 +200,10 @@ public class PodcastBorderPane extends BorderPane {
 				.get(podcastListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode()) {
 			Text pubDateText = new Text(podcastEpisode.getPubdate());
 			PodcastBPDecorator.decorateText(pubDateText, PodcastBPDecorator.SMALLTEXTSIZE);
-			Text titleText = new Text(podcastEpisode.getTitle());
+			// Text titleText = new Text(podcastEpisode.getTitle());
+			Text titleText = new Text(podcastEpisode.getTitle().length() > 40
+					? new String(new StringBuilder(podcastEpisode.getTitle().substring(0, 40)).append("..."))
+					: podcastEpisode.getTitle());
 			PodcastBPDecorator.decorateText(titleText, PodcastBPDecorator.SMALLTEXTSIZE);
 			Image image = new Image(podcastEpisode.getImage());
 			if (image.isError()) {

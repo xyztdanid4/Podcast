@@ -111,12 +111,9 @@ public class SearchBorderPane extends BorderPane {
 			Rectangle imageRectangle = new Rectangle();
 			SearchBPDecorator.decorateRectangle(imageRectangle, SearchBPDecorator.SMALLRECTANGLEHEIGHT,
 					SearchBPDecorator.SMALLRECTANGLEWIDTH, podcast.getArtworkUrl60());
-			String artistN = podcast.getArtistName();
-			if (artistN.length() > 20) {
-				artistN = artistN.substring(0, 20);
-				artistN += "...";
-			}
-			Text artistName = new Text(artistN);
+			Text artistName = new Text(podcast.getArtistName().length() > 20
+					? new String(new StringBuilder(podcast.getArtistName().substring(0, 20)).append("..."))
+					: podcast.getArtistName());
 			SearchBPDecorator.decorateText(artistName, SearchBPDecorator.SMALLTEXTSIZE);
 			Button subscribeButton;
 			if (isPodcastSubscribed(podcast.getArtistName())) {
@@ -167,7 +164,11 @@ public class SearchBorderPane extends BorderPane {
 							imageView.setImage(image);
 							imageView.setFitHeight(SearchBPDecorator.IMAGEHEIGHT);
 							imageView.setFitWidth(SearchBPDecorator.IMAGEWIDTH);
-							Text title = new Text(podcastEpisode.getTitle());
+							String titleString = podcastEpisode.getTitle();
+							Text title = new Text(podcastEpisode.getTitle().length() > 20
+									? new String(
+											new StringBuilder(podcastEpisode.getTitle().substring(0, 20)).append("..."))
+									: podcastEpisode.getTitle());
 							SearchBPDecorator.decorateText(title, SearchBPDecorator.SMALLTEXTSIZE);
 							itemHbox = new HBox(SearchBPDecorator.PADDING, imageView, title);
 							SearchBPDecorator.decorateHBox(itemHbox);
