@@ -38,15 +38,21 @@ public class LoginGridPane extends GridPaneSample {
 	private static final String CANCELBUTTONS_TOOLTIP = "Press this to cancel, and exit!";
 	private static ButtonSample okButton;
 	private static ButtonSample cancelButton;
-	private static TextFieldSample nameTextField;
+	private static TextFieldSample nameTextField1;
 	private static PasswordFieldSample passwordPasswordField;
 	private static LabelSample messageLabel;
 	private static LabelSample nameLabel;
 	private static LabelSample passwordLabel;
+	private static TextFieldSample nameTextField2;
 
 	public LoginGridPane() {
-		nameTextField = new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP);
-		LoginGridPaneDecorator.decorateTextField(nameTextField);
+
+		nameTextField1 = new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP);
+		LoginGridPaneDecorator.decorateTextField(nameTextField1);
+
+		nameTextField2 = LoginGridPaneDecorator
+				.decorateTextFieldFactory(new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP));
+
 		passwordPasswordField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
 		LoginGridPaneDecorator.decorateTextField(passwordPasswordField);
 		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTONSMAPLE_TOOLTIP);
@@ -62,9 +68,8 @@ public class LoginGridPane extends GridPaneSample {
 		add(messageLabel, LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
 		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
-		add(nameTextField, LoginGridPaneDecorator.NAMETEXTFIELDX, LoginGridPaneDecorator.NAMETEXTFIELDY);
-		add(passwordPasswordField, LoginGridPaneDecorator.PASSWORDFIELDX,
-				LoginGridPaneDecorator.PASSWORDFIELDY);
+		add(nameTextField1, LoginGridPaneDecorator.NAMETEXTFIELDX, LoginGridPaneDecorator.NAMETEXTFIELDY);
+		add(passwordPasswordField, LoginGridPaneDecorator.PASSWORDFIELDX, LoginGridPaneDecorator.PASSWORDFIELDY);
 		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);
 		add(cancelButton, LoginGridPaneDecorator.CANCELBUTTONX, LoginGridPaneDecorator.CANCELBUTTONY);
 		setOkButtonFunctionality();
@@ -82,13 +87,13 @@ public class LoginGridPane extends GridPaneSample {
 
 	private void setOkButtonFunctionality() {
 		okButton.setOnAction((ActionEvent event) -> {
-			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+			if (!(nameTextField1.getText().matches("[a-zA-Z]+"))) {
 				LoginStage.getInstance().hide();
 				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
 			} else {
 				if (checkUserAndPassword()) {
 					MainStage.getInstance().show();
-					InformationContainer.getInstance().setOwner(nameTextField.getText());
+					InformationContainer.getInstance().setOwner(nameTextField1.getText());
 					LoginStage.getInstance().hide();
 				} else {
 					LoginStage.getInstance().hide();
@@ -99,13 +104,14 @@ public class LoginGridPane extends GridPaneSample {
 	}
 
 	private void setButtonDisability() {
-		okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
+		okButton.disableProperty().bind(Bindings.isEmpty(nameTextField1.textProperty()));
 		okButton.disableProperty().bind(Bindings.isEmpty(passwordPasswordField.textProperty()));
 	}
 
 	private boolean checkUserAndPassword() {
-		return !(MorphiaLoginConnector.getDataStore().createQuery(User.class).filter("name = ", nameTextField.getText())
-				.filter("password = ", passwordPasswordField.getText()).asList().isEmpty());
+		return !(MorphiaLoginConnector.getDataStore().createQuery(User.class)
+				.filter("name = ", nameTextField1.getText()).filter("password = ", passwordPasswordField.getText())
+				.asList().isEmpty());
 	}
 
 	private void setPasswordTextFieldKeyEvent() {
