@@ -27,7 +27,7 @@ import szakdolgozat.podcast.gui.decorator.SearchBPDecorator;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.ListViewSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
-import szakdolgozat.podcast.jsonparser.JsonParser;
+import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
@@ -98,7 +98,7 @@ public class SearchBorderPane extends BorderPane {
 	}
 
 	private void startSearchPodcast() {
-		JsonParser jsonParser = new JsonParser(new String("https://itunes.apple.com/search?term="
+		PodcastJsonParser jsonParser = new PodcastJsonParser(new String("https://itunes.apple.com/search?term="
 				+ searchTextField.getText() + "&entity=podcast&media=podcast&limit=5"));
 		searchPodcastContainer = jsonParser.getSearchResult();
 		showSearchResult();

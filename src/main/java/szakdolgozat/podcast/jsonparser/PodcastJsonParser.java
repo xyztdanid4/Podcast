@@ -8,12 +8,12 @@ import com.google.gson.Gson;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.gui.dialog.ErrorDialog;
 
-public class JsonParser {
+public class PodcastJsonParser {
 
 	private PodcastContainer searchResultContainer;
 	private String result;
 
-	public JsonParser(String searchText) {
+	public PodcastJsonParser(String searchText) {
 		UrlReader urlReader = new UrlReader();
 		searchText = searchText.replace(" ", "+");
 		result = "";

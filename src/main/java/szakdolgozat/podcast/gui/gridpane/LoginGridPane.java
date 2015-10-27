@@ -63,8 +63,7 @@ public class LoginGridPane extends GridPaneSample {
 		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
 		add(nameTextField, LoginGridPaneDecorator.NAMETEXTFIELDX, LoginGridPaneDecorator.NAMETEXTFIELDY);
-		add(passwordPasswordField, LoginGridPaneDecorator.PASSWORDFIELDX,
-				LoginGridPaneDecorator.PASSWORDFIELDY);
+		add(passwordPasswordField, LoginGridPaneDecorator.PASSWORDFIELDX, LoginGridPaneDecorator.PASSWORDFIELDY);
 		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);
 		add(cancelButton, LoginGridPaneDecorator.CANCELBUTTONX, LoginGridPaneDecorator.CANCELBUTTONY);
 		setOkButtonFunctionality();
@@ -87,8 +86,8 @@ public class LoginGridPane extends GridPaneSample {
 				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
 			} else {
 				if (checkUserAndPassword()) {
-					MainStage.getInstance().show();
 					InformationContainer.getInstance().setOwner(nameTextField.getText());
+					MainStage.getInstance().show();
 					LoginStage.getInstance().hide();
 				} else {
 					LoginStage.getInstance().hide();
