@@ -164,9 +164,9 @@ public class SearchBorderPane extends BorderPane {
 							imageView.setImage(image);
 							SearchBPDecorator.decorateImageView(imageView, SearchBPDecorator.IMAGEHEIGHT,
 									SearchBPDecorator.IMAGEWIDTH);
-							Text title = new Text(podcastEpisode.getTitle().length() > 20
+							Text title = new Text(podcastEpisode.getTitle().length() > 40
 									? new String(
-											new StringBuilder(podcastEpisode.getTitle().substring(0, 20)).append("..."))
+											new StringBuilder(podcastEpisode.getTitle().substring(0, 40)).append("..."))
 									: podcastEpisode.getTitle());
 							SearchBPDecorator.decorateText(title, SearchBPDecorator.SMALLTEXTSIZE);
 							itemHbox = new HBox(SearchBPDecorator.PADDING, imageView, title);
@@ -179,9 +179,9 @@ public class SearchBorderPane extends BorderPane {
 						Rectangle imageView = new Rectangle();
 						SearchBPDecorator.decorateRectangle(imageView, SearchBPDecorator.SMALLRECTANGLEHEIGHT,
 								SearchBPDecorator.SMALLRECTANGLEWIDTH, podcastEpisode.getImage());
-						Text title = new Text(podcastEpisode.getTitle().length() > 20
+						Text title = new Text(podcastEpisode.getTitle().length() > 40
 								? new String(
-										new StringBuilder(podcastEpisode.getTitle().substring(0, 20)).append("..."))
+										new StringBuilder(podcastEpisode.getTitle().substring(0, 40)).append("..."))
 								: podcastEpisode.getTitle());
 						SearchBPDecorator.decorateText(title, SearchBPDecorator.SMALLTEXTSIZE);
 						itemHbox = new HBox(SearchBPDecorator.PADDING, imageView, title);

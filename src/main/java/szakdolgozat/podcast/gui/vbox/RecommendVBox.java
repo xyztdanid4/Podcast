@@ -23,6 +23,7 @@ import szakdolgozat.podcast.jsonparser.UrlReader;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
 public class RecommendVBox extends VBox {
+	private static final String RECOMMEND = "Similar podcast";
 	private ListView<HBox> recommendListView;
 	private ObservableList<HBox> recommendList;
 	private List<String> artistNames;
@@ -38,46 +39,56 @@ public class RecommendVBox extends VBox {
 		List<Podcast> podcastsFromDBList = MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
 		artistNames = new ArrayList<String>();
 		for (Podcast podcast : podcastsFromDBList) {
-			artistNames.add(podcast.getArtistName());
-		}
-		System.out.println(artistNames);
-
-		UrlReader urlReader = new UrlReader();
-		String result = "";
-		try {
-			result = urlReader.readUrl("https://www.tastekid.com/api/similar?q=hardwell&k=171743-podcasta-T2Y4SDX0");
-			// System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Gson gson = new Gson();
-		SimilarPodcastContainer similarPodcastContainer = gson.fromJson(result, SimilarPodcastContainer.class);
-		System.out.println(similarPodcastContainer);
-		for (SimilarPodcastItem item : similarPodcastContainer.getSimilar().getResults()) {
-			System.out.println(item.getName());
-			PodcastJsonParser jsonParser = new PodcastJsonParser(new String("https://itunes.apple.com/search?term="
-					+ item.getName() + "&entity=podcast&media=podcast&limit=5"));
-			searchPodcastContainer = jsonParser.getSearchResult();
-			for (Podcast podcast : searchPodcastContainer.getResults()) {
-				Rectangle imageRectangle = new Rectangle();
-				RecommendListDecorator.decorateRectangle(imageRectangle, RecommendListDecorator.SMALLRECTANGLEHEIGHT,
-						RecommendListDecorator.SMALLRECTANGLEWIDTH, podcast.getArtworkUrl60());
-				Text artistName = new Text(podcast.getArtistName().length() > 20
-						? new String(new StringBuilder(podcast.getArtistName().substring(0, 20)).append("..."))
-						: podcast.getArtistName());
-				RecommendListDecorator.decorateText(artistName, RecommendListDecorator.SMALLTEXTSIZE);
-				HBox itemHBox = new HBox(RecommendListDecorator.PADDING, imageRectangle, artistName);
-				RecommendListDecorator.decorateHBox(itemHBox);
-				recommendList.add(itemHBox);
+			UrlReader urlReader = new UrlReader();
+			String result = "";
+			try {
+				result = urlReader.readUrl("https://www.tastekid.com/api/similar?q=" + podcast.getArtistName()
+						+ "&k=171743-podcasta-T2Y4SDX0");
+				// System.out.println(result);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Gson gson = new Gson();
+			SimilarPodcastContainer similarPodcastContainer = gson.fromJson(result, SimilarPodcastContainer.class);
+			System.out.println(similarPodcastContainer);
+			for (SimilarPodcastItem item : similarPodcastContainer.getSimilar().getResults()) {
+				System.out.println(item.getName());
+				PodcastJsonParser jsonParser = new PodcastJsonParser(new String("https://itunes.apple.com/search?term="
+						+ item.getName() + "&entity=podcast&media=podcast&limit=5"));
+				searchPodcastContainer = jsonParser.getSearchResult();
+				for (Podcast podcastIterator : searchPodcastContainer.getResults()) {
+					Rectangle imageRectangle = new Rectangle();
+					RecommendListDecorator.decorateRectangle(imageRectangle,
+							RecommendListDecorator.SMALLRECTANGLEHEIGHT, RecommendListDecorator.SMALLRECTANGLEWIDTH,
+							podcastIterator.getArtworkUrl60());
+					Text artistName = new Text(podcastIterator.getArtistName().length() > 20
+							? new String(
+									new StringBuilder(podcastIterator.getArtistName().substring(0, 20)).append("..."))
+							: podcastIterator.getArtistName());
+					RecommendListDecorator.decorateText(artistName, RecommendListDecorator.SMALLTEXTSIZE);
+					HBox itemHBox = new HBox(RecommendListDecorator.PADDING, imageRectangle, artistName);
+					RecommendListDecorator.decorateHBox(itemHBox);
+					recommendList.add(itemHBox);
+				}
 			}
 		}
-		recommendListView.setItems(recommendList);
-		getChildren().add(recommendListView);
+		// System.out.println(artistNames);
 
+		recommendListView.setItems(recommendList);
+		Text recommendText = new Text(new String(RECOMMEND));
+		RecommendListDecorator.decorateText(recommendText, RecommendListDecorator.BIGTEXTSIZE);
+		getChildren().addAll(recommendText, recommendListView);
+
+		RecommendListDecorator.decorate(this);
+		setPadding();
 	}
 
 	private boolean isPodcastSubscribed(final String name) {
 		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
 				.isEmpty());
+	}
+
+	private void setPadding() {
+		setPadding(new Insets(RecommendListDecorator.PADDING, 0, 0, RecommendListDecorator.PADDING));
 	}
 }
