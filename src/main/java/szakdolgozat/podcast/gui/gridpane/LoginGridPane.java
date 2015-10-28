@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.gui.decorator.LoginGridPaneDecorator;
-import szakdolgozat.podcast.gui.dialog.ErrorDialog;
+import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.GridPaneSample;
 import szakdolgozat.podcast.gui.samples.LabelSample;
@@ -83,7 +83,7 @@ public class LoginGridPane extends GridPaneSample {
 		okButton.setOnAction((ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
 				LoginStage.getInstance().hide();
-				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
+				LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
 			} else {
 				if (checkUserAndPassword()) {
 					InformationContainer.getInstance().setOwner(nameTextField.getText());
@@ -91,7 +91,7 @@ public class LoginGridPane extends GridPaneSample {
 					LoginStage.getInstance().hide();
 				} else {
 					LoginStage.getInstance().hide();
-					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
+					LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
 				}
 			}
 		});

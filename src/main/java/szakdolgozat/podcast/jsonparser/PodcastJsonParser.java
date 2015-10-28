@@ -6,9 +6,9 @@ import java.net.URL;
 import com.google.gson.Gson;
 
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
-import szakdolgozat.podcast.gui.dialog.ErrorDialog;
+import szakdolgozat.podcast.gui.dialog.OtherErrorDialog;
 
-public class PodcastJsonParser {
+public class PodcastJsonParser extends JsonParser {
 
 	private PodcastContainer searchResultContainer;
 	private String result;
@@ -21,7 +21,7 @@ public class PodcastJsonParser {
 			result = urlReader.readUrl(searchText);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ErrorDialog errorDialog = new ErrorDialog(new String("Error: cannot read Url for json parsing!"));
+			OtherErrorDialog errorDialog = new OtherErrorDialog(new String("Error: cannot read Url for json parsing!"));
 		}
 		jsonToObject();
 		removeNotWorkingFeeds();

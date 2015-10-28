@@ -10,7 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.gui.decorator.NewLoginGridPaneDecorator;
-import szakdolgozat.podcast.gui.dialog.ErrorDialog;
+import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.GridPaneSample;
 import szakdolgozat.podcast.gui.samples.LabelSample;
@@ -114,13 +114,13 @@ public class NewLoginGridPane extends GridPaneSample {
 		okButton.setOnAction((ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
 				LoginStage.getInstance().hide();
-				ErrorDialog errorDialog = new ErrorDialog(MATCHERROR);
+				LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
 			} else if (!(passwordTextField.getText().equals(passwordAgainTextField.getText()))) {
 				LoginStage.getInstance().hide();
-				ErrorDialog errorDialog = new ErrorDialog(ERRORPASSWORD);
+				LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORPASSWORD);
 			} else if (!(emailTextField.getText().matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
 				LoginStage.getInstance().hide();
-				ErrorDialog errorDialog = new ErrorDialog(ERRORMAILFORMAT);
+				LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMAILFORMAT);
 			} else {
 				if (checkValuesInDB()) {
 					saveUser();
@@ -129,7 +129,7 @@ public class NewLoginGridPane extends GridPaneSample {
 					MainStage.getInstance().show();
 				} else {
 					LoginStage.getInstance().hide();
-					ErrorDialog errorDialog = new ErrorDialog(ERRORMESSAGE);
+					LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
 				}
 			}
 		});

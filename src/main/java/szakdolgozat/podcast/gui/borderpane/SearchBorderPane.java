@@ -162,9 +162,8 @@ public class SearchBorderPane extends BorderPane {
 							image = new Image(podcastEpisode.getImage());
 							ImageView imageView = new ImageView();
 							imageView.setImage(image);
-							imageView.setFitHeight(SearchBPDecorator.IMAGEHEIGHT);
-							imageView.setFitWidth(SearchBPDecorator.IMAGEWIDTH);
-							String titleString = podcastEpisode.getTitle();
+							SearchBPDecorator.decorateImageView(imageView, SearchBPDecorator.IMAGEHEIGHT,
+									SearchBPDecorator.IMAGEWIDTH);
 							Text title = new Text(podcastEpisode.getTitle().length() > 20
 									? new String(
 											new StringBuilder(podcastEpisode.getTitle().substring(0, 20)).append("..."))
@@ -180,7 +179,10 @@ public class SearchBorderPane extends BorderPane {
 						Rectangle imageView = new Rectangle();
 						SearchBPDecorator.decorateRectangle(imageView, SearchBPDecorator.SMALLRECTANGLEHEIGHT,
 								SearchBPDecorator.SMALLRECTANGLEWIDTH, podcastEpisode.getImage());
-						Text title = new Text(podcastEpisode.getTitle());
+						Text title = new Text(podcastEpisode.getTitle().length() > 20
+								? new String(
+										new StringBuilder(podcastEpisode.getTitle().substring(0, 20)).append("..."))
+								: podcastEpisode.getTitle());
 						SearchBPDecorator.decorateText(title, SearchBPDecorator.SMALLTEXTSIZE);
 						itemHbox = new HBox(SearchBPDecorator.PADDING, imageView, title);
 						SearchBPDecorator.decorateHBox(itemHbox);
