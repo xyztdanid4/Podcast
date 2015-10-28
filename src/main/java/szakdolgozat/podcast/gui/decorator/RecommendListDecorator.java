@@ -11,23 +11,15 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class ErrorDialogDecorator extends Decorator {
-	public static final int labelX = 1;
-	public static final int labelY = 1;
-	public static final int buttonX = 2;
-	public static final int buttonY = 2;
-	public static final int SCENE_WIDTH = 300;
-	public static final int SCENE_HIGHT = 100;
-
-	public ErrorDialogDecorator() {
-
-	}
+public class RecommendListDecorator extends Decorator {
+	public static final int LISTWIDTH = 250;
+	public static final int LISTHEIGHT = 400;
+	public static final int PADDING = 10;
 
 	public static void decorate(Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
 		pane.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(BORDERPANEBORDERRADIUS),
-				new BorderWidths(BORDERSIZE, BORDERSIZE, BORDERSIZE, BORDERSIZE))));
+				new CornerRadii(BORDERPANEBORDERRADIUS), new BorderWidths(BORDERSIZE, BORDERSIZE, 0, 0))));
 	}
 }

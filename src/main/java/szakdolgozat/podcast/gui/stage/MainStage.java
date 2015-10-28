@@ -20,4 +20,5 @@ public class MainStage extends StageSample {
 	public static MainStage getInstance() {
 		return instance;
 	}
+
 }
