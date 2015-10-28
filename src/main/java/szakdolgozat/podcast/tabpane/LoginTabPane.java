@@ -9,7 +9,7 @@ public class LoginTabPane extends TabPane {
 	private static final String TOOLTIP = "This is LoginTabPane!";
 
 	public LoginTabPane() {
+		super(new NewUserLoginTab(), new UserLoginTab());
 		setTooltip(new Tooltip(TOOLTIP));
-		getTabs().addAll(new NewUserLoginTab(), new UserLoginTab());
 	}
 }

@@ -7,17 +7,17 @@ public class SimilarPodcastContainer {
 
 	}
 
-	@Override
-	public String toString() {
-		return "SimilarPodcastContainer [Similar=" + Similar + "]";
-	}
-
 	public SimilarPodcast getSimilar() {
 		return Similar;
 	}
 
 	public void setSimilar(SimilarPodcast similar) {
 		Similar = similar;
+	}
+
+	@Override
+	public String toString() {
+		return "SimilarPodcastContainer [Similar=" + Similar + "]";
 	}
 
 }

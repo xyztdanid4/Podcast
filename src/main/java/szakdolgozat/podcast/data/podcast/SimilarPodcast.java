@@ -6,9 +6,14 @@ public class SimilarPodcast {
 	private List<SimilarPodcastItem> Info;
 	private List<SimilarPodcastItem> Results;
 
-	@Override
-	public String toString() {
-		return "SimilarPodcastContainer [Info=" + Info + ", Results=" + Results + "]";
+	public SimilarPodcast() {
+		super();
+	}
+
+	public SimilarPodcast(List<SimilarPodcastItem> info, List<SimilarPodcastItem> results) {
+		super();
+		Info = info;
+		Results = results;
 	}
 
 	public List<SimilarPodcastItem> getInfo() {
@@ -27,4 +32,8 @@ public class SimilarPodcast {
 		Results = results;
 	}
 
+	@Override
+	public String toString() {
+		return "SimilarPodcastContainer [Info=" + Info + ", Results=" + Results + "]";
+	}
 }

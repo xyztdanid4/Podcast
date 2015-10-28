@@ -10,13 +10,15 @@ import szakdolgozat.podcast.gui.tab.SearchTab;
 
 public class ApplicationTabPane extends TabPane {
 	private static final String TOOLTIP = "This is ApplicationTabPane!";
+	private static final int HEIGHT = 300;
+	private static final int WEIGHT = 300;
 
 	public ApplicationTabPane() {
+		super(new SearchTab(), new PodcastListTab(), new PlayListTab(), new DownloadTab());
 		setSide(Side.LEFT);
 		setTooltip(new Tooltip(TOOLTIP));
-		setTabMaxHeight(300);
-		setTabMaxWidth(300);
-		getTabs().addAll(new SearchTab(), new PodcastListTab(), new PlayListTab(), new DownloadTab());
+		setTabMaxHeight(HEIGHT);
+		setTabMaxWidth(WEIGHT);
 	}
 
 }

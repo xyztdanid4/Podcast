@@ -9,5 +9,5 @@ public class ApplicationTab extends Tab {
 		setGraphic(new ImageView(new Image(getClass().getClassLoader().getResource(imagePath).toExternalForm())));
 		setClosable(false);
 	}
-	
+
 }
