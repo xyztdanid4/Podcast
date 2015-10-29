@@ -7,7 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.builder.ListItemBuilder;
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.RecommendListDecorator;
 
 public class RecommendVBoxView extends VBox {
@@ -21,21 +21,21 @@ public class RecommendVBoxView extends VBox {
 		recommendVBoxController = new RecommendVBoxData();
 		recommendList = FXCollections.observableArrayList();
 		recommendListView = new ListView<HBox>();
-		RecommendListDecorator.decorateListView(recommendListView, RecommendListDecorator.LISTWIDTH,
+		RecommendListDecorator.decorateListViewFactory(recommendListView, RecommendListDecorator.LISTWIDTH,
 				RecommendListDecorator.LISTHEIGHT);
 		setMargin(recommendListView, new Insets(RecommendListDecorator.PADDING));
 
 		for (RecommendListItem item : recommendVBoxController.getRecommendListItems()) {
-			recommendList.add(ListItemBuilder.getInstance().build(item.getImage(), item.getArtist()));
+			recommendList.add(HBoxBuilder.getInstance().build(item.getImage(), item.getArtist()));
 			// TESZT MIATT
 			// recommendList.add(ListItemBuilder.getInstance().build(item.getArtist()));
 		}
 
 		recommendListView.setItems(recommendList);
 		Text recommendText = new Text(new String(RECOMMEND));
-		RecommendListDecorator.decorateText(recommendText, RecommendListDecorator.BIGTEXTSIZE);
+		RecommendListDecorator.decorateTextFactory(recommendText, RecommendListDecorator.BIGTEXTSIZE);
 		recommendListView = new ListView<HBox>(FXCollections.observableArrayList(recommendList));
-		RecommendListDecorator.decorateListView(recommendListView, RecommendListDecorator.LISTWIDTH,
+		RecommendListDecorator.decorateListViewFactory(recommendListView, RecommendListDecorator.LISTWIDTH,
 				RecommendListDecorator.LISTHEIGHT);
 		getChildren().addAll(recommendText, recommendListView);
 

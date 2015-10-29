@@ -48,17 +48,17 @@ public class LoginGridPane extends GridPaneSample {
 		nameTextField = LoginGridPaneDecorator
 				.decorateTextFieldFactory(new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP));
 		PasswordField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
-		LoginGridPaneDecorator.decorateTextField(PasswordField);
+		LoginGridPaneDecorator.decorateTextFieldFactory(PasswordField);
 		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTONSMAPLE_TOOLTIP);
-		LoginGridPaneDecorator.decorateButton(okButton);
+		LoginGridPaneDecorator.decorateButtonFactory(okButton);
 		cancelButton = new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTONS_TOOLTIP);
-		LoginGridPaneDecorator.decorateButton(cancelButton);
+		LoginGridPaneDecorator.decorateButtonFactory(cancelButton);
 		messageLabel = new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabel(messageLabel);
+		LoginGridPaneDecorator.decorateLabelFactory(messageLabel);
 		nameLabel = new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabel(nameLabel);
+		LoginGridPaneDecorator.decorateLabelFactory(nameLabel);
 		passwordLabel = new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabel(passwordLabel);
+		LoginGridPaneDecorator.decorateLabelFactory(passwordLabel);
 		add(messageLabel, LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
 		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
@@ -70,7 +70,7 @@ public class LoginGridPane extends GridPaneSample {
 		setCancelButtonFunctinality();
 		setButtonDisability();
 		setPasswordTextFieldKeyEvent();
-		LoginGridPaneDecorator.decorate(this);
+		LoginGridPaneDecorator.decorateFactory(this);
 	}
 
 	private void setCancelButtonFunctinality() {

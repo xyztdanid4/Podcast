@@ -23,11 +23,12 @@ public class ErrorDialogDecorator extends Decorator {
 
 	}
 
-	public static void decorate(Pane pane) {
+	public static Pane decorate(Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
 		pane.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(BORDERPANEBORDERRADIUS),
 				new BorderWidths(BORDERSIZE, BORDERSIZE, BORDERSIZE, BORDERSIZE))));
+		return pane;
 	}
 }

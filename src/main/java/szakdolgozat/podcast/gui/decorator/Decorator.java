@@ -26,6 +26,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import szakdolgozat.podcast.gui.samples.ButtonSample;
+import szakdolgozat.podcast.gui.samples.TextFieldSample;
 
 public class Decorator {
 	// border - radius
@@ -58,19 +60,21 @@ public class Decorator {
 
 	}
 
-	public static void decorate(Pane pane) {
+	public static Pane decorateFactory(Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
 		pane.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(BORDERPANEBORDERRADIUS), new BorderWidths(BORDERSIZE, BORDERSIZE, 0, BORDERSIZE))));
+		return pane;
 	}
 
-	public static void decorateText(Text text, final int size) {
+	public static Text decorateTextFactory(Text text, final int size) {
 		text.setFill(Color.web(TEXTCOLOR));
 		text.setFont(Font.font("Arial", FontWeight.BOLD, size));
+		return text;
 	}
 
-	public static void decorateHBox(HBox hbox, final int prefwidth, final int prefheight, final int maxwidht,
+	public static HBox decorateHBoxFactory(HBox hbox, final int prefwidth, final int prefheight, final int maxwidht,
 			final int maxheight) {
 		hbox.setPrefSize(prefwidth, prefheight);
 		hbox.setMaxSize(maxwidht, maxheight);
@@ -79,9 +83,10 @@ public class Decorator {
 		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		hbox.setAlignment(Pos.CENTER_LEFT);
+		return hbox;
 	}
 
-	public static void decorateHBox(HBox hbox) {
+	public static HBox decorateHBoxFactory(HBox hbox) {
 		hbox.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
@@ -89,9 +94,10 @@ public class Decorator {
 		hbox.setAlignment(Pos.CENTER_LEFT);
 		setMouseEnteredEventHBox(hbox);
 		setMouseExitedEventHBox(hbox);
+		return hbox;
 	}
 
-	public static void decorateListView(ListView listView, final int width, final int height) {
+	public static ListView<HBox> decorateListViewFactory(ListView<HBox> listView, final int width, final int height) {
 		listView.setPrefSize(width, height);
 		listView.setMaxSize(width, height);
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
@@ -99,27 +105,33 @@ public class Decorator {
 		listView.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		listView.setPadding(new Insets(LISTVIEWINSETS));
+		return listView;
 	}
 
-	public static void decorateRectangle(Rectangle rectangle, final int height, final int width, String imageURL) {
+	public static Rectangle decorateRectangleFactory(Rectangle rectangle, final int height, final int width,
+			String imageURL) {
 		rectangle.setArcHeight(RECTANGLEARCHHEIGHT);
 		rectangle.setArcWidth(RECTANGLEARCHWIDHT);
 		rectangle.setHeight(height);
 		rectangle.setWidth(width);
 		rectangle.setFill(new ImagePattern(new Image(imageURL)));
+		return rectangle;
 	}
 
-	public static void decorateHelperVBox(VBox vBox) {
+	public static VBox decorateHelperVBoxFactory(VBox vBox) {
 		vBox.setAlignment(Pos.CENTER_LEFT);
+		return vBox;
 	}
 
-	public static void decorateVBox(VBox vBox) {
+	public static VBox decorateVBoxFactory(VBox vBox) {
 		vBox.setAlignment(Pos.CENTER_LEFT);
+		return vBox;
 	}
 
-	public static void decorateImageView(ImageView imageView, final int height, final int width) {
+	public static ImageView decorateImageViewFactory(ImageView imageView, final int height, final int width) {
 		imageView.setFitWidth(width);
 		imageView.setFitHeight(height);
+		return imageView;
 	}
 
 	private static void setMouseEnteredEventHBox(HBox itemHbox) {
@@ -162,7 +174,7 @@ public class Decorator {
 		});
 	}
 
-	public static void decorateButton(Button button) {
+	public static Button decorateButtonFactory(Button button) {
 		button.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		button.setBackground(new Background(
@@ -170,28 +182,44 @@ public class Decorator {
 		button.setTextFill(Color.web(TEXTCOLOR));
 		setMouseEnteredEventButton(button);
 		setMouseExitedEventButton(button);
+		return button;
 	}
 
-	public static void decorateLabel(Label label) {
+	public static ButtonSample decorateButtonSampleFactory(ButtonSample button) {
+		button.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		button.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		button.setTextFill(Color.web(TEXTCOLOR));
+		setMouseEnteredEventButton(button);
+		setMouseExitedEventButton(button);
+		return button;
+	}
+
+	public static Label decorateLabelFactory(Label label) {
 		label.setTextFill(Color.web(TEXTCOLOR));
+		return label;
 	}
 
-	public static void decorateTextField(TextField textField) {
+	public static TextField decorateTextFieldFactory(TextField textField) {
 		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		textField.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		textField.setStyle("-fx-text-inner-color: white;");
+		return textField;
 	}
 
-	public static void decorateTextField(TextField textField, final int width, final int height) {
-		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+	public static TextFieldSample decorateTextFieldSampleFactory(TextFieldSample textFieldSample, final int width,
+			final int height) {
+		textFieldSample.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
-		textField.setBackground(new Background(
+		textFieldSample.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-		textField.setStyle("-fx-text-inner-color: white;");
-		textField.setMaxSize(width, height);
-		textField.setPrefSize(width, height);
+		textFieldSample.setStyle("-fx-text-inner-color: white;");
+		textFieldSample.setMaxSize(width, height);
+		textFieldSample.setPrefSize(width, height);
+		return textFieldSample;
 	}
 
 }

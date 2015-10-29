@@ -2,7 +2,7 @@ package szakdolgozat.podcast.gui.tab;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import szakdolgozat.podcast.gui.borderpane.PodcastBorderPane;
+import szakdolgozat.podcast.gui.borderpane.PodcastBorderPaneView;
 
 public class PodcastListTab extends ApplicationTab {
 	private static final String PODCASTLISTTAB_IMAGEPATH = "appbar.list.png";
@@ -25,7 +25,7 @@ public class PodcastListTab extends ApplicationTab {
 	}
 
 	private void onselection() {
-		setContent(new PodcastBorderPane());
+		setContent(new PodcastBorderPaneView());
 	}
 
 }

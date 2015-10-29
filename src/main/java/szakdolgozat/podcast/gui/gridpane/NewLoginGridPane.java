@@ -62,28 +62,28 @@ public class NewLoginGridPane extends GridPaneSample {
 
 	public NewLoginGridPane() {
 		nameTextField = new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP);
-		NewLoginGridPaneDecorator.decorateTextField(nameTextField);
+		NewLoginGridPaneDecorator.decorateTextFieldFactory(nameTextField);
 		passwordTextField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextField(passwordTextField);
+		NewLoginGridPaneDecorator.decorateTextFieldFactory(passwordTextField);
 		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTON_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateButton(okButton);
+		NewLoginGridPaneDecorator.decorateButtonFactory(okButton);
 		cancelButton = new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTON_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateButton(cancelButton);
+		NewLoginGridPaneDecorator.decorateButtonFactory(cancelButton);
 		passwordAgainTextField = new PasswordFieldSample(PASSWORDAGAINTEXTFIELD_PROMPTTEXT,
 				PASSWORDAGAINTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextField(passwordAgainTextField);
+		NewLoginGridPaneDecorator.decorateTextFieldFactory(passwordAgainTextField);
 		emailTextField = new TextFieldSample(EMAILTEXTFIELD_PROMTTEXT, EMAILTTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextField(emailTextField);
+		NewLoginGridPaneDecorator.decorateTextFieldFactory(emailTextField);
 		messageLabel = new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabel(messageLabel);
+		NewLoginGridPaneDecorator.decorateLabelFactory(messageLabel);
 		nameLabel = new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabel(nameLabel);
+		NewLoginGridPaneDecorator.decorateLabelFactory(nameLabel);
 		passwordLabel = new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabel(passwordLabel);
+		NewLoginGridPaneDecorator.decorateLabelFactory(passwordLabel);
 		passwordAgainLabel = new LabelSample(PASSWORDAGAINLABEL_TEXT, PASSWORDAGAINLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabel(passwordAgainLabel);
+		NewLoginGridPaneDecorator.decorateLabelFactory(passwordAgainLabel);
 		emailLabel = new LabelSample(EMAILLABEL_TEXT, EMAILLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabel(emailLabel);
+		NewLoginGridPaneDecorator.decorateLabelFactory(emailLabel);
 		add(messageLabel, NewLoginGridPaneDecorator.MESSAGELABELX, NewLoginGridPaneDecorator.MESSAGLABELY);
 		add(nameLabel, NewLoginGridPaneDecorator.NAMELABELX, NewLoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, NewLoginGridPaneDecorator.PASSWORDLABELX, NewLoginGridPaneDecorator.PASSWORDLABELY);
@@ -101,7 +101,7 @@ public class NewLoginGridPane extends GridPaneSample {
 		setCancelButtonFunctinality();
 		setButtonDisability();
 		setPasswordTextFieldKeyEvent();
-		NewLoginGridPaneDecorator.decorate(this);
+		NewLoginGridPaneDecorator.decorateFactory(this);
 	}
 
 	private void setCancelButtonFunctinality() {

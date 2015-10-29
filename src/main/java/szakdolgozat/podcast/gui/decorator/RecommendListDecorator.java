@@ -16,10 +16,11 @@ public class RecommendListDecorator extends Decorator {
 	public static final int LISTHEIGHT = 400;
 	public static final int PADDING = 10;
 
-	public static void decorate(Pane pane) {
+	public static Pane decorate(Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
 		pane.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(BORDERPANEBORDERRADIUS), new BorderWidths(BORDERSIZE, BORDERSIZE, 0, 0))));
+		return pane;
 	}
 }
