@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.controller;
+package szakdolgozat.podcast.gui.vbox;
 
 public class RecommendListItem {
 	private String image;

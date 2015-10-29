@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.controller;
+package szakdolgozat.podcast.gui.vbox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +9,10 @@ import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.jsonparser.SimilarPodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
-public class RecommendVBoxController {
+public class RecommendVBoxData {
 	private List<RecommendListItem> recommendListItems;
 
-	public RecommendVBoxController() {
+	public RecommendVBoxData() {
 		recommendListItems = new ArrayList<RecommendListItem>();
 		for (Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
 			SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(

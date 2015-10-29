@@ -8,19 +8,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.builder.ListItemBuilder;
-import szakdolgozat.podcast.controller.RecommendListItem;
-import szakdolgozat.podcast.controller.RecommendVBoxController;
 import szakdolgozat.podcast.gui.decorator.RecommendListDecorator;
 
-public class RecommendVBox extends VBox {
+public class RecommendVBoxView extends VBox {
 	private static final String RECOMMEND = "Similar podcast";
 	private ListView<HBox> recommendListView;
 	private ObservableList<HBox> recommendList;
-	private RecommendVBoxController recommendVBoxController;
+	private RecommendVBoxData recommendVBoxController;
 
-	public RecommendVBox() {
+	public RecommendVBoxView() {
 		super(RecommendListDecorator.PADDING);
-		recommendVBoxController = new RecommendVBoxController();
+		recommendVBoxController = new RecommendVBoxData();
 		recommendList = FXCollections.observableArrayList();
 		recommendListView = new ListView<HBox>();
 		RecommendListDecorator.decorateListView(recommendListView, RecommendListDecorator.LISTWIDTH,
