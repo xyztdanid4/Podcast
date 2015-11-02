@@ -108,6 +108,15 @@ public class Decorator {
 		return listView;
 	}
 
+	public static ListView<HBox> decorateListViewFactory(ListView<HBox> listView) {
+		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		listView.setBackground(new Background(
+				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		listView.setPadding(new Insets(LISTVIEWINSETS));
+		return listView;
+	}
+
 	public static Rectangle decorateRectangleFactory(Rectangle rectangle, final int height, final int width,
 			String imageURL) {
 		rectangle.setArcHeight(RECTANGLEARCHHEIGHT);

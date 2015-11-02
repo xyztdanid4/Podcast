@@ -83,31 +83,6 @@ public class PodcastBorderPaneView extends BorderPane {
 		if (!podcastsFromDBList.isEmpty()) {
 			ObservableList<HBox> podcastsContainer = FXCollections.observableArrayList();
 			for (Podcast podcastIterator : podcastsFromDBList) {
-				/*
-				 * ButtonSample subscribeButton =
-				 * PodcastBPDecorator.decorateButtonSampleFactory(new
-				 * ButtonSample() { { setOnAction(new
-				 * EventHandler<ActionEvent>() {
-				 * 
-				 * @Override public void handle(ActionEvent event) {
-				 * removefromDB(podcastIterator.getArtistName()); } });
-				 * setText(UNSUBSCRIBE); setTooltip(new
-				 * Tooltip(CLICKFORUNSUBSCRIBE)); } });
-				 */
-				/*
-				 * podcastsContainer.add(PodcastBPDecorator.decorateHBoxFactory(
-				 * new HBox(PodcastBPDecorator.HBOXPADDING,
-				 * PodcastBPDecorator.decorateRectangleFactory(new Rectangle(),
-				 * PodcastBPDecorator.SMALLRECTANGLEHEIGHT,
-				 * PodcastBPDecorator.SMALLRECTANGLEWIDTH,
-				 * podcastIterator.getArtworkUrl60()), PodcastBPDecorator
-				 * .decorateTextFactory( new
-				 * Text(podcastIterator.getArtistName().length() > 20 ? new
-				 * String(new StringBuilder(
-				 * podcastIterator.getArtistName().substring(0,
-				 * 20)).append("...")) : podcastIterator.getArtistName()),
-				 * PodcastBPDecorator.SMALLTEXTSIZE), subscribeButton)));
-				 */
 				podcastsContainer.add(HBoxBuilder.create().image(podcastIterator.getArtworkUrl60())
 						.artist(podcastIterator.getArtistName()).button(new ButtonSample() {
 							{

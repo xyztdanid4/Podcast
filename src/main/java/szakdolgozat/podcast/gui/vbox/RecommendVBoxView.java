@@ -20,18 +20,17 @@ public class RecommendVBoxView extends VBox {
 		super(RecommendListDecorator.PADDING);
 		recommendVBoxController = new RecommendVBoxData();
 		recommendList = FXCollections.observableArrayList();
-		recommendListView = new ListView<HBox>();
-		RecommendListDecorator.decorateListViewFactory(recommendListView, RecommendListDecorator.LISTWIDTH,
-				RecommendListDecorator.LISTHEIGHT);
-		setMargin(recommendListView, new Insets(RecommendListDecorator.PADDING));
-
+		// RecommendListDecorator.decorateListViewFactory(recommendListView,
+		// RecommendListDecorator.LISTWIDTH,
+		// RecommendListDecorator.LISTHEIGHT);
 		for (RecommendListItem item : recommendVBoxController.getRecommendListItems()) {
-			recommendList.add(HBoxBuilder.getInstance().build(item.getImage(), item.getArtist()));
+			recommendList.add(HBoxBuilder.create().image(item.getImage()).artist(item.getArtist()).build());
 			// TESZT MIATT
 			// recommendList.add(ListItemBuilder.getInstance().build(item.getArtist()));
 		}
 
-		recommendListView.setItems(recommendList);
+		recommendListView = new ListView<HBox>(recommendList);
+		setMargin(recommendListView, new Insets(RecommendListDecorator.PADDING));
 		Text recommendText = new Text(new String(RECOMMEND));
 		RecommendListDecorator.decorateTextFactory(recommendText, RecommendListDecorator.BIGTEXTSIZE);
 		recommendListView = new ListView<HBox>(FXCollections.observableArrayList(recommendList));
