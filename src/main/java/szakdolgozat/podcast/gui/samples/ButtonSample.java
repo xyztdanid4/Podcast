@@ -8,4 +8,8 @@ public class ButtonSample extends Button {
 		new TooltipSample(tooltip);
 		setTooltip(new TooltipSample(tooltip));
 	}
+
+	public ButtonSample() {
+		super();
+	}
 }

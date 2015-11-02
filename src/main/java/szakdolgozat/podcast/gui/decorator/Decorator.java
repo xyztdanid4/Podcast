@@ -45,7 +45,7 @@ public class Decorator {
 	// padding
 	public static final int PADDING = 20;
 	public static final int HBOXPADDING = 10;
-	public static final int DEFAULTVBOXPADDING = 10;
+	public static final int VBOXPADDING = 10;
 	// listview
 	public static final int LISTVIEWINSETS = 0;
 	// rectangle

@@ -8,8 +8,10 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -81,30 +83,50 @@ public class PodcastBorderPaneView extends BorderPane {
 		if (!podcastsFromDBList.isEmpty()) {
 			ObservableList<HBox> podcastsContainer = FXCollections.observableArrayList();
 			for (Podcast podcastIterator : podcastsFromDBList) {
-				ButtonSample subscribeButton = PodcastBPDecorator
-						.decorateButtonSampleFactory(new ButtonSample(UNSUBSCRIBE, CLICKFORUNSUBSCRIBE));
-				setSubscribeButtonAction(subscribeButton, podcastIterator);
-
-				podcastsContainer.add(PodcastBPDecorator.decorateHBoxFactory(new HBox(PodcastBPDecorator.HBOXPADDING,
-						PodcastBPDecorator.decorateRectangleFactory(new Rectangle(),
-								PodcastBPDecorator.SMALLRECTANGLEHEIGHT, PodcastBPDecorator.SMALLRECTANGLEWIDTH,
-								podcastIterator.getArtworkUrl60()),
-						PodcastBPDecorator
-								.decorateTextFactory(
-										new Text(podcastIterator.getArtistName().length() > 20
-												? new String(new StringBuilder(
-														podcastIterator.getArtistName().substring(0, 20)).append("..."))
-												: podcastIterator.getArtistName()),
-										PodcastBPDecorator.SMALLTEXTSIZE),
-						subscribeButton)));
-				podcastsContainer.add(HBoxBuilder.getInstance().build(podcastIterator.getArtworkUrl60(),
-						podcastIterator.getArtistName()));
+				/*
+				 * ButtonSample subscribeButton =
+				 * PodcastBPDecorator.decorateButtonSampleFactory(new
+				 * ButtonSample() { { setOnAction(new
+				 * EventHandler<ActionEvent>() {
+				 * 
+				 * @Override public void handle(ActionEvent event) {
+				 * removefromDB(podcastIterator.getArtistName()); } });
+				 * setText(UNSUBSCRIBE); setTooltip(new
+				 * Tooltip(CLICKFORUNSUBSCRIBE)); } });
+				 */
+				/*
+				 * podcastsContainer.add(PodcastBPDecorator.decorateHBoxFactory(
+				 * new HBox(PodcastBPDecorator.HBOXPADDING,
+				 * PodcastBPDecorator.decorateRectangleFactory(new Rectangle(),
+				 * PodcastBPDecorator.SMALLRECTANGLEHEIGHT,
+				 * PodcastBPDecorator.SMALLRECTANGLEWIDTH,
+				 * podcastIterator.getArtworkUrl60()), PodcastBPDecorator
+				 * .decorateTextFactory( new
+				 * Text(podcastIterator.getArtistName().length() > 20 ? new
+				 * String(new StringBuilder(
+				 * podcastIterator.getArtistName().substring(0,
+				 * 20)).append("...")) : podcastIterator.getArtistName()),
+				 * PodcastBPDecorator.SMALLTEXTSIZE), subscribeButton)));
+				 */
+				podcastsContainer.add(HBoxBuilder.create().image(podcastIterator.getArtworkUrl60())
+						.artist(podcastIterator.getArtistName()).button(new ButtonSample() {
+							{
+								setOnAction(new EventHandler<ActionEvent>() {
+									@Override
+									public void handle(ActionEvent event) {
+										removefromDB(podcastIterator.getArtistName());
+									}
+								});
+								setText(UNSUBSCRIBE);
+								setTooltip(new Tooltip(CLICKFORUNSUBSCRIBE));
+							}
+						}).build());
 			}
 			// actionok miatt meg kell tartani a listviewt
 			podcastListView = PodcastBPDecorator.decorateListViewFactory(new ListView<HBox>(podcastsContainer),
 					PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.PODCASTLISTVIEWHEIGHT);
 			// setmargin miatt meg kell tartani a podcastlistvboxot is
-			VBox podcastListVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING,
+			VBox podcastListVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
 					PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST), PodcastBPDecorator.BIGTEXTSIZE),
 					podcastListView);
 			setMargin(podcastListVBox, new Insets(PodcastBPDecorator.PADDING));
@@ -112,7 +134,7 @@ public class PodcastBorderPaneView extends BorderPane {
 			setLeft(podcastListVBox);
 		} else {
 			// szintén a setmargin miatt kel a podcastVbox is
-			VBox podcastVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING,
+			VBox podcastVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
 					PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST), PodcastBPDecorator.BIGTEXTSIZE),
 					PodcastBPDecorator.decorateHBoxFactory(
 							new HBox(PodcastBPDecorator.HBOXPADDING,
@@ -181,7 +203,7 @@ public class PodcastBorderPaneView extends BorderPane {
 
 	private void showEmptyEpisodesList() {
 		// setmargin miatt kell az epoisodesVBox
-		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING,
+		VBox episodeVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
 				PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES), PodcastBPDecorator.BIGTEXTSIZE),
 				PodcastBPDecorator.decorateHBoxFactory(
 						new HBox(PodcastBPDecorator.HBOXPADDING,
@@ -245,7 +267,7 @@ public class PodcastBorderPaneView extends BorderPane {
 		episodeListView = PodcastBPDecorator.decorateListViewFactory(new ListView<HBox>(episodesContainer),
 				PodcastBPDecorator.EPISODESLISTWIDTH, PodcastBPDecorator.EPISODESLISTHEIGHT);
 		// marad mer setmargin megint
-		VBox episodeVBox = new VBox(PodcastBPDecorator.DEFAULTVBOXPADDING,
+		VBox episodeVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
 				PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES), PodcastBPDecorator.BIGTEXTSIZE),
 				episodeListView);
 		setMargin(episodeVBox, new Insets(PodcastBPDecorator.PADDING));
