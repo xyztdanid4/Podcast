@@ -12,25 +12,21 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
-import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.SearchBPDecorator;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
-import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
-import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
-public class SearchBorderPane extends BorderPane {
+public class SearchBorderPaneView extends BorderPane {
 	private static final String SEARCHTEXTFIELD_PROMPTTEXT = "SEARCH ME!";
 	private static final String SEARCHTEXTFIELD_TOOLTIP = "Type something, you would like to podcast!";
 	private static final String SEARCHBUTTON_TOOLTIP = "Click me for search!";
@@ -45,24 +41,46 @@ public class SearchBorderPane extends BorderPane {
 	private ButtonSample searchButton;
 	private HBox searchItemsContainerHbox;
 	private TextFieldSample searchTextField;
-	private PodcastContainer searchPodcastContainer;
+	// private PodcastContainer searchPodcastContainer;
 	private ObservableList<HBox> searchResultList;
 	private ListView searchResultListView;
 	private ObservableList<HBox> episodesList;
 	private ListView episodesListView;
 	private VBox podcastListVBox;
 	private VBox episodesListVBox;
+	private SearchBorderPaneController searchBorderPaneController;
 
-	public SearchBorderPane() {
+	public SearchBorderPaneView() {
+		searchBorderPaneController = new SearchBorderPaneController();
 		searchTextField = SearchBPDecorator.decorateTextFieldSampleFactory(
-				new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP),
-				SearchBPDecorator.SEARCHTEXTFIELDWIDTH, SearchBPDecorator.SEARCHTEXTFIELDHEIGHT);
+				new TextFieldSample(SEARCHTEXTFIELD_PROMPTTEXT, SEARCHTEXTFIELD_TOOLTIP) {
+					{
+						setOnKeyPressed(new EventHandler<KeyEvent>() {
+							@Override
+							public void handle(KeyEvent event) {
+								if (event.getCode() == KeyCode.ENTER) {
+									searchButton.fire();
+								}
+							}
+						});
+					}
+				}, SearchBPDecorator.SEARCHTEXTFIELDWIDTH, SearchBPDecorator.SEARCHTEXTFIELDHEIGHT);
+
 		searchButton = SearchBPDecorator
-				.decorateButtonSampleFactory(new ButtonSample(SEARCHBUTTON_TEXT, SEARCHBUTTON_TOOLTIP));
+				.decorateButtonSampleFactory(new ButtonSample(SEARCHBUTTON_TEXT, SEARCHBUTTON_TOOLTIP) {
+					{
+						setOnAction((ActionEvent event) -> {
+							// startSearchPodcast();
+							searchBorderPaneController.startSearchPodcast(searchTextField.getText());
+							showSearchResult();
+						});
+						disableProperty().bind(Bindings.isEmpty(searchTextField.textProperty()));
+					}
+				});
 		setTop(new HBox(SearchBPDecorator.HBOXPADDING, searchTextField, searchButton));
-		setButtonDisability();
-		setSearchButtonFunctionality();
-		setSearchTextFieldKeyEvent();
+		// setButtonDisability();
+		// setSearchButtonFunctionality();
+		// setSearchTextFieldKeyEvent();
 		setPadding();
 		showPodcastList();
 		showEpisodesList();
@@ -74,39 +92,38 @@ public class SearchBorderPane extends BorderPane {
 				SearchBPDecorator.PADDING));
 	}
 
-	private void setSearchTextFieldKeyEvent() {
-		searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.ENTER) {
-					searchButton.fire();
-				}
-			}
-		});
-	}
+	/*
+	 * private void setSearchTextFieldKeyEvent() {
+	 * searchTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	 * 
+	 * @Override public void handle(KeyEvent event) { if (event.getCode() ==
+	 * KeyCode.ENTER) { searchButton.fire(); } } }); }
+	 */
 
-	private void setButtonDisability() {
-		searchButton.disableProperty().bind(Bindings.isEmpty(searchTextField.textProperty()));
-	}
+	/*
+	 * private void setButtonDisability() {
+	 * searchButton.disableProperty().bind(Bindings.isEmpty(searchTextField.
+	 * textProperty())); }
+	 */
 
-	private void setSearchButtonFunctionality() {
-		searchButton.setOnAction((ActionEvent event) -> {
-			startSearchPodcast();
-		});
-	}
-
-	private void startSearchPodcast() {
-		PodcastJsonParser jsonParser = new PodcastJsonParser(new String("https://itunes.apple.com/search?term="
-				+ searchTextField.getText() + "&entity=podcast&media=podcast&limit=5"));
-		searchPodcastContainer = jsonParser.getSearchResult();
-		showSearchResult();
-	}
+	/*
+	 * private void setSearchButtonFunctionality() {
+	 * searchButton.setOnAction((ActionEvent event) -> { startSearchPodcast();
+	 * }); }
+	 */
+	/*
+	 * private void startSearchPodcast() { PodcastJsonParser jsonParser = new
+	 * PodcastJsonParser(new String("https://itunes.apple.com/search?term=" +
+	 * searchTextField.getText() + "&entity=podcast&media=podcast&limit=5"));
+	 * searchPodcastContainer = jsonParser.getSearchResult();
+	 * showSearchResult(); }
+	 */
 
 	private void showSearchResult() {
 		clearLists();
-		for (Podcast podcast : searchPodcastContainer.getResults()) {
+		for (Podcast podcast : searchBorderPaneController.getSearchPodcastContainer().getResults()) {
 			ButtonSample subscribeButton;
-			if (isPodcastSubscribed(podcast.getArtistName())) {
+			if (searchBorderPaneController.isPodcastSubscribed(podcast.getArtistName())) {
 				subscribeButton = SearchBPDecorator.decorateButtonSampleFactory(
 						new ButtonSample(ALREADYSUBSCRIBED_TEXT, ALREADYSUBSCRIBED_TOOLTIP));
 				subscribeButton.setDisable(true);
@@ -115,21 +132,34 @@ public class SearchBorderPane extends BorderPane {
 						.decorateButtonSampleFactory(new ButtonSample(SUBSCRIBED_TEXT, SUBSCRIBED_TOOLTIP));
 				subscribeButton.setDisable(false);
 				subscribeButton.setOnAction((ActionEvent event) -> {
-					XmlParser xmlParser = new XmlParser(podcast.getFeedUrl());
-					podcast.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
-					subscribe(podcast);
+					/*
+					 * XmlParser xmlParser = new
+					 * XmlParser(podcast.getFeedUrl());
+					 * podcast.setPodcastEpisode(new
+					 * ArrayList<PodcastEpisode>(xmlParser.readFeed()));
+					 * subscribe(podcast);
+					 */
+					searchBorderPaneController.subscribe(podcast);
 					subscribeButton.setDisable(true);
 					subscribeButton.setText(ALREADYSUBSCRIBED_TEXT);
 					subscribeButton.setTooltip(new Tooltip(ALREADYSUBSCRIBED_TOOLTIP));
 				});
 			}
-			searchResultList.add(SearchBPDecorator.decorateHBoxFactory(new HBox(SearchBPDecorator.PADDING,
-					SearchBPDecorator.decorateRectangleFactory(new Rectangle(), SearchBPDecorator.SMALLRECTANGLEHEIGHT,
-							SearchBPDecorator.SMALLRECTANGLEWIDTH, podcast.getArtworkUrl60()),
-					SearchBPDecorator.decorateTextFactory(new Text(podcast.getArtistName().length() > 20
-							? new String(new StringBuilder(podcast.getArtistName().substring(0, 20)).append("..."))
-							: podcast.getArtistName()), SearchBPDecorator.SMALLTEXTSIZE),
-					subscribeButton)));
+			/*
+			 * searchResultList.add(SearchBPDecorator.decorateHBoxFactory(new
+			 * HBox(SearchBPDecorator.PADDING,
+			 * SearchBPDecorator.decorateRectangleFactory(new Rectangle(),
+			 * SearchBPDecorator.SMALLRECTANGLEHEIGHT,
+			 * SearchBPDecorator.SMALLRECTANGLEWIDTH,
+			 * podcast.getArtworkUrl60()),
+			 * SearchBPDecorator.decorateTextFactory(new
+			 * Text(podcast.getArtistName().length() > 20 ? new String(new
+			 * StringBuilder(podcast.getArtistName().substring(0,
+			 * 20)).append("...")) : podcast.getArtistName()),
+			 * SearchBPDecorator.SMALLTEXTSIZE), subscribeButton)));
+			 */
+			searchResultList.add(HBoxBuilder.create().smallRectangle(podcast.getArtworkUrl60())
+					.artist(podcast.getArtistName()).noDecoratebutton(subscribeButton).build());
 		}
 		if (!searchResultList.isEmpty()) {
 			enableLists();
@@ -144,51 +174,54 @@ public class SearchBorderPane extends BorderPane {
 			if (!searchResultListView.getSelectionModel().isEmpty()) {
 				episodesList.clear();
 				int selected = searchResultListView.getSelectionModel().getSelectedIndex();
-				XmlParser xmlParser = new XmlParser(searchPodcastContainer.getResults().get(selected).getFeedUrl());
-				searchPodcastContainer.getResults().get(selected)
+				XmlParser xmlParser = new XmlParser(
+						searchBorderPaneController.getSearchPodcastContainer().getResults().get(selected).getFeedUrl());
+				searchBorderPaneController.getSearchPodcastContainer().getResults().get(selected)
 						.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
-				for (PodcastEpisode podcastEpisode : searchPodcastContainer.getResults().get(selected)
-						.getPodcastEpisode()) {
+				for (PodcastEpisode podcastEpisode : searchBorderPaneController.getSearchPodcastContainer().getResults()
+						.get(selected).getPodcastEpisode()) {
 					HBox itemHbox = null;
 					Image image = new Image(podcastEpisode.getImage());
 					if (image.isError()) {
 						try {
 							// action miatt meg kell hagyni
-							itemHbox = SearchBPDecorator
-									.decorateHBoxFactory(
-											new HBox(SearchBPDecorator.PADDING,
-													SearchBPDecorator.decorateImageViewFactory(
-															new ImageView(new Image(
-																	podcastEpisode.getImage())),
-													SearchBPDecorator.IMAGEHEIGHT,
-													SearchBPDecorator.IMAGEWIDTH), SearchBPDecorator
-															.decorateTextFactory(
-																	new Text(podcastEpisode.getTitle().length() > 40
-																			? new String(new StringBuilder(
-																					podcastEpisode.getTitle()
-																							.substring(0, 40))
-																									.append("..."))
-																			: podcastEpisode.getTitle()),
-																	SearchBPDecorator.SMALLTEXTSIZE)));
+							/*
+							 * itemHbox = SearchBPDecorator
+							 * .decorateHBoxFactory( new
+							 * HBox(SearchBPDecorator.PADDING,
+							 * SearchBPDecorator.decorateImageViewFactory( new
+							 * ImageView(new Image( podcastEpisode.getImage())),
+							 * SearchBPDecorator.IMAGEHEIGHT,
+							 * SearchBPDecorator.IMAGEWIDTH), SearchBPDecorator
+							 * .decorateTextFactory( new
+							 * Text(podcastEpisode.getTitle().length() > 40 ?
+							 * new String(new StringBuilder(
+							 * podcastEpisode.getTitle() .substring(0, 40))
+							 * .append("...")) : podcastEpisode.getTitle()),
+							 * SearchBPDecorator.SMALLTEXTSIZE)));
+							 */
+							itemHbox = HBoxBuilder.create().image(podcastEpisode.getImage())
+									.title(podcastEpisode.getTitle()).build();
 						} catch (Exception e) {
 							e.printStackTrace();
 							System.out.print("IMAGEHIBA SEARCHBORDERPANE");
 						}
 					} else {
-						itemHbox = SearchBPDecorator.decorateHBoxFactory(new HBox(SearchBPDecorator.PADDING,
-								SearchBPDecorator.decorateRectangleFactory(new Rectangle(),
-										SearchBPDecorator.SMALLRECTANGLEHEIGHT, SearchBPDecorator.SMALLRECTANGLEWIDTH,
-										podcastEpisode
-												.getImage()),
-								SearchBPDecorator
-										.decorateTextFactory(
-												new Text(
-														podcastEpisode.getTitle().length() > 40
-																? new String(new StringBuilder(
-																		podcastEpisode.getTitle().substring(0, 40))
-																				.append("..."))
-																: podcastEpisode.getTitle()),
-												SearchBPDecorator.SMALLTEXTSIZE)));
+						/*
+						 * itemHbox = SearchBPDecorator.decorateHBoxFactory(new
+						 * HBox(SearchBPDecorator.PADDING,
+						 * SearchBPDecorator.decorateRectangleFactory(new
+						 * Rectangle(), SearchBPDecorator.SMALLRECTANGLEHEIGHT,
+						 * SearchBPDecorator.SMALLRECTANGLEWIDTH, podcastEpisode
+						 * .getImage()), SearchBPDecorator .decorateTextFactory(
+						 * new Text( podcastEpisode.getTitle().length() > 40 ?
+						 * new String(new StringBuilder(
+						 * podcastEpisode.getTitle().substring(0, 40))
+						 * .append("...")) : podcastEpisode.getTitle()),
+						 * SearchBPDecorator.SMALLTEXTSIZE)));
+						 */
+						itemHbox = HBoxBuilder.create().smallRectangle(podcastEpisode.getImage())
+								.title(podcastEpisode.getTitle()).build();
 					}
 					episodesList.add(itemHbox);
 				}
@@ -221,10 +254,11 @@ public class SearchBorderPane extends BorderPane {
 		setLeft(podcastListVBox);
 	}
 
-	private boolean isPodcastSubscribed(final String name) {
-		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
-				.isEmpty());
-	}
+	/*
+	 * private boolean isPodcastSubscribed(final String name) { return
+	 * !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter(
+	 * "artistName = ", name).asList() .isEmpty()); }
+	 */
 
 	private void showNoResultFound() {
 		Text text = new Text(new String(NORESULT));
@@ -246,7 +280,8 @@ public class SearchBorderPane extends BorderPane {
 		episodesList.clear();
 	}
 
-	private void subscribe(Podcast podcast) {
-		MorphiaConnector.getInstance().getDataStore().save(podcast);
-	}
+	/*
+	 * private void subscribe(Podcast podcast) {
+	 * MorphiaConnector.getInstance().getDataStore().save(podcast); }
+	 */
 }

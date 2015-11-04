@@ -24,7 +24,7 @@ public class RecommendVBoxView extends VBox {
 		// RecommendListDecorator.LISTWIDTH,
 		// RecommendListDecorator.LISTHEIGHT);
 		for (RecommendListItem item : recommendVBoxController.getRecommendListItems()) {
-			recommendList.add(HBoxBuilder.create().image(item.getImage()).artist(item.getArtist()).build());
+			recommendList.add(HBoxBuilder.create().smallRectangle(item.getImage()).artist(item.getArtist()).build());
 			// TESZT MIATT
 			// recommendList.add(ListItemBuilder.getInstance().build(item.getArtist()));
 		}

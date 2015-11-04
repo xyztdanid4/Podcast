@@ -38,9 +38,6 @@ public class LoginGridPane extends GridPaneSample {
 	private static ButtonSample cancelButton;
 	private static TextFieldSample nameTextField;
 	private static PasswordFieldSample PasswordField;
-	private static LabelSample messageLabel;
-	private static LabelSample nameLabel;
-	private static LabelSample passwordLabel;
 
 	public LoginGridPane() {
 		LoginGridPaneController loginGridPaneController = new LoginGridPaneController();
@@ -98,19 +95,26 @@ public class LoginGridPane extends GridPaneSample {
 						});
 					}
 				});
-
-		messageLabel = LoginGridPaneDecorator
-				.decorateLabelSampleFactory(new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP));
-
-		nameLabel = LoginGridPaneDecorator
-				.decorateLabelSampleFactory(new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP));
-
-		passwordLabel = LoginGridPaneDecorator
-				.decorateLabelSampleFactory(new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP));
-
-		add(messageLabel, LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
-		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
-		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
+		/*
+		 * LabelSample messageLabel = LoginGridPaneDecorator
+		 * .decorateLabelSampleFactory(new LabelSample(MESSAGELABEL_TEXT,
+		 * MESSAGELABEL_TOOLTIP));
+		 * 
+		 * LabelSample nameLabel = LoginGridPaneDecorator
+		 * .decorateLabelSampleFactory(new LabelSample(NAMELABEL_TEXT,
+		 * NAMELABEL_TOOLTIP));
+		 * 
+		 * LabelSample passwordLabel = LoginGridPaneDecorator
+		 * .decorateLabelSampleFactory(new LabelSample(PASSWORDLABEL_TEXT,
+		 * PASSWORDLABEL_TOOLTIP));
+		 */
+		add(LoginGridPaneDecorator.decorateLabelSampleFactory(new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP)),
+				LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
+		add(LoginGridPaneDecorator.decorateLabelSampleFactory(new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP)),
+				LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
+		add(LoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP)),
+				LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
 		add(nameTextField, LoginGridPaneDecorator.NAMETEXTFIELDX, LoginGridPaneDecorator.NAMETEXTFIELDY);
 		add(PasswordField, LoginGridPaneDecorator.PASSWORDFIELDX, LoginGridPaneDecorator.PASSWORDFIELDY);
 		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);

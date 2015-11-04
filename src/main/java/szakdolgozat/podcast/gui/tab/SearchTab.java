@@ -1,6 +1,6 @@
 package szakdolgozat.podcast.gui.tab;
 
-import szakdolgozat.podcast.gui.borderpane.SearchBorderPane;
+import szakdolgozat.podcast.gui.borderpane.SearchBorderPaneView;
 
 public class SearchTab extends ApplicationTab {
 	private static final String SEARCHTAB_IMAGEPATH = "appbar.section.expand.png";
@@ -13,6 +13,6 @@ public class SearchTab extends ApplicationTab {
 
 	@Override
 	protected void onselection() {
-		setContent(new SearchBorderPane());
+		setContent(new SearchBorderPaneView());
 	}
 }
