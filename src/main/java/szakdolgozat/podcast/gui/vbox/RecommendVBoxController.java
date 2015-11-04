@@ -9,10 +9,10 @@ import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.jsonparser.SimilarPodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
-public class RecommendVBoxData {
+public class RecommendVBoxController {
 	private List<RecommendListItem> recommendListItems;
 
-	public RecommendVBoxData() {
+	public RecommendVBoxController() {
 		recommendListItems = new ArrayList<RecommendListItem>();
 		for (Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
 			SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(

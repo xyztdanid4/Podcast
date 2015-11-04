@@ -2,7 +2,7 @@ package szakdolgozat.podcast.gui.stage;
 
 import javafx.scene.Scene;
 import szakdolgozat.podcast.gui.samples.StageSample;
-import szakdolgozat.podcast.tabpane.LoginTabPane;
+import szakdolgozat.podcast.gui.tabpane.LoginTabPane;
 
 public class LoginStage extends StageSample {
 	private static final String LOGINSTAGETEXT = "Login!";

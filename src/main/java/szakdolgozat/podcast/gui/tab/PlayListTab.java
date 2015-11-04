@@ -7,4 +7,9 @@ public class PlayListTab extends ApplicationTab {
 	public PlayListTab() {
 		super(PLAYLISTTAB_IMAGEPATH, PLAYLISTTAB_TITLE);
 	}
+
+	@Override
+	protected void onselection() {
+
+	}
 }

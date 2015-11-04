@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.tabpane;
+package szakdolgozat.podcast.gui.tabpane;
 
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;

@@ -16,8 +16,6 @@ import szakdolgozat.podcast.gui.samples.PasswordFieldSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 import szakdolgozat.podcast.gui.stage.LoginStage;
 import szakdolgozat.podcast.gui.stage.MainStage;
-import szakdolgozat.podcast.morphia.MorphiaLoginConnector;
-import szakdolgozat.podcast.user.User;
 
 public class LoginGridPane extends GridPaneSample {
 	private static final String MESSAGELABEL_TEXT = "Welcome, please Login!";
@@ -45,20 +43,71 @@ public class LoginGridPane extends GridPaneSample {
 	private static LabelSample passwordLabel;
 
 	public LoginGridPane() {
+		LoginGridPaneController loginGridPaneController = new LoginGridPaneController();
 		nameTextField = LoginGridPaneDecorator
-				.decorateTextFieldFactory(new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP));
-		PasswordField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
-		LoginGridPaneDecorator.decorateTextFieldFactory(PasswordField);
-		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTONSMAPLE_TOOLTIP);
-		LoginGridPaneDecorator.decorateButtonFactory(okButton);
-		cancelButton = new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTONS_TOOLTIP);
-		LoginGridPaneDecorator.decorateButtonFactory(cancelButton);
-		messageLabel = new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabelFactory(messageLabel);
-		nameLabel = new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabelFactory(nameLabel);
-		passwordLabel = new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP);
-		LoginGridPaneDecorator.decorateLabelFactory(passwordLabel);
+				.decorateTextFieldSampleFactory(new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP));
+
+		PasswordField = LoginGridPaneDecorator.decoratePasswordFieldSampleFactory(
+				new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP) {
+					{
+						setOnKeyPressed(new EventHandler<KeyEvent>() {
+							@Override
+							public void handle(KeyEvent event) {
+								if (event.getCode() == KeyCode.ENTER) {
+									okButton.fire();
+								}
+							}
+						});
+					}
+				});
+		okButton = LoginGridPaneDecorator
+				.decorateButtonSampleFactory(new ButtonSample(OKBUTTON_TEXT, OKBUTTONSMAPLE_TOOLTIP) {
+					{
+						setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+									LoginStage.getInstance().hide();
+									LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
+								} else {
+									if (loginGridPaneController.checkUserAndPassword(nameTextField.getText(),
+											PasswordField.getText())) {
+										InformationContainer.getInstance().setOwner(nameTextField.getText());
+										MainStage.getInstance().show();
+										LoginStage.getInstance().hide();
+									} else {
+										LoginStage.getInstance().hide();
+										LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
+									}
+								}
+							}
+						});
+						disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
+						disableProperty().bind(Bindings.isEmpty(PasswordField.textProperty()));
+					}
+				});
+
+		cancelButton = LoginGridPaneDecorator
+				.decorateButtonSampleFactory(new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTONS_TOOLTIP) {
+					{
+						setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								Platform.exit();
+							}
+						});
+					}
+				});
+
+		messageLabel = LoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP));
+
+		nameLabel = LoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP));
+
+		passwordLabel = LoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP));
+
 		add(messageLabel, LoginGridPaneDecorator.MESSAGELABELX, LoginGridPaneDecorator.MESSAGLABELY);
 		add(nameLabel, LoginGridPaneDecorator.NAMELABELX, LoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, LoginGridPaneDecorator.PASSWORDLABELX, LoginGridPaneDecorator.PASSWORDLABELY);
@@ -66,56 +115,48 @@ public class LoginGridPane extends GridPaneSample {
 		add(PasswordField, LoginGridPaneDecorator.PASSWORDFIELDX, LoginGridPaneDecorator.PASSWORDFIELDY);
 		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);
 		add(cancelButton, LoginGridPaneDecorator.CANCELBUTTONX, LoginGridPaneDecorator.CANCELBUTTONY);
-		setOkButtonFunctionality();
-		setCancelButtonFunctinality();
-		setButtonDisability();
-		setPasswordTextFieldKeyEvent();
+		// setOkButtonFunctionality();
+		// setCancelButtonFunctinality();
+		// setButtonDisability();
+		// setPasswordTextFieldKeyEvent();
 		LoginGridPaneDecorator.decorateFactory(this);
 	}
 
-	private void setCancelButtonFunctinality() {
-		cancelButton.setOnAction((ActionEvent event) -> {
-			Platform.exit();
-		});
-	}
+	/*
+	 * private void setCancelButtonFunctinality() {
+	 * cancelButton.setOnAction((ActionEvent event) -> { Platform.exit(); }); }
+	 */
+	/*
+	 * private void setOkButtonFunctionality() {
+	 * okButton.setOnAction((ActionEvent event) -> { if
+	 * (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+	 * LoginStage.getInstance().hide(); LoginErrorDialog errorDialog = new
+	 * LoginErrorDialog(MATCHERROR); } else { if (checkUserAndPassword()) {
+	 * InformationContainer.getInstance().setOwner(nameTextField.getText());
+	 * MainStage.getInstance().show(); LoginStage.getInstance().hide(); } else {
+	 * LoginStage.getInstance().hide(); LoginErrorDialog errorDialog = new
+	 * LoginErrorDialog(ERRORMESSAGE); } } }); }
+	 */
+	/*
+	 * private void setButtonDisability() {
+	 * okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.
+	 * textProperty()));
+	 * okButton.disableProperty().bind(Bindings.isEmpty(PasswordField.
+	 * textProperty())); }
+	 */
 
-	private void setOkButtonFunctionality() {
-		okButton.setOnAction((ActionEvent event) -> {
-			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
-				LoginStage.getInstance().hide();
-				LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
-			} else {
-				if (checkUserAndPassword()) {
-					InformationContainer.getInstance().setOwner(nameTextField.getText());
-					MainStage.getInstance().show();
-					LoginStage.getInstance().hide();
-				} else {
-					LoginStage.getInstance().hide();
-					LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
-				}
-			}
-		});
-	}
+	/*
+	 * private boolean checkUserAndPassword() { return
+	 * !(MorphiaLoginConnector.getDataStore().createQuery(User.class).filter(
+	 * "name = ", nameTextField.getText()) .filter("password = ",
+	 * PasswordField.getText()).asList().isEmpty()); }
+	 */
 
-	private void setButtonDisability() {
-		okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
-		okButton.disableProperty().bind(Bindings.isEmpty(PasswordField.textProperty()));
-	}
-
-	private boolean checkUserAndPassword() {
-		return !(MorphiaLoginConnector.getDataStore().createQuery(User.class).filter("name = ", nameTextField.getText())
-				.filter("password = ", PasswordField.getText()).asList().isEmpty());
-	}
-
-	private void setPasswordTextFieldKeyEvent() {
-		PasswordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.ENTER) {
-					okButton.fire();
-				}
-			}
-		});
-	}
-
+	/*
+	 * private void setPasswordTextFieldKeyEvent() {
+	 * PasswordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	 * 
+	 * @Override public void handle(KeyEvent event) { if (event.getCode() ==
+	 * KeyCode.ENTER) { okButton.fire(); } } }); }
+	 */
 }

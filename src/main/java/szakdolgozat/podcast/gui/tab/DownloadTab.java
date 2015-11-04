@@ -10,4 +10,9 @@ public class DownloadTab extends ApplicationTab {
 		super(DOWNLOADTAB_IMAGEPATH, DOWNLOADTAB_TITLE);
 		setContent(new DownloadBorderPane());
 	}
+
+	@Override
+	protected void onselection() {
+
+	}
 }

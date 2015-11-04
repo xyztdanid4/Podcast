@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import szakdolgozat.podcast.gui.stage.LoginStage;
 
 public class LoginErrorDialog extends ErrorDialog {
-
 	public LoginErrorDialog(final String message) {
 		super(message);
 		setOkButtonFunctinolity();

@@ -12,14 +12,14 @@ import szakdolgozat.podcast.gui.decorator.RecommendListDecorator;
 
 public class RecommendVBoxView extends VBox {
 	private static final String RECOMMEND = "Similar podcast";
-	private ListView<HBox> recommendListView;
-	private ObservableList<HBox> recommendList;
-	private RecommendVBoxData recommendVBoxController;
+	// private ListView<HBox> recommendListView;
+	// private ObservableList<HBox> recommendList;
+	// private RecommendVBoxController recommendVBoxController;
 
 	public RecommendVBoxView() {
 		super(RecommendListDecorator.PADDING);
-		recommendVBoxController = new RecommendVBoxData();
-		recommendList = FXCollections.observableArrayList();
+		RecommendVBoxController recommendVBoxController = new RecommendVBoxController();
+		ObservableList<HBox> recommendList = FXCollections.observableArrayList();
 		// RecommendListDecorator.decorateListViewFactory(recommendListView,
 		// RecommendListDecorator.LISTWIDTH,
 		// RecommendListDecorator.LISTHEIGHT);
@@ -29,14 +29,18 @@ public class RecommendVBoxView extends VBox {
 			// recommendList.add(ListItemBuilder.getInstance().build(item.getArtist()));
 		}
 
-		recommendListView = new ListView<HBox>(recommendList);
-		setMargin(recommendListView, new Insets(RecommendListDecorator.PADDING));
-		Text recommendText = new Text(new String(RECOMMEND));
-		RecommendListDecorator.decorateTextFactory(recommendText, RecommendListDecorator.BIGTEXTSIZE);
-		recommendListView = new ListView<HBox>(FXCollections.observableArrayList(recommendList));
-		RecommendListDecorator.decorateListViewFactory(recommendListView, RecommendListDecorator.LISTWIDTH,
+		ListView<HBox> recommendListView = RecommendListDecorator.decorateListViewFactory(
+				new ListView<HBox>(FXCollections.observableArrayList(recommendList)), RecommendListDecorator.LISTWIDTH,
 				RecommendListDecorator.LISTHEIGHT);
-		getChildren().addAll(recommendText, recommendListView);
+		setMargin(recommendListView, new Insets(RecommendListDecorator.PADDING));
+
+		/*
+		 * Text recommendText = RecommendListDecorator.decorateTextFactory(new
+		 * Text(new String(RECOMMEND)), RecommendListDecorator.BIGTEXTSIZE);
+		 */
+
+		getChildren().addAll(RecommendListDecorator.decorateTextFactory(new Text(new String(RECOMMEND)),
+				RecommendListDecorator.BIGTEXTSIZE), recommendListView);
 
 		RecommendListDecorator.decorate(this);
 		setPadding();

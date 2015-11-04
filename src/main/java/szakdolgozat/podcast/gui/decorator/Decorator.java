@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +28,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
+import szakdolgozat.podcast.gui.samples.LabelSample;
+import szakdolgozat.podcast.gui.samples.PasswordFieldSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 
 public class Decorator {
@@ -210,7 +213,30 @@ public class Decorator {
 		return label;
 	}
 
+	public static LabelSample decorateLabelSampleFactory(LabelSample label) {
+		label.setTextFill(Color.web(TEXTCOLOR));
+		return label;
+	}
+
 	public static TextField decorateTextFieldFactory(TextField textField) {
+		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textField.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textField.setStyle("-fx-text-inner-color: white;");
+		return textField;
+	}
+
+	public static PasswordField decoratePasswordFieldFactory(PasswordField textField) {
+		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textField.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textField.setStyle("-fx-text-inner-color: white;");
+		return textField;
+	}
+
+	public static PasswordFieldSample decoratePasswordFieldSampleFactory(PasswordFieldSample textField) {
 		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		textField.setBackground(new Background(
@@ -228,6 +254,16 @@ public class Decorator {
 		textFieldSample.setStyle("-fx-text-inner-color: white;");
 		textFieldSample.setMaxSize(width, height);
 		textFieldSample.setPrefSize(width, height);
+		return textFieldSample;
+	}
+
+	public static TextFieldSample decorateTextFieldSampleFactory(TextFieldSample textFieldSample) {
+		textFieldSample.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textFieldSample.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textFieldSample.setStyle("-fx-text-inner-color: white;");
+
 		return textFieldSample;
 	}
 

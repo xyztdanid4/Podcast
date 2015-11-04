@@ -17,10 +17,9 @@ public abstract class ErrorDialog extends GridPane {
 
 	public ErrorDialog(final String message) {
 		dialog = new StageSample(WRONG);
-		okButton = new ButtonSample(OKBUTTONTEXT, OKBUTTONTOOLTIP);
-		ErrorDialogDecorator.decorateButtonFactory(okButton);
-		Text text = new Text(new String(message));
-		ErrorDialogDecorator.decorateTextFactory(text, ErrorDialogDecorator.SMALLTEXTSIZE);
+		okButton = ErrorDialogDecorator.decorateButtonSampleFactory(new ButtonSample(OKBUTTONTEXT, OKBUTTONTOOLTIP));
+		Text text = ErrorDialogDecorator.decorateTextFactory(new Text(new String(message)),
+				ErrorDialogDecorator.SMALLTEXTSIZE);
 		setMargin(text, new Insets(ErrorDialogDecorator.PADDING));
 		add(text, ErrorDialogDecorator.labelX, ErrorDialogDecorator.labelY);
 		add(okButton, ErrorDialogDecorator.buttonX, ErrorDialogDecorator.buttonY);

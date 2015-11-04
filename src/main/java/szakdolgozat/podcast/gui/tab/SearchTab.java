@@ -1,7 +1,5 @@
 package szakdolgozat.podcast.gui.tab;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import szakdolgozat.podcast.gui.borderpane.SearchBorderPane;
 
 public class SearchTab extends ApplicationTab {
@@ -13,18 +11,8 @@ public class SearchTab extends ApplicationTab {
 		adaptOnSelection();
 	}
 
-	private void adaptOnSelection() {
-		selectedProperty().addListener(new InvalidationListener() {
-			@Override
-			public void invalidated(Observable observable) {
-				if (isSelected()) {
-					onselection();
-				}
-			}
-		});
-	}
-
-	private void onselection() {
+	@Override
+	protected void onselection() {
 		setContent(new SearchBorderPane());
 	}
 }

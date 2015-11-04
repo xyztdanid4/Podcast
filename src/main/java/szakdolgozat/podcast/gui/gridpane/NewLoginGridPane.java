@@ -1,14 +1,10 @@
 package szakdolgozat.podcast.gui.gridpane;
 
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.gui.decorator.NewLoginGridPaneDecorator;
 import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
@@ -18,8 +14,6 @@ import szakdolgozat.podcast.gui.samples.PasswordFieldSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 import szakdolgozat.podcast.gui.stage.LoginStage;
 import szakdolgozat.podcast.gui.stage.MainStage;
-import szakdolgozat.podcast.morphia.MorphiaLoginConnector;
-import szakdolgozat.podcast.user.User;
 
 public class NewLoginGridPane extends GridPaneSample {
 	private static final String MATCHERROR = "You should use only englush abc letters!";
@@ -61,29 +55,94 @@ public class NewLoginGridPane extends GridPaneSample {
 	private static LabelSample emailLabel;
 
 	public NewLoginGridPane() {
-		nameTextField = new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP);
-		NewLoginGridPaneDecorator.decorateTextFieldFactory(nameTextField);
-		passwordTextField = new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextFieldFactory(passwordTextField);
-		okButton = new ButtonSample(OKBUTTON_TEXT, OKBUTTON_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateButtonFactory(okButton);
-		cancelButton = new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTON_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateButtonFactory(cancelButton);
-		passwordAgainTextField = new PasswordFieldSample(PASSWORDAGAINTEXTFIELD_PROMPTTEXT,
-				PASSWORDAGAINTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextFieldFactory(passwordAgainTextField);
-		emailTextField = new TextFieldSample(EMAILTEXTFIELD_PROMTTEXT, EMAILTTEXTFIELD_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateTextFieldFactory(emailTextField);
-		messageLabel = new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabelFactory(messageLabel);
-		nameLabel = new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabelFactory(nameLabel);
-		passwordLabel = new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabelFactory(passwordLabel);
-		passwordAgainLabel = new LabelSample(PASSWORDAGAINLABEL_TEXT, PASSWORDAGAINLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabelFactory(passwordAgainLabel);
-		emailLabel = new LabelSample(EMAILLABEL_TEXT, EMAILLABEL_TOOLTIP);
-		NewLoginGridPaneDecorator.decorateLabelFactory(emailLabel);
+		NewLoginGridPaneController newLoginGridPaneController = new NewLoginGridPaneController();
+		nameTextField = NewLoginGridPaneDecorator
+				.decorateTextFieldSampleFactory(new TextFieldSample(NAMETEXTFIELD_PROMPTEXT, NAMETEXTFIELD_TOOLTP));
+
+		passwordTextField = NewLoginGridPaneDecorator.decoratePasswordFieldSampleFactory(
+				new PasswordFieldSample(PASSWORDTEXTFIELD_PROMPTEXT, PASSWORDTEXTFIELD_TOOLTIP) {
+					{
+						setOnKeyPressed(new EventHandler<KeyEvent>() {
+							@Override
+							public void handle(KeyEvent event) {
+								okButton.fire();
+							}
+
+						});
+					}
+				});
+
+		cancelButton = NewLoginGridPaneDecorator
+				.decorateButtonSampleFactory(new ButtonSample(CANCELBUTTON_TEXT, CANCELBUTTON_TOOLTIP) {
+					{
+						setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								Platform.exit();
+							}
+						});
+					}
+				});
+
+		passwordAgainTextField = NewLoginGridPaneDecorator.decoratePasswordFieldSampleFactory(
+				new PasswordFieldSample(PASSWORDAGAINTEXTFIELD_PROMPTTEXT, PASSWORDAGAINTEXTFIELD_TOOLTIP));
+
+		emailTextField = NewLoginGridPaneDecorator
+				.decorateTextFieldSampleFactory(new TextFieldSample(EMAILTEXTFIELD_PROMTTEXT, EMAILTTEXTFIELD_TOOLTIP));
+
+		messageLabel = NewLoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(MESSAGELABEL_TEXT, MESSAGELABEL_TOOLTIP));
+
+		nameLabel = NewLoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(NAMELABEL_TEXT, NAMELABEL_TOOLTIP));
+
+		passwordLabel = NewLoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(PASSWORDLABEL_TEXT, PASSWORDLABEL_TOOLTIP));
+
+		passwordAgainLabel = NewLoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(PASSWORDAGAINLABEL_TEXT, PASSWORDAGAINLABEL_TOOLTIP));
+
+		emailLabel = NewLoginGridPaneDecorator
+				.decorateLabelSampleFactory(new LabelSample(EMAILLABEL_TEXT, EMAILLABEL_TOOLTIP));
+
+		okButton = NewLoginGridPaneDecorator
+				.decorateButtonSampleFactory(new ButtonSample(OKBUTTON_TEXT, OKBUTTON_TOOLTIP) {
+					{
+						setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+									LoginStage.getInstance().hide();
+									LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
+								} else if (!(passwordTextField.getText().equals(passwordAgainTextField.getText()))) {
+									LoginStage.getInstance().hide();
+									LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORPASSWORD);
+								} else
+									if (!(emailTextField.getText().matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
+									LoginStage.getInstance().hide();
+									LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMAILFORMAT);
+								} else {
+									if (newLoginGridPaneController.checkValuesInDB(nameTextField.getText(),
+											emailTextField.getText())) {
+										newLoginGridPaneController.saveUser(nameTextField.getText(),
+												passwordAgainTextField.getText(), emailTextField.getText());
+										newLoginGridPaneController.setDBowner(nameTextField.getText());
+										LoginStage.getInstance().hide();
+										MainStage.getInstance().show();
+									} else {
+										LoginStage.getInstance().hide();
+										LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
+									}
+								}
+							}
+						});
+						disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
+						disableProperty().bind(Bindings.isEmpty(passwordTextField.textProperty()));
+						disableProperty().bind(Bindings.isEmpty(passwordAgainTextField.textProperty()));
+						disableProperty().bind(Bindings.isEmpty(emailTextField.textProperty()));
+					}
+				});
+
 		add(messageLabel, NewLoginGridPaneDecorator.MESSAGELABELX, NewLoginGridPaneDecorator.MESSAGLABELY);
 		add(nameLabel, NewLoginGridPaneDecorator.NAMELABELX, NewLoginGridPaneDecorator.NAMELABELY);
 		add(passwordLabel, NewLoginGridPaneDecorator.PASSWORDLABELX, NewLoginGridPaneDecorator.PASSWORDLABELY);
@@ -97,84 +156,82 @@ public class NewLoginGridPane extends GridPaneSample {
 		add(emailLabel, NewLoginGridPaneDecorator.EMAILLABELX, NewLoginGridPaneDecorator.EMAILLABELY);
 		add(okButton, NewLoginGridPaneDecorator.OKBUTTONX, NewLoginGridPaneDecorator.OKBUTTONY);
 		add(cancelButton, NewLoginGridPaneDecorator.CANCELBUTTONX, NewLoginGridPaneDecorator.CANCELBUTTONY);
-		setOkButtonFunctionality();
-		setCancelButtonFunctinality();
-		setButtonDisability();
-		setPasswordTextFieldKeyEvent();
+		// setOkButtonFunctionality();
+		// setCancelButtonFunctinality();
+		// setButtonDisability();
+		// setPasswordTextFieldKeyEvent();
 		NewLoginGridPaneDecorator.decorateFactory(this);
 	}
 
-	private void setCancelButtonFunctinality() {
-		cancelButton.setOnAction((ActionEvent event) -> {
-			Platform.exit();
-		});
-	}
+	/*
+	 * private void setCancelButtonFunctinality() {
+	 * cancelButton.setOnAction((ActionEvent event) -> { Platform.exit(); }); }
+	 */
 
-	private void setOkButtonFunctionality() {
-		okButton.setOnAction((ActionEvent event) -> {
-			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
-				LoginStage.getInstance().hide();
-				LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
-			} else if (!(passwordTextField.getText().equals(passwordAgainTextField.getText()))) {
-				LoginStage.getInstance().hide();
-				LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORPASSWORD);
-			} else if (!(emailTextField.getText().matches("[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
-				LoginStage.getInstance().hide();
-				LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMAILFORMAT);
-			} else {
-				if (checkValuesInDB()) {
-					saveUser();
-					setDBowner();
-					LoginStage.getInstance().hide();
-					MainStage.getInstance().show();
-				} else {
-					LoginStage.getInstance().hide();
-					LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
-				}
-			}
-		});
-	}
+	/*
+	 * private void setOkButtonFunctionality() {
+	 * okButton.setOnAction((ActionEvent event) -> { if
+	 * (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
+	 * LoginStage.getInstance().hide(); LoginErrorDialog errorDialog = new
+	 * LoginErrorDialog(MATCHERROR); } else if
+	 * (!(passwordTextField.getText().equals(passwordAgainTextField.getText())))
+	 * { LoginStage.getInstance().hide(); LoginErrorDialog errorDialog = new
+	 * LoginErrorDialog(ERRORPASSWORD); } else if
+	 * (!(emailTextField.getText().matches(
+	 * "[a-zA-Z0-9]+[@][a-zA-Z]+[.][a-zA-Z]+"))) {
+	 * LoginStage.getInstance().hide(); LoginErrorDialog errorDialog = new
+	 * LoginErrorDialog(ERRORMAILFORMAT); } else { if (checkValuesInDB()) {
+	 * saveUser(); setDBowner(); LoginStage.getInstance().hide();
+	 * MainStage.getInstance().show(); } else { LoginStage.getInstance().hide();
+	 * LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE); } }
+	 * }); }
+	 */
 
-	private void saveUser() {
-		MorphiaLoginConnector
-				.save(new User(nameTextField.getText(), passwordAgainTextField.getText(), emailTextField.getText()));
-	}
+	/*
+	 * private void saveUser() { MorphiaLoginConnector .save(new
+	 * User(nameTextField.getText(), passwordAgainTextField.getText(),
+	 * emailTextField.getText())); }
+	 */
 
-	private void setDBowner() {
-		InformationContainer.getInstance().setOwner(nameTextField.getText());
-	}
+	/*
+	 * private void setDBowner() {
+	 * InformationContainer.getInstance().setOwner(nameTextField.getText()); }
+	 */
 
-	private void setButtonDisability() {
-		okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
-		okButton.disableProperty().bind(Bindings.isEmpty(passwordTextField.textProperty()));
-		okButton.disableProperty().bind(Bindings.isEmpty(passwordAgainTextField.textProperty()));
-		okButton.disableProperty().bind(Bindings.isEmpty(emailTextField.textProperty()));
-	}
+	/*
+	 * private void setButtonDisability() {
+	 * okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.
+	 * textProperty()));
+	 * okButton.disableProperty().bind(Bindings.isEmpty(passwordTextField.
+	 * textProperty()));
+	 * okButton.disableProperty().bind(Bindings.isEmpty(passwordAgainTextField.
+	 * textProperty()));
+	 * okButton.disableProperty().bind(Bindings.isEmpty(emailTextField.
+	 * textProperty())); }
+	 */
 
-	private boolean checkValuesInDB() {
-		return MorphiaLoginConnector.getDataStore().createQuery(User.class).filter("name = ", nameTextField.getText())
-				.asList().isEmpty()
-				&& MorphiaLoginConnector.getDataStore().createQuery(User.class)
-						.filter("email = ", emailTextField.getText()).asList().isEmpty();
-	}
+	/*
+	 * private boolean checkValuesInDB() { return
+	 * MorphiaLoginConnector.getDataStore().createQuery(User.class).filter(
+	 * "name = ", nameTextField.getText()) .asList().isEmpty() &&
+	 * MorphiaLoginConnector.getDataStore().createQuery(User.class) .filter(
+	 * "email = ", emailTextField.getText()).asList().isEmpty(); }
+	 */
 
-	private void setPasswordTextFieldKeyEvent() {
-		emailTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.ENTER) {
-					okButton.fire();
-				}
-			}
-		});
-	}
+	/*
+	 * private void setPasswordTextFieldKeyEvent() {
+	 * emailTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	 * 
+	 * @Override public void handle(KeyEvent event) { if (event.getCode() ==
+	 * KeyCode.ENTER) { okButton.fire(); } } }); }
+	 */
 
-	private void selectAll() {
-		List<User> query = MorphiaLoginConnector.getDataStore().createQuery(User.class).asList();
-		for (int i = 0; i < query.size(); i++) {
-			System.out.println(query.get(i).getName());
-			System.out.println(query.get(i).getPassword());
-			System.out.println(query.get(i).getEmail());
-		}
-	}
+	/*
+	 * private void selectAll() { List<User> query =
+	 * MorphiaLoginConnector.getDataStore().createQuery(User.class).asList();
+	 * for (int i = 0; i < query.size(); i++) {
+	 * System.out.println(query.get(i).getName());
+	 * System.out.println(query.get(i).getPassword());
+	 * System.out.println(query.get(i).getEmail()); } }
+	 */
 }

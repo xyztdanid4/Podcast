@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.tabpane;
+package szakdolgozat.podcast.gui.tabpane;
 
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
