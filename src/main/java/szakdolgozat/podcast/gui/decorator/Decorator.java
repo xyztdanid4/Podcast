@@ -42,6 +42,7 @@ public class Decorator {
 	public static final String BORDERCOLOR = "#006666";
 	public static final String ITEMBACKGROUNDCOLOR = "#808080";
 	public static final String BACKGROUNDCOLOR = "#191919";
+
 	// textsize
 	public static final int BIGTEXTSIZE = 16;
 	public static final int SMALLTEXTSIZE = 12;
@@ -58,6 +59,8 @@ public class Decorator {
 	public static final int SMALLRECTANGLEWIDTH = 40;
 	public static final int BIGRECTANGLEHEIGHT = 90;
 	public static final int BIGRECTANGLEWIDTH = 90;
+
+	public static final int HELPERVBOXPADDING = 5;
 
 	public Decorator() {
 

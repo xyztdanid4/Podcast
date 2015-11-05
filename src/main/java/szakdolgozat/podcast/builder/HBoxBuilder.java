@@ -1,6 +1,8 @@
 package szakdolgozat.podcast.builder;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
@@ -53,6 +55,11 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
+	public HBoxBuilder smallText(String text) {
+		hbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.SMALLTEXTSIZE));
+		return getInstance();
+	}
+
 	public HBoxBuilder title(String artist) {
 		hbox.getChildren()
 				.add(Decorator.decorateTextFactory(
@@ -85,6 +92,12 @@ public class HBoxBuilder {
 
 	public HBox build() {
 		return hbox;
+	}
+
+	public HBoxBuilder vbox(VBox vbox) {
+		vbox.setAlignment(Pos.CENTER_LEFT);
+		hbox.getChildren().add(vbox);
+		return getInstance();
 	}
 
 	public static HBoxBuilder getInstance() {
