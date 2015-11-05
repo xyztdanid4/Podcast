@@ -30,7 +30,7 @@ public class VBoxBuilder {
 		return getInstance();
 	}
 
-	public VBoxBuilder centerLeftAlignment() {
+	public VBoxBuilder topLeftAlignment() {
 		vbox.setAlignment(Pos.TOP_LEFT);
 		return getInstance();
 	}

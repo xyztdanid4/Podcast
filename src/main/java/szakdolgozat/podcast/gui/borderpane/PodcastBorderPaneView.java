@@ -46,7 +46,6 @@ public class PodcastBorderPaneView extends BorderPane {
 
 	public PodcastBorderPaneView() {
 		podcastBoderPaneController = new PodcastBoderPaneController();
-		// readfromDB();
 		podcastBoderPaneController.readfromDB();
 		PodcastBPDecorator.decorateFactory(this);
 		setPadding();
@@ -61,22 +60,7 @@ public class PodcastBorderPaneView extends BorderPane {
 				PodcastBPDecorator.PADDING));
 	}
 
-	/*
-	 * private void readfromDB() { podcastsFromDBList =
-	 * MorphiaConnector.getDataStore().createQuery(Podcast.class).asList(); }
-	 */
-
 	private void showPodcastEmptyInformation() {
-		/*
-		 * setTop(PodcastBPDecorator .decorateHBoxFactory( new
-		 * HBox(PodcastBPDecorator.HBOXPADDING,
-		 * PodcastBPDecorator.decorateTextFactory(new Text(GETINFO),
-		 * PodcastBPDecorator.BIGTEXTSIZE)),
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXWIDTH,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXHEIGHT));
-		 */
 		setTop(HBoxBuilder.create().bigText(GETINFO).size(PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
 				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT).build());
 	}
@@ -125,6 +109,7 @@ public class PodcastBorderPaneView extends BorderPane {
 											PodcastBPDecorator.SMALLTEXTSIZE)),
 							PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT,
 							PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT));
+
 			setMargin(podcastVBox, new Insets(PodcastBPDecorator.PADDING));
 			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastVBox);
@@ -139,57 +124,9 @@ public class PodcastBorderPaneView extends BorderPane {
 	}
 
 	private void showPodcastInformation() {
-		// readfromDB();
 		podcastBoderPaneController.readfromDB();
 		int selectedindex = podcastListView.getSelectionModel().getSelectedIndex();
-		/*
-		 * setTop(PodcastBPDecorator.decorateHBoxFactory( new
-		 * HBox(PodcastBPDecorator.HBOXPADDING,
-		 * PodcastBPDecorator.decorateHelperVBoxFactory( new
-		 * VBox(PodcastBPDecorator.decorateRectangleFactory(new Rectangle(),
-		 * PodcastBPDecorator.BIGRECTANGLEHEIGHT,
-		 * PodcastBPDecorator.BIGRECTANGLEWIDTH,
-		 * podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex)
-		 * .getArtworkUrl100()))), PodcastBPDecorator
-		 * .decorateHelperVBoxFactory(new
-		 * VBox(PodcastBPDecorator.HELPERVBOXPADDING,
-		 * PodcastBPDecorator.decorateTextFactory( new Text(new
-		 * String(ARTISTLABEL + podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getArtistName())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE),
-		 * PodcastBPDecorator.decorateTextFactory( new Text(new
-		 * String(COLLECTIONNAMELABEL + podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getCollectionName())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE),
-		 * PodcastBPDecorator.decorateTextFactory( new Text(new
-		 * String(COUNTRYLABEL + podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getCountry())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE))),
-		 * PodcastBPDecorator.decorateHelperVBoxFactory(new
-		 * VBox(PodcastBPDecorator.HELPERVBOXPADDING,
-		 * PodcastBPDecorator.decorateTextFactory( new Text(new
-		 * String(FEEDURLLABEL +
-		 * podcastBoderPaneController.getPodcastsFromDBList()
-		 * .get(selectedindex).getFeedUrl())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE), PodcastBPDecorator
-		 * .decorateTextFactory( new Text(new String(GENRELABEL +
-		 * podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getPrimaryGenreName())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE),
-		 * PodcastBPDecorator.decorateTextFactory( new Text(new
-		 * String(LASTRELEASEDATELABEL + podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getReleaseDate())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE), PodcastBPDecorator
-		 * .decorateTextFactory( new Text(new String(TRACKCOUNTLABEL +
-		 * podcastBoderPaneController
-		 * .getPodcastsFromDBList().get(selectedindex).getTrackCount())),
-		 * PodcastBPDecorator.SMALLTEXTSIZE)))),
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXWIDTH,
-		 * PodcastBPDecorator.PODCASTINFORMATIONCONTAINERMAXHEIGHT));
-		 */
-		HBox item = HBoxBuilder.create()
+		setTop(HBoxBuilder.create()
 				.size(PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
 						PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT)
 				.vbox(VBoxBuilder.create()
@@ -212,27 +149,11 @@ public class PodcastBorderPaneView extends BorderPane {
 						.smallText(LASTRELEASEDATELABEL + podcastBoderPaneController.getPodcastsFromDBList()
 								.get(selectedindex).getReleaseDate())
 						.build())
-				.build();
-		setTop(item);
+				.build());
 	}
 
 	private void showEmptyEpisodesList() {
-		// setmargin miatt kell az epoisodesVBox
-		/*
-		 * VBox episodeVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
-		 * PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES),
-		 * PodcastBPDecorator.BIGTEXTSIZE),
-		 * PodcastBPDecorator.decorateHBoxFactory( new
-		 * HBox(PodcastBPDecorator.HBOXPADDING,
-		 * PodcastBPDecorator.decorateTextFactory(new Text(NOPODCASTSELECTED),
-		 * PodcastBPDecorator.SMALLTEXTSIZE)),
-		 * PodcastBPDecorator.EMPTYEPISODESLISTWIDTH,
-		 * PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT,
-		 * PodcastBPDecorator.EMPTYEPISODESLISTWIDTH,
-		 * PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT)); setMargin(episodeVBox,
-		 * new Insets(PodcastBPDecorator.PADDING));
-		 */
-		VBox episodeVBox = VBoxBuilder.create().bigText(SUBSCRIBEDEPISODES).centerLeftAlignment()
+		VBox episodeVBox = VBoxBuilder.create().bigText(SUBSCRIBEDEPISODES).topLeftAlignment()
 				.noHBox(HBoxBuilder.create().smallText(NOPODCASTSELECTED)
 						.size(PodcastBPDecorator.EMPTYEPISODESLISTWIDTH, PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT)
 						.build())
@@ -242,7 +163,6 @@ public class PodcastBorderPaneView extends BorderPane {
 	}
 
 	private void showpodcastEpisodes() {
-		// readfromDB();
 		podcastBoderPaneController.readfromDB();
 		ObservableList<HBox> episodesContainer = FXCollections.observableArrayList();
 		for (PodcastEpisode podcastEpisode : podcastBoderPaneController.getPodcastsFromDBList()
@@ -301,17 +221,8 @@ public class PodcastBorderPaneView extends BorderPane {
 		setCenter(episodeVBox);
 	}
 
-	/*
-	 * private void removefromDB(final String name) { final Query<Podcast>
-	 * deletePodcast =
-	 * MorphiaConnector.getDataStore().createQuery(Podcast.class) .filter(
-	 * "artistName =", name);
-	 * MorphiaConnector.getDataStore().delete(deletePodcast); }
-	 */
-
 	private void setSubscribeButtonAction(ButtonSample button, Podcast podcast) {
 		button.setOnAction((ActionEvent event) -> {
-			// removefromDB(podcast.getArtistName());
 			podcastBoderPaneController.removefromDB(podcast.getArtistName());
 			showPodcastEmptyInformation();
 			showSubscribedPodcasts();
