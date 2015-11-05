@@ -6,11 +6,11 @@ import szakdolgozat.podcast.gui.stage.LoginStage;
 public class LoginErrorDialog extends ErrorDialog {
 	public LoginErrorDialog(final String message) {
 		super(message);
-		setOkButtonFunctinolity();
+		setOkButtonFunction();
 	}
 
 	@Override
-	protected void setOkButtonFunctinolity() {
+	protected void setOkButtonFunction() {
 		okButton.setOnAction((ActionEvent event) -> {
 			dialog.close();
 			LoginStage.getInstance().show();

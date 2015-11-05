@@ -91,32 +91,4 @@ public class HBoxBuilder {
 		return instance;
 	}
 
-	/*
-	 * public static HBox build(final String image, String artist, ButtonSample
-	 * button) { return Decorator.decorateHBoxFactory(new
-	 * HBox(Decorator.HBOXPADDING, Decorator.decorateRectangleFactory(new
-	 * Rectangle(), Decorator.SMALLRECTANGLEHEIGHT,
-	 * Decorator.SMALLRECTANGLEWIDTH, image), Decorator.decorateTextFactory( new
-	 * Text(artist.length() > 20 ? new String(new
-	 * StringBuilder(artist.substring(0, 20)).append("...")) : artist),
-	 * Decorator.SMALLTEXTSIZE),
-	 * Decorator.decorateButtonSampleFactory(button))); }
-	 */
-	/*
-	 * public HBox build(final String image, String artist) { return
-	 * Decorator.decorateHBoxFactory(new HBox(Decorator.HBOXPADDING,
-	 * Decorator.decorateRectangleFactory(new Rectangle(),
-	 * Decorator.SMALLRECTANGLEHEIGHT, Decorator.SMALLRECTANGLEWIDTH, image),
-	 * Decorator.decorateTextFactory( new Text(artist.length() > 20 ? new
-	 * String(new StringBuilder(artist.substring(0, 20)).append("...")) :
-	 * artist), Decorator.SMALLTEXTSIZE))); }
-	 */
-
-	/*
-	 * public HBox build(String artist) { return
-	 * Decorator.decorateHBoxFactory(new HBox(Decorator.PADDING,
-	 * Decorator.decorateTextFactory( new Text(artist.length() > 20 ? new
-	 * String(new StringBuilder(artist.substring(0, 20)).append("...")) :
-	 * artist), Decorator.SMALLTEXTSIZE))); }
-	 */
 }

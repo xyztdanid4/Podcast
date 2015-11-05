@@ -29,7 +29,7 @@ public abstract class ErrorDialog extends GridPane {
 		dialog.show();
 	}
 
-	protected abstract void setOkButtonFunctinolity();
+	protected abstract void setOkButtonFunction();
 
 	public void setOkButtonEnterEvent() {
 		okButton.defaultButtonProperty().bind(okButton.focusedProperty());

@@ -6,11 +6,11 @@ import szakdolgozat.podcast.gui.stage.MainStage;
 public class OtherErrorDialog extends ErrorDialog {
 	public OtherErrorDialog(final String message) {
 		super(message);
-		setOkButtonFunctinolity();
+		setOkButtonFunction();
 	}
 
 	@Override
-	protected void setOkButtonFunctinolity() {
+	protected void setOkButtonFunction() {
 		okButton.setOnAction((ActionEvent event) -> {
 			dialog.close();
 			MainStage.getInstance().show();
