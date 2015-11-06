@@ -109,7 +109,7 @@ public class HBoxBuilder {
 		return hbox;
 	}
 
-	public HBoxBuilder vbox(final VBox vbox) {
+	public HBoxBuilder noVBox(final VBox vbox) {
 		vbox.setAlignment(Pos.CENTER_LEFT);
 		hbox.getChildren().add(vbox);
 		return getInstance();

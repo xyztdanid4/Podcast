@@ -69,7 +69,7 @@ public class SearchBorderPaneView extends BorderPane {
 		setPadding();
 		showPodcastList();
 		showEpisodesList();
-		Decorator.decorateFactory(this);
+		SearchBPDecorator.decorateFactory(this);
 	}
 
 	private void setPadding() {
