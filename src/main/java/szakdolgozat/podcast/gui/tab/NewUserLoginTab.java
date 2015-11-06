@@ -6,7 +6,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.gui.gridpane.NewLoginGridPane;
+import szakdolgozat.podcast.gui.gridpane.NewLoginGridPaneView;
 
 public class NewUserLoginTab extends Tab {
 	private static final String NEWUSERLOGINTABTEXT = "New User";
@@ -33,6 +33,6 @@ public class NewUserLoginTab extends Tab {
 
 		setTooltip(new Tooltip(NEWUSERLOGINTAB_TOOLTIP));
 		setClosable(false);
-		setContent(new NewLoginGridPane());
+		setContent(new NewLoginGridPaneView());
 	}
 }

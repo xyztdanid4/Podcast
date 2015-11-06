@@ -1,14 +1,14 @@
 package szakdolgozat.podcast.builder;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
-import szakdolgozat.podcast.gui.decorator.PodcastBPDecorator;
-import szakdolgozat.podcast.gui.samples.ButtonSample;
-import szakdolgozat.podcast.gui.samples.TextFieldSample;
 
 public class HBoxBuilder {
 	static HBoxBuilder instance = new HBoxBuilder();
@@ -23,25 +23,30 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
-	public HBoxBuilder image(String image) {
+	public static HBoxBuilder noCreate() {
+		hbox = new HBox(Decorator.HBOXPADDING);
+		return getInstance();
+	}
+
+	public HBoxBuilder image(final String image) {
+		hbox.getChildren().add(Decorator.decorateImageViewFactory(new ImageView(image), Decorator.SMALLRECTANGLEHEIGHT,
+				Decorator.SMALLRECTANGLEWIDTH));
+		return getInstance();
+	}
+
+	public HBoxBuilder smallRectangle(final String image) {
 		hbox.getChildren().add(Decorator.decorateRectangleFactory(new Rectangle(), Decorator.SMALLRECTANGLEHEIGHT,
 				Decorator.SMALLRECTANGLEWIDTH, image));
 		return getInstance();
 	}
 
-	public HBoxBuilder smallRectangle(String image) {
-		hbox.getChildren().add(Decorator.decorateRectangleFactory(new Rectangle(), Decorator.SMALLRECTANGLEHEIGHT,
-				Decorator.SMALLRECTANGLEWIDTH, image));
-		return getInstance();
-	}
-
-	public HBoxBuilder bigRectangle(String image) {
+	public HBoxBuilder bigRectangle(final String image) {
 		hbox.getChildren().add(Decorator.decorateRectangleFactory(new Rectangle(), Decorator.BIGRECTANGLEHEIGHT,
 				Decorator.BIGRECTANGLEWIDTH, image));
 		return getInstance();
 	}
 
-	public HBoxBuilder artist(String artist) {
+	public HBoxBuilder artist(final String artist) {
 		hbox.getChildren()
 				.add(Decorator.decorateTextFactory(
 						new Text(artist.length() > 20
@@ -50,17 +55,17 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
-	public HBoxBuilder bigText(String text) {
+	public HBoxBuilder bigText(final String text) {
 		hbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.BIGTEXTSIZE));
 		return getInstance();
 	}
 
-	public HBoxBuilder smallText(String text) {
+	public HBoxBuilder smallText(final String text) {
 		hbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.SMALLTEXTSIZE));
 		return getInstance();
 	}
 
-	public HBoxBuilder title(String artist) {
+	public HBoxBuilder title(final String artist) {
 		hbox.getChildren()
 				.add(Decorator.decorateTextFactory(
 						new Text(artist.length() > 40
@@ -69,18 +74,28 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
-	public HBoxBuilder button(ButtonSample button) {
-		hbox.getChildren().add(PodcastBPDecorator.decorateButtonSampleFactory(button));
+	public HBoxBuilder button(final Button button) {
+		hbox.getChildren().add(Decorator.decorateButtonFactory(button));
 		return getInstance();
 	}
 
-	public HBoxBuilder noDecoratebutton(ButtonSample button) {
+	public HBoxBuilder noButton(final Button button) {
 		hbox.getChildren().add(button);
 		return getInstance();
 	}
 
-	public HBoxBuilder textField(TextFieldSample textField, final int width, final int height) {
-		hbox.getChildren().add(PodcastBPDecorator.decorateTextFieldSampleFactory(textField, width, height));
+	public HBoxBuilder noText(final Text text) {
+		hbox.getChildren().add(text);
+		return getInstance();
+	}
+
+	public HBoxBuilder noTextField(final TextField textField) {
+		hbox.getChildren().add(textField);
+		return getInstance();
+	}
+
+	public HBoxBuilder textField(final TextField textField, final int width, final int height) {
+		hbox.getChildren().add(Decorator.decorateTextFieldFactory(textField, width, height));
 		return getInstance();
 	}
 
@@ -94,13 +109,13 @@ public class HBoxBuilder {
 		return hbox;
 	}
 
-	public HBoxBuilder vbox(VBox vbox) {
+	public HBoxBuilder vbox(final VBox vbox) {
 		vbox.setAlignment(Pos.CENTER_LEFT);
 		hbox.getChildren().add(vbox);
 		return getInstance();
 	}
 
-	public static HBoxBuilder getInstance() {
+	private static HBoxBuilder getInstance() {
 		return instance;
 	}
 

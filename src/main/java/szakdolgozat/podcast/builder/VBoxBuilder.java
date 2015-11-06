@@ -16,7 +16,7 @@ public class VBoxBuilder {
 
 	}
 
-	public static VBoxBuilder getInstance() {
+	private static VBoxBuilder getInstance() {
 		return instance;
 	}
 
@@ -35,6 +35,11 @@ public class VBoxBuilder {
 		return getInstance();
 	}
 
+	public VBoxBuilder centerLeftAlignment() {
+		vbox.setAlignment(Pos.CENTER_LEFT);
+		return getInstance();
+	}
+
 	public VBoxBuilder bigText(final String text) {
 		vbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.BIGTEXTSIZE));
 		return getInstance();
@@ -45,19 +50,25 @@ public class VBoxBuilder {
 		return getInstance();
 	}
 
-	public VBoxBuilder noHBox(HBox hbox) {
+	public VBoxBuilder noHBox(final HBox hbox) {
 		vbox.getChildren().add(hbox);
 		return getInstance();
 	}
 
-	public VBoxBuilder bigRectangle(String image) {
+	public VBoxBuilder noListView(final ListView listVIew) {
+		vbox.getChildren().add(listVIew);
+		return getInstance();
+	}
+
+	public VBoxBuilder bigRectangle(final String image) {
 		vbox.getChildren().add(Decorator.decorateRectangleFactory(new Rectangle(), Decorator.BIGRECTANGLEHEIGHT,
 				Decorator.BIGRECTANGLEWIDTH, image));
 		return getInstance();
 	}
 
-	public VBoxBuilder listView(ListView listView) {
-
+	public VBoxBuilder size(final int width, final int height) {
+		vbox.setPrefSize(width, height);
+		vbox.setMaxSize(width, height);
 		return getInstance();
 	}
 

@@ -12,7 +12,7 @@ public class LoginErrorDialog extends ErrorDialog {
 	@Override
 	protected void setOkButtonFunction() {
 		okButton.setOnAction((ActionEvent event) -> {
-			dialog.close();
+			stage.close();
 			LoginStage.getInstance().show();
 		});
 	}

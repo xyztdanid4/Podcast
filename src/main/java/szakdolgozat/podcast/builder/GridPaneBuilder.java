@@ -10,7 +10,7 @@ public class GridPaneBuilder {
 	static GridPaneBuilder insance = new GridPaneBuilder();
 	private static GridPane gridPane;
 
-	public static GridPaneBuilder getInsance() {
+	private static GridPaneBuilder getInsance() {
 		return insance;
 	}
 
@@ -19,20 +19,20 @@ public class GridPaneBuilder {
 		return getInsance();
 	}
 
-	public GridPaneBuilder button(Button button) {
+	public GridPaneBuilder button(final Button button) {
 
 		return getInsance();
 	}
 
-	public GridPaneBuilder buttonSample(ButtonSample buttonSample) {
+	public GridPaneBuilder buttonSample(final ButtonSample buttonSample) {
 		return getInsance();
 	}
 
-	public GridPaneBuilder label(Label label) {
+	public GridPaneBuilder label(final Label label) {
 		return getInsance();
 	}
 
-	public GridPaneBuilder textField(TextField textField) {
+	public GridPaneBuilder textField(final TextField textField) {
 		return getInsance();
 	}
 

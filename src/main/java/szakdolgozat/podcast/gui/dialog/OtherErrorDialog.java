@@ -12,7 +12,7 @@ public class OtherErrorDialog extends ErrorDialog {
 	@Override
 	protected void setOkButtonFunction() {
 		okButton.setOnAction((ActionEvent event) -> {
-			dialog.close();
+			stage.close();
 			MainStage.getInstance().show();
 		});
 	}

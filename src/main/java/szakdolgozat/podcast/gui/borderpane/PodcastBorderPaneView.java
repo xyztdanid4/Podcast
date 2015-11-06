@@ -4,10 +4,9 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -16,9 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.builder.HBoxBuilder;
+import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.PodcastBPDecorator;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
 
@@ -42,9 +43,9 @@ public class PodcastBorderPaneView extends BorderPane {
 	PodcastBoderPaneController podcastBoderPaneController;
 
 	public PodcastBorderPaneView() {
-		podcastBoderPaneController = new PodcastBoderPaneController();
-		podcastBoderPaneController.readfromDB();
-		PodcastBPDecorator.decorateFactory(this);
+		this.podcastBoderPaneController = new PodcastBoderPaneController();
+		this.podcastBoderPaneController.readfromDB();
+		Decorator.decorateFactory(this);
 		setPadding();
 		showPodcastEmptyInformation();
 		showSubscribedPodcasts();
@@ -53,173 +54,180 @@ public class PodcastBorderPaneView extends BorderPane {
 	}
 
 	private void setPadding() {
-		setPadding(new Insets(PodcastBPDecorator.PADDING, PodcastBPDecorator.PADDING, PodcastBPDecorator.PADDING,
-				PodcastBPDecorator.PADDING));
+		setPadding(new Insets(Decorator.PADDING, Decorator.PADDING, Decorator.PADDING, Decorator.PADDING));
 	}
 
 	private void showPodcastEmptyInformation() {
-		setTop(HBoxBuilder.create().bigText(GETINFO).size(PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
-				PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT).build());
+		//-.-off
+		setTop(HBoxBuilder.create()
+							.bigText(GETINFO)
+							.size(PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT)
+							.build());
+		//-.-on
 	}
 
 	private void showSubscribedPodcasts() {
-		podcastBoderPaneController.readfromDB();
-		if (!podcastBoderPaneController.getPodcastsFromDBList().isEmpty()) {
-			ObservableList<HBox> podcastsContainer = FXCollections.observableArrayList();
-			for (Podcast podcastIterator : podcastBoderPaneController.getPodcastsFromDBList()) {
-				podcastsContainer.add(HBoxBuilder.create().smallRectangle(podcastIterator.getArtworkUrl60())
-						.artist(podcastIterator.getArtistName()).button(new ButtonSample() {
-							{
-								setOnAction(new EventHandler<ActionEvent>() {
-									@Override
-									public void handle(ActionEvent event) {
-										podcastBoderPaneController.removefromDB(podcastIterator.getArtistName());
-										showPodcastEmptyInformation();
-										showSubscribedPodcasts();
-										showEmptyEpisodesList();
-										setPodcastListInvalidationListener();
-									}
-								});
-								setText(UNSUBSCRIBE);
-								setTooltip(new Tooltip(CLICKFORUNSUBSCRIBE));
-							}
-						}).build());
+		this.podcastBoderPaneController.readfromDB();
+		if (!this.podcastBoderPaneController.getPodcastsFromDBList().isEmpty()) {
+			final ObservableList<HBox> podcastsContainer = FXCollections.observableArrayList();
+			for (final Podcast podcastIterator : this.podcastBoderPaneController.getPodcastsFromDBList()) {
+				//-.-off
+				podcastsContainer.add(HBoxBuilder.create()
+												.smallRectangle(podcastIterator.getArtworkUrl60())
+												.artist(podcastIterator.getArtistName())
+												.button(new Button() {
+												{
+													setOnAction(event -> {
+														PodcastBorderPaneView.this.podcastBoderPaneController
+															.removefromDB(podcastIterator.getArtistName());
+														showPodcastEmptyInformation();
+														showSubscribedPodcasts();
+														showEmptyEpisodesList();
+														setPodcastListInvalidationListener();
+													});
+												setText(UNSUBSCRIBE);
+												}
+												}).build());
 			}
+			//-.-on
 			// actionok miatt meg kell tartani a listviewt
-			podcastListView = PodcastBPDecorator.decorateListViewFactory(new ListView<HBox>(podcastsContainer),
-					PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.PODCASTLISTVIEWHEIGHT);
+			// this.podcastListView = Decorator.decorateListViewFactory(new
+			// ListView<HBox>(podcastsContainer),
+			// PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+			// PodcastBPDecorator.PODCASTLISTVIEWHEIGHT);
+			//-.-off
+			this.podcastListView = ListViewBuilder.create()
+													.items(podcastsContainer)
+													.size(PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.PODCASTLISTVIEWHEIGHT)
+													.build();
+			//-.-on
 			// setmargin miatt meg kell tartani a podcastlistvboxot is
-			VBox podcastListVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
-					PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST), PodcastBPDecorator.BIGTEXTSIZE),
-					podcastListView);
-			setMargin(podcastListVBox, new Insets(PodcastBPDecorator.PADDING));
+			// final VBox podcastListVBox = new VBox(Decorator.VBOXPADDING,
+			// Decorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST),
+			// Decorator.BIGTEXTSIZE),
+			// this.podcastListView);
+			//-.-off
+			final VBox podcastListVBox = VBoxBuilder.create()
+													.bigText(SUBSCRIBEDPODCAST)
+													.noListView(this.podcastListView)
+													.build();
+			//-.-on
+			setMargin(podcastListVBox, new Insets(Decorator.PADDING));
 			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastListVBox);
 		} else {
 			// szintén a setmargin miatt kel a podcastVbox is
-			VBox podcastVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
-					PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST), PodcastBPDecorator.BIGTEXTSIZE),
-					PodcastBPDecorator.decorateHBoxFactory(
-							new HBox(PodcastBPDecorator.HBOXPADDING,
-									PodcastBPDecorator.decorateTextFactory(new Text(NOSUBSCRIPTIONS),
-											PodcastBPDecorator.SMALLTEXTSIZE)),
-							PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT,
-							PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT));
-
-			setMargin(podcastVBox, new Insets(PodcastBPDecorator.PADDING));
+			final VBox podcastVBox = new VBox(Decorator.VBOXPADDING,
+					Decorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST), Decorator.BIGTEXTSIZE),
+					Decorator
+							.decorateHBoxFactory(
+									new HBox(Decorator.HBOXPADDING,
+											Decorator.decorateTextFactory(new Text(NOSUBSCRIPTIONS),
+													Decorator.SMALLTEXTSIZE)),
+									PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+									PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT,
+									PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
+									PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT));
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			setMargin(podcastVBox, new Insets(Decorator.PADDING));
 			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastVBox);
 		}
 	}
 
 	private void setPodcastListInvalidationListener() {
-		podcastListView.getSelectionModel().selectedIndexProperty().addListener((Observable o) -> {
+		this.podcastListView.getSelectionModel().selectedIndexProperty().addListener((final Observable o) -> {
 			showPodcastInformation();
 			showpodcastEpisodes();
 		});
 	}
 
 	private void showPodcastInformation() {
-		podcastBoderPaneController.readfromDB();
-		int selectedindex = podcastListView.getSelectionModel().getSelectedIndex();
+		this.podcastBoderPaneController.readfromDB();
+		final int selectedindex = this.podcastListView.getSelectionModel().getSelectedIndex();
 		setTop(HBoxBuilder.create()
 				.size(PodcastBPDecorator.PODCASTINFORMATIONCONTAINERWIDTH,
 						PodcastBPDecorator.PODCASTINFORMATIONCONTAINERHEIGHT)
 				.vbox(VBoxBuilder.create()
-						.bigRectangle(podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex)
+						.bigRectangle(this.podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex)
 								.getArtworkUrl100())
 						.build())
 				.vbox(VBoxBuilder.create()
-						.smallText(ARTISTLABEL
-								+ podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex).getArtistName())
-						.smallText(COLLECTIONNAMELABEL + podcastBoderPaneController.getPodcastsFromDBList()
+						.smallText(ARTISTLABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
+								.get(selectedindex).getArtistName())
+						.smallText(COLLECTIONNAMELABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
 								.get(selectedindex).getCollectionName())
-						.smallText(COUNTRYLABEL
-								+ podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex).getCountry())
+						.smallText(COUNTRYLABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
+								.get(selectedindex).getCountry())
 						.build())
 				.vbox(VBoxBuilder.create()
-						.smallText(FEEDURLLABEL
-								+ podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex).getFeedUrl())
-						.smallText(GENRELABEL + podcastBoderPaneController.getPodcastsFromDBList().get(selectedindex)
-								.getPrimaryGenreName())
-						.smallText(LASTRELEASEDATELABEL + podcastBoderPaneController.getPodcastsFromDBList()
+						.smallText(FEEDURLLABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
+								.get(selectedindex).getFeedUrl())
+						.smallText(GENRELABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
+								.get(selectedindex).getPrimaryGenreName())
+						.smallText(LASTRELEASEDATELABEL + this.podcastBoderPaneController.getPodcastsFromDBList()
 								.get(selectedindex).getReleaseDate())
 						.build())
 				.build());
 	}
 
 	private void showEmptyEpisodesList() {
-		VBox episodeVBox = VBoxBuilder.create().bigText(SUBSCRIBEDEPISODES).topLeftAlignment()
+		final VBox episodeVBox = VBoxBuilder.create().bigText(SUBSCRIBEDEPISODES).topLeftAlignment()
 				.noHBox(HBoxBuilder.create().smallText(NOPODCASTSELECTED)
 						.size(PodcastBPDecorator.EMPTYEPISODESLISTWIDTH, PodcastBPDecorator.EMPTYEPISODESLISTHEIGHT)
 						.build())
 				.build();
-		setMargin(episodeVBox, new Insets(PodcastBPDecorator.PADDING));
+		setMargin(episodeVBox, new Insets(Decorator.PADDING));
 		setCenter(episodeVBox);
 	}
 
 	private void showpodcastEpisodes() {
-		podcastBoderPaneController.readfromDB();
-		ObservableList<HBox> episodesContainer = FXCollections.observableArrayList();
-		for (PodcastEpisode podcastEpisode : podcastBoderPaneController.getPodcastsFromDBList()
-				.get(podcastListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode()) {
-			Image image = new Image(podcastEpisode.getImage());
+		this.podcastBoderPaneController.readfromDB();
+		final ObservableList<HBox> episodesContainer = FXCollections.observableArrayList();
+		for (final PodcastEpisode podcastEpisode : this.podcastBoderPaneController.getPodcastsFromDBList()
+				.get(this.podcastListView.getSelectionModel().getSelectedIndex()).getPodcastEpisode()) {
+			final Image image = new Image(podcastEpisode.getImage());
 			if (image.isError()) {
 				// megtartjuk az objektumot, hiszen az actiont még hozzá kell
 				// füzni
-				HBox itemHbox = PodcastBPDecorator
-						.decorateHBoxFactory(
-								new HBox(PodcastBPDecorator.HBOXPADDING,
-										PodcastBPDecorator
-												.decorateImageViewFactory(new ImageView(image),
-														PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
-														PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH),
-										PodcastBPDecorator
-												.decorateTextFactory(
-														new Text(
-																podcastEpisode.getTitle().length() > 40
-																		? new String(new StringBuilder(podcastEpisode
-																				.getTitle().substring(0, 40))
-																						.append("..."))
-																		: podcastEpisode.getTitle()),
-														PodcastBPDecorator.SMALLTEXTSIZE),
-										PodcastBPDecorator.decorateTextFactory(new Text(podcastEpisode.getPubdate()),
-												PodcastBPDecorator.SMALLTEXTSIZE)));
+				final HBox itemHbox = Decorator.decorateHBoxFactory(new HBox(Decorator.HBOXPADDING,
+						Decorator.decorateImageViewFactory(new ImageView(image),
+								PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT, PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH),
+						Decorator.decorateTextFactory(new Text(podcastEpisode.getTitle().length() > 40
+								? new String(
+										new StringBuilder(podcastEpisode.getTitle().substring(0, 40)).append("..."))
+								: podcastEpisode.getTitle()), Decorator.SMALLTEXTSIZE),
+						Decorator.decorateTextFactory(new Text(podcastEpisode.getPubdate()), Decorator.SMALLTEXTSIZE)));
 				episodesContainer.add(itemHbox);
 			} else {
 				// megtartjuk az objektumot, hiszen az actiont még hozzá kell
 				// füzni
-				HBox itemHbox = new HBox(PodcastBPDecorator.HBOXPADDING,
-						PodcastBPDecorator
-								.decorateHelperVBoxFactory(
-										new VBox(PodcastBPDecorator.decorateRectangleFactory(new Rectangle(),
-												PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
-												PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH,
-												podcastEpisode
-														.getImage()))),
-						PodcastBPDecorator.decorateTextFactory(new Text(podcastEpisode.getTitle().length() > 40
+				final HBox itemHbox = new HBox(Decorator.HBOXPADDING,
+						Decorator.decorateHelperVBoxFactory(new VBox(Decorator.decorateRectangleFactory(new Rectangle(),
+								PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT, PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH,
+								podcastEpisode.getImage()))),
+						Decorator.decorateTextFactory(new Text(podcastEpisode.getTitle().length() > 40
 								? new String(
 										new StringBuilder(podcastEpisode.getTitle().substring(0, 40)).append("..."))
-								: podcastEpisode.getTitle()), PodcastBPDecorator.SMALLTEXTSIZE),
-						PodcastBPDecorator.decorateTextFactory(new Text(podcastEpisode.getPubdate()),
-								PodcastBPDecorator.SMALLTEXTSIZE));
-				PodcastBPDecorator.decorateHBoxFactory(itemHbox);
+								: podcastEpisode.getTitle()), Decorator.SMALLTEXTSIZE),
+						Decorator.decorateTextFactory(new Text(podcastEpisode.getPubdate()), Decorator.SMALLTEXTSIZE));
+				Decorator.decorateHBoxFactory(itemHbox);
 				episodesContainer.add(itemHbox);
 			}
 		}
-		episodeListView = PodcastBPDecorator.decorateListViewFactory(new ListView<HBox>(episodesContainer),
+		this.episodeListView = Decorator.decorateListViewFactory(new ListView<HBox>(episodesContainer),
 				PodcastBPDecorator.EPISODESLISTWIDTH, PodcastBPDecorator.EPISODESLISTHEIGHT);
 		// marad mer setmargin megint
-		VBox episodeVBox = new VBox(PodcastBPDecorator.VBOXPADDING,
-				PodcastBPDecorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES), PodcastBPDecorator.BIGTEXTSIZE),
-				episodeListView);
-		setMargin(episodeVBox, new Insets(PodcastBPDecorator.PADDING));
+		final VBox episodeVBox = new VBox(Decorator.VBOXPADDING,
+				Decorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES), Decorator.BIGTEXTSIZE),
+				this.episodeListView);
+		setMargin(episodeVBox, new Insets(Decorator.PADDING));
 		setCenter(episodeVBox);
 	}
 
-	private void setSubscribeButtonAction(ButtonSample button, Podcast podcast) {
-		button.setOnAction((ActionEvent event) -> {
-			podcastBoderPaneController.removefromDB(podcast.getArtistName());
+	private void setSubscribeButtonAction(final ButtonSample button, final Podcast podcast) {
+		button.setOnAction((final ActionEvent event) -> {
+			this.podcastBoderPaneController.removefromDB(podcast.getArtistName());
 			showPodcastEmptyInformation();
 			showSubscribedPodcasts();
 			showEmptyEpisodesList();

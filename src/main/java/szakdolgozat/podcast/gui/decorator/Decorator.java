@@ -1,6 +1,5 @@
 package szakdolgozat.podcast.gui.decorator;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -28,7 +26,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.samples.ButtonSample;
-import szakdolgozat.podcast.gui.samples.LabelSample;
 import szakdolgozat.podcast.gui.samples.PasswordFieldSample;
 import szakdolgozat.podcast.gui.samples.TextFieldSample;
 
@@ -66,22 +63,23 @@ public class Decorator {
 
 	}
 
-	public static Pane decorateFactory(Pane pane) {
+	public static Pane decorateFactory(final Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));
 		pane.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(BORDERPANEBORDERRADIUS), new BorderWidths(BORDERSIZE, BORDERSIZE, 0, BORDERSIZE))));
+				new CornerRadii(BORDERPANEBORDERRADIUS),
+				new BorderWidths(BORDERSIZE, BORDERSIZE, BORDERSIZE, BORDERSIZE))));
 		return pane;
 	}
 
-	public static Text decorateTextFactory(Text text, final int size) {
+	public static Text decorateTextFactory(final Text text, final int size) {
 		text.setFill(Color.web(TEXTCOLOR));
 		text.setFont(Font.font("Arial", FontWeight.BOLD, size));
 		return text;
 	}
 
-	public static HBox decorateHBoxFactory(HBox hbox, final int prefwidth, final int prefheight, final int maxwidht,
-			final int maxheight) {
+	public static HBox decorateHBoxFactory(final HBox hbox, final int prefwidth, final int prefheight,
+			final int maxwidht, final int maxheight) {
 		hbox.setPrefSize(prefwidth, prefheight);
 		hbox.setMaxSize(maxwidht, maxheight);
 		hbox.setBackground(new Background(
@@ -92,7 +90,7 @@ public class Decorator {
 		return hbox;
 	}
 
-	public static HBox decorateHBoxFactory(HBox hbox) {
+	public static HBox decorateHBoxFactory(final HBox hbox) {
 		hbox.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
@@ -103,7 +101,8 @@ public class Decorator {
 		return hbox;
 	}
 
-	public static ListView<HBox> decorateListViewFactory(ListView<HBox> listView, final int width, final int height) {
+	public static ListView<HBox> decorateListViewFactory(final ListView<HBox> listView, final int width,
+			final int height) {
 		listView.setPrefSize(width, height);
 		listView.setMaxSize(width, height);
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
@@ -114,7 +113,7 @@ public class Decorator {
 		return listView;
 	}
 
-	public static ListView<HBox> decorateListViewFactory(ListView<HBox> listView) {
+	public static ListView<HBox> decorateListViewFactory(final ListView<HBox> listView) {
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		listView.setBackground(new Background(
@@ -123,8 +122,8 @@ public class Decorator {
 		return listView;
 	}
 
-	public static Rectangle decorateRectangleFactory(Rectangle rectangle, final int height, final int width,
-			String imageURL) {
+	public static Rectangle decorateRectangleFactory(final Rectangle rectangle, final int height, final int width,
+			final String imageURL) {
 		rectangle.setArcHeight(RECTANGLEARCHHEIGHT);
 		rectangle.setArcWidth(RECTANGLEARCHWIDHT);
 		rectangle.setHeight(height);
@@ -133,63 +132,43 @@ public class Decorator {
 		return rectangle;
 	}
 
-	public static VBox decorateHelperVBoxFactory(VBox vBox) {
+	public static VBox decorateHelperVBoxFactory(final VBox vBox) {
 		vBox.setAlignment(Pos.CENTER_LEFT);
 		return vBox;
 	}
 
-	public static VBox decorateVBoxFactory(VBox vBox) {
+	public static VBox decorateVBoxFactory(final VBox vBox) {
 		vBox.setAlignment(Pos.CENTER_LEFT);
 		return vBox;
 	}
 
-	public static ImageView decorateImageViewFactory(ImageView imageView, final int height, final int width) {
+	public static ImageView decorateImageViewFactory(final ImageView imageView, final int height, final int width) {
 		imageView.setFitWidth(width);
 		imageView.setFitHeight(height);
 		return imageView;
 	}
 
-	private static void setMouseEnteredEventHBox(HBox itemHbox) {
-		itemHbox.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				itemHbox.setBackground(new Background(
-						new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-			}
-		});
+	private static void setMouseEnteredEventHBox(final HBox itemHbox) {
+		itemHbox.setOnMouseEntered(e -> itemHbox.setBackground(new Background(
+				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY))));
 	}
 
-	private static void setMouseExitedEventHBox(HBox itemHbox) {
-		itemHbox.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				itemHbox.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-						new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-			}
-		});
+	private static void setMouseExitedEventHBox(final HBox itemHbox) {
+		itemHbox.setOnMouseExited(e -> itemHbox.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY))));
 	}
 
-	private static void setMouseEnteredEventButton(Button button) {
-		button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				button.setBackground(new Background(
-						new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-			}
-		});
+	private static void setMouseEnteredEventButton(final Button button) {
+		button.setOnMouseEntered(e -> button.setBackground(new Background(
+				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY))));
 	}
 
-	private static void setMouseExitedEventButton(Button button) {
-		button.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				button.setBackground(new Background(new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR),
-						new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-			}
-		});
+	private static void setMouseExitedEventButton(final Button button) {
+		button.setOnMouseExited(e -> button.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY))));
 	}
 
-	public static Button decorateButtonFactory(Button button) {
+	public static Button decorateButtonFactory(final Button button) {
 		button.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		button.setBackground(new Background(
@@ -200,7 +179,7 @@ public class Decorator {
 		return button;
 	}
 
-	public static ButtonSample decorateButtonSampleFactory(ButtonSample button) {
+	public static ButtonSample decorateButtonSampleFactory(final ButtonSample button) {
 		button.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		button.setBackground(new Background(
@@ -211,17 +190,17 @@ public class Decorator {
 		return button;
 	}
 
-	public static Label decorateLabelFactory(Label label) {
+	public static Label decorateLabelFactory(final Label label) {
 		label.setTextFill(Color.web(TEXTCOLOR));
 		return label;
 	}
 
-	public static LabelSample decorateLabelSampleFactory(LabelSample label) {
-		label.setTextFill(Color.web(TEXTCOLOR));
-		return label;
-	}
+	/*
+	 * public static LabelSample decorateLabelSampleFactory(final LabelSample
+	 * label) { label.setTextFill(Color.web(TEXTCOLOR)); return label; }
+	 */
 
-	public static TextField decorateTextFieldFactory(TextField textField) {
+	public static PasswordField decoratePasswordFieldFactory(final PasswordField textField) {
 		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		textField.setBackground(new Background(
@@ -230,7 +209,7 @@ public class Decorator {
 		return textField;
 	}
 
-	public static PasswordField decoratePasswordFieldFactory(PasswordField textField) {
+	public static PasswordFieldSample decoratePasswordFieldSampleFactory(final PasswordFieldSample textField) {
 		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		textField.setBackground(new Background(
@@ -239,16 +218,7 @@ public class Decorator {
 		return textField;
 	}
 
-	public static PasswordFieldSample decoratePasswordFieldSampleFactory(PasswordFieldSample textField) {
-		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
-				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
-		textField.setBackground(new Background(
-				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
-		textField.setStyle("-fx-text-inner-color: white;");
-		return textField;
-	}
-
-	public static TextFieldSample decorateTextFieldSampleFactory(TextFieldSample textFieldSample, final int width,
+	public static TextFieldSample decorateTextFieldSampleFactory(final TextFieldSample textFieldSample, final int width,
 			final int height) {
 		textFieldSample.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
@@ -260,14 +230,33 @@ public class Decorator {
 		return textFieldSample;
 	}
 
-	public static TextFieldSample decorateTextFieldSampleFactory(TextFieldSample textFieldSample) {
+	public static TextFieldSample decorateTextFieldSampleFactory(final TextFieldSample textFieldSample) {
 		textFieldSample.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		textFieldSample.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		textFieldSample.setStyle("-fx-text-inner-color: white;");
-
 		return textFieldSample;
+	}
+
+	public static TextField decorateTextFieldFactory(final TextField textField) {
+		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textField.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textField.setStyle("-fx-text-inner-color: white;");
+		return textField;
+	}
+
+	public static TextField decorateTextFieldFactory(final TextField textField, final int width, final int height) {
+		textField.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		textField.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		textField.setStyle("-fx-text-inner-color: white;");
+		textField.setMaxSize(width, height);
+		textField.setPrefSize(width, height);
+		return textField;
 	}
 
 }
