@@ -17,6 +17,7 @@ public class RecommendVBoxView extends VBox {
 	public RecommendVBoxView() {
 		super(RecommendListDecorator.PADDING);
 		this.recommendVBoxController = new RecommendVBoxController();
+
 		final ObservableList<HBox> recommendList = FXCollections.observableArrayList();
 		//-.-off
 		for (final RecommendListItem item : this.recommendVBoxController.getRecommendListItems()) {
@@ -36,6 +37,7 @@ public class RecommendVBoxView extends VBox {
 		//-.-on
 		RecommendListDecorator.decorate(this);
 		setPadding();
+
 	}
 
 	private void setPadding() {

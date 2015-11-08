@@ -78,6 +78,7 @@ public class PodcastBorderPaneView extends BorderPane {
 													setOnAction(event -> {
 														PodcastBorderPaneView.this.podcastBoderPaneController
 															.removefromDB(podcastIterator.getArtistName());
+														PodcastBorderPaneView.this.podcastBoderPaneController.stopListener(PodcastBorderPaneView.this.podcastBoderPaneController.getPodcastsFromDBList().indexOf(podcastIterator));
 														showPodcastEmptyInformation();
 														showSubscribedPodcasts();
 														showEmptyEpisodesList();

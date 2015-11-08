@@ -6,6 +6,7 @@ import org.mongodb.morphia.query.Query;
 
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
+import szakdolgozat.podcast.threads.PodcastListener;
 
 public class PodcastBoderPaneController {
 	private List<Podcast> podcastsFromDBList;
@@ -15,11 +16,11 @@ public class PodcastBoderPaneController {
 	}
 
 	public void readfromDB() {
-		podcastsFromDBList = MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
+		this.podcastsFromDBList = MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
 	}
 
 	public List<Podcast> getPodcastsFromDBList() {
-		return podcastsFromDBList;
+		return this.podcastsFromDBList;
 	}
 
 	public void removefromDB(final String name) {
@@ -28,4 +29,9 @@ public class PodcastBoderPaneController {
 		MorphiaConnector.getDataStore().delete(deletePodcast);
 	}
 
+	public void stopListener(final int index) {
+		System.out.println("index: " + index);
+		PodcastListener.getInstance().getTasks().get(index).cancel();
+		PodcastListener.getInstance().getTasks().remove(index);
+	}
 }

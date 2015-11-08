@@ -13,24 +13,26 @@ public class RecommendVBoxController {
 	private List<RecommendListItem> recommendListItems;
 
 	public RecommendVBoxController() {
-		recommendListItems = new ArrayList<RecommendListItem>();
-		for (Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
-			SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(
+		this.recommendListItems = new ArrayList<RecommendListItem>();
+		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
+			final SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(
 					"https://www.tastekid.com/api/similar?q=" + podcast.getArtistName()
-							+ "&k=171743-podcasta-T2Y4SDX0&limit=2");
+							+ "&k=171743-podcasta-3P4R58KA&limit=2");
 			if (isPodcastSubscribed(podcast.getArtistName())) {
-				for (SimilarPodcastItem item : similarPodcastJsonParser.getSearchResult().getSimilar().getResults()) {
+				for (final SimilarPodcastItem item : similarPodcastJsonParser.getSearchResult().getSimilar()
+						.getResults()) {
 					System.out.println(item.getName());
-					PodcastJsonParser jsonParser = new PodcastJsonParser(
+					final PodcastJsonParser jsonParser = new PodcastJsonParser(
 							new String("https://itunes.apple.com/search?term=" + item.getName()
 									+ "&entity=podcast&media=podcast&limit=5"));
-					for (Podcast podcastIterator : jsonParser.getSearchResult().getResults()) {
-						recommendListItems.add(new RecommendListItem(podcastIterator.getArtworkUrl60(),
+					for (final Podcast podcastIterator : jsonParser.getSearchResult().getResults()) {
+						this.recommendListItems.add(new RecommendListItem(podcastIterator.getArtworkUrl60(),
 								podcastIterator.getArtistName()));
 					}
 				}
 			}
 		}
+
 	}
 
 	private boolean isPodcastSubscribed(final String name) {
@@ -39,10 +41,10 @@ public class RecommendVBoxController {
 	}
 
 	public List<RecommendListItem> getRecommendListItems() {
-		return recommendListItems;
+		return this.recommendListItems;
 	}
 
-	public void setRecommendListItems(List<RecommendListItem> recommendListItems) {
+	public void setRecommendListItems(final List<RecommendListItem> recommendListItems) {
 		this.recommendListItems = recommendListItems;
 	}
 }

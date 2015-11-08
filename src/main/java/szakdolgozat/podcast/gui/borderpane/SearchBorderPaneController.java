@@ -7,16 +7,17 @@ import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
+import szakdolgozat.podcast.threads.PodcastListener;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class SearchBorderPaneController {
 	private PodcastContainer searchPodcastContainer;
 
 	public PodcastContainer getSearchPodcastContainer() {
-		return searchPodcastContainer;
+		return this.searchPodcastContainer;
 	}
 
-	public void setSearchPodcastContainer(PodcastContainer searchPodcastContainer) {
+	public void setSearchPodcastContainer(final PodcastContainer searchPodcastContainer) {
 		this.searchPodcastContainer = searchPodcastContainer;
 	}
 
@@ -24,10 +25,10 @@ public class SearchBorderPaneController {
 
 	}
 
-	public void startSearchPodcast(String searchText) {
-		PodcastJsonParser jsonParser = new PodcastJsonParser(new String(
+	public void startSearchPodcast(final String searchText) {
+		final PodcastJsonParser jsonParser = new PodcastJsonParser(new String(
 				"https://itunes.apple.com/search?term=" + searchText + "&entity=podcast&media=podcast&limit=5"));
-		searchPodcastContainer = jsonParser.getSearchResult();
+		this.searchPodcastContainer = jsonParser.getSearchResult();
 	}
 
 	public boolean isPodcastSubscribed(final String name) {
@@ -35,10 +36,16 @@ public class SearchBorderPaneController {
 				.isEmpty());
 	}
 
-	public void subscribe(Podcast podcast) {
-		XmlParser xmlParser = new XmlParser(podcast.getFeedUrl());
+	public void subscribe(final Podcast podcast) {
+		final XmlParser xmlParser = new XmlParser(podcast.getFeedUrl());
 		podcast.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
-		MorphiaConnector.getInstance().getDataStore().save(podcast);
+		MorphiaConnector.getInstance();
+		MorphiaConnector.getDataStore().save(podcast);
+		// PodcastListener.getInstance().startNewListener();
+	}
+
+	public void startNewListener() {
+		PodcastListener.getInstance().startNewListener();
 	}
 
 }

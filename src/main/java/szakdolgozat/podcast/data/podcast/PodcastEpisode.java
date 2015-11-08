@@ -14,9 +14,8 @@ public class PodcastEpisode {
 
 	}
 
-	public PodcastEpisode(String title, String author, String subtitle,
-			String summary, String guid, String pubDate, String duration,
-			String image) {
+	public PodcastEpisode(final String title, final String author, final String subtitle, final String summary,
+			final String guid, final String pubDate, final String duration, final String image) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -32,14 +31,14 @@ public class PodcastEpisode {
 	 * @return the title
 	 */
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	/**
 	 * @param title
 	 *            the title to set
 	 */
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -47,14 +46,14 @@ public class PodcastEpisode {
 	 * @return the author
 	 */
 	public String getAuthor() {
-		return author;
+		return this.author;
 	}
 
 	/**
 	 * @param author
 	 *            the author to set
 	 */
-	public void setAuthor(String author) {
+	public void setAuthor(final String author) {
 		this.author = author;
 	}
 
@@ -62,14 +61,14 @@ public class PodcastEpisode {
 	 * @return the subtitle
 	 */
 	public String getSubtitle() {
-		return subtitle;
+		return this.subtitle;
 	}
 
 	/**
 	 * @param subtitle
 	 *            the subtitle to set
 	 */
-	public void setSubtitle(String subtitle) {
+	public void setSubtitle(final String subtitle) {
 		this.subtitle = subtitle;
 	}
 
@@ -77,14 +76,14 @@ public class PodcastEpisode {
 	 * @return the summary
 	 */
 	public String getSummary() {
-		return summary;
+		return this.summary;
 	}
 
 	/**
 	 * @param summary
 	 *            the summary to set
 	 */
-	public void setSummary(String summary) {
+	public void setSummary(final String summary) {
 		this.summary = summary;
 	}
 
@@ -92,14 +91,14 @@ public class PodcastEpisode {
 	 * @return the guid
 	 */
 	public String getGuid() {
-		return guid;
+		return this.guid;
 	}
 
 	/**
 	 * @param guid
 	 *            the guid to set
 	 */
-	public void setGuid(String guid) {
+	public void setGuid(final String guid) {
 		this.guid = guid;
 	}
 
@@ -107,14 +106,14 @@ public class PodcastEpisode {
 	 * @return the pubdate
 	 */
 	public String getPubdate() {
-		return pubDate;
+		return this.pubDate;
 	}
 
 	/**
 	 * @param pubdate
 	 *            the pubdate to set
 	 */
-	public void setPubdate(String pubdate) {
+	public void setPubdate(final String pubdate) {
 		this.pubDate = pubdate;
 	}
 
@@ -122,14 +121,14 @@ public class PodcastEpisode {
 	 * @return the duration
 	 */
 	public String getDuration() {
-		return duration;
+		return this.duration;
 	}
 
 	/**
 	 * @param duration
 	 *            the duration to set
 	 */
-	public void setDuration(String duration) {
+	public void setDuration(final String duration) {
 		this.duration = duration;
 	}
 
@@ -137,14 +136,14 @@ public class PodcastEpisode {
 	 * @return the image
 	 */
 	public String getImage() {
-		return image;
+		return this.image;
 	}
 
 	/**
 	 * @param image
 	 *            the image to set
 	 */
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
 
@@ -155,10 +154,105 @@ public class PodcastEpisode {
 	 */
 	@Override
 	public String toString() {
-		return "PodcastEpisode [title=" + title + ", author=" + author
-				+ ", subtitle=" + subtitle + ", summary=" + summary + ", guid="
-				+ guid + ", pubdate=" + pubDate + ", duration=" + duration
-				+ ", image=" + image + "]";
+		return "PodcastEpisode [title=" + this.title + ", author=" + this.author + ", subtitle=" + this.subtitle
+				+ ", summary=" + this.summary + ", guid=" + this.guid + ", pubdate=" + this.pubDate + ", duration="
+				+ this.duration + ", image=" + this.image + "]";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.author == null) ? 0 : this.author.hashCode());
+		result = prime * result + ((this.duration == null) ? 0 : this.duration.hashCode());
+		result = prime * result + ((this.guid == null) ? 0 : this.guid.hashCode());
+		result = prime * result + ((this.image == null) ? 0 : this.image.hashCode());
+		result = prime * result + ((this.pubDate == null) ? 0 : this.pubDate.hashCode());
+		result = prime * result + ((this.subtitle == null) ? 0 : this.subtitle.hashCode());
+		result = prime * result + ((this.summary == null) ? 0 : this.summary.hashCode());
+		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final PodcastEpisode other = (PodcastEpisode) obj;
+		if (this.author == null) {
+			if (other.author != null) {
+				return false;
+			}
+		} else if (!this.author.equals(other.author)) {
+			return false;
+		}
+		if (this.duration == null) {
+			if (other.duration != null) {
+				return false;
+			}
+		} else if (!this.duration.equals(other.duration)) {
+			return false;
+		}
+		if (this.guid == null) {
+			if (other.guid != null) {
+				return false;
+			}
+		} else if (!this.guid.equals(other.guid)) {
+			return false;
+		}
+		if (this.image == null) {
+			if (other.image != null) {
+				return false;
+			}
+		} else if (!this.image.equals(other.image)) {
+			return false;
+		}
+		if (this.pubDate == null) {
+			if (other.pubDate != null) {
+				return false;
+			}
+		} else if (!this.pubDate.equals(other.pubDate)) {
+			return false;
+		}
+		if (this.subtitle == null) {
+			if (other.subtitle != null) {
+				return false;
+			}
+		} else if (!this.subtitle.equals(other.subtitle)) {
+			return false;
+		}
+		if (this.summary == null) {
+			if (other.summary != null) {
+				return false;
+			}
+		} else if (!this.summary.equals(other.summary)) {
+			return false;
+		}
+		if (this.title == null) {
+			if (other.title != null) {
+				return false;
+			}
+		} else if (!this.title.equals(other.title)) {
+			return false;
+		}
+		return true;
 	}
 
 }

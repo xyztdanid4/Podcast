@@ -41,14 +41,14 @@ public class Podcast {
 	 * @return the podcastEpisode
 	 */
 	public List<PodcastEpisode> getPodcastEpisode() {
-		return podcastEpisodes;
+		return this.podcastEpisodes;
 	}
 
 	/**
 	 * @param podcastEpisode
 	 *            the podcastEpisode to set
 	 */
-	public void setPodcastEpisode(List<PodcastEpisode> podcastEpisode) {
+	public void setPodcastEpisode(final List<PodcastEpisode> podcastEpisode) {
 		this.podcastEpisodes = podcastEpisode;
 	}
 
@@ -56,14 +56,14 @@ public class Podcast {
 	 * @return the wrapperType
 	 */
 	public String getWrapperType() {
-		return wrapperType;
+		return this.wrapperType;
 	}
 
 	/**
 	 * @param wrapperType
 	 *            the wrapperType to set
 	 */
-	public void setWrapperType(String wrapperType) {
+	public void setWrapperType(final String wrapperType) {
 		this.wrapperType = wrapperType;
 	}
 
@@ -71,14 +71,14 @@ public class Podcast {
 	 * @return the kind
 	 */
 	public String getKind() {
-		return kind;
+		return this.kind;
 	}
 
 	/**
 	 * @param kind
 	 *            the kind to set
 	 */
-	public void setKind(String kind) {
+	public void setKind(final String kind) {
 		this.kind = kind;
 	}
 
@@ -86,14 +86,14 @@ public class Podcast {
 	 * @return the collectionId
 	 */
 	public String getCollectionId() {
-		return collectionId;
+		return this.collectionId;
 	}
 
 	/**
 	 * @param collectionId
 	 *            the collectionId to set
 	 */
-	public void setCollectionId(String collectionId) {
+	public void setCollectionId(final String collectionId) {
 		this.collectionId = collectionId;
 	}
 
@@ -101,14 +101,14 @@ public class Podcast {
 	 * @return the trackId
 	 */
 	public String getTrackId() {
-		return trackId;
+		return this.trackId;
 	}
 
 	/**
 	 * @param trackId
 	 *            the trackId to set
 	 */
-	public void setTrackId(String trackId) {
+	public void setTrackId(final String trackId) {
 		this.trackId = trackId;
 	}
 
@@ -116,14 +116,14 @@ public class Podcast {
 	 * @return the artistName
 	 */
 	public String getArtistName() {
-		return artistName;
+		return this.artistName;
 	}
 
 	/**
 	 * @param artistName
 	 *            the artistName to set
 	 */
-	public void setArtistName(String artistName) {
+	public void setArtistName(final String artistName) {
 		this.artistName = artistName;
 	}
 
@@ -131,14 +131,14 @@ public class Podcast {
 	 * @return the collectionName
 	 */
 	public String getCollectionName() {
-		return collectionName;
+		return this.collectionName;
 	}
 
 	/**
 	 * @param collectionName
 	 *            the collectionName to set
 	 */
-	public void setCollectionName(String collectionName) {
+	public void setCollectionName(final String collectionName) {
 		this.collectionName = collectionName;
 	}
 
@@ -146,14 +146,14 @@ public class Podcast {
 	 * @return the trackName
 	 */
 	public String getTrackName() {
-		return trackName;
+		return this.trackName;
 	}
 
 	/**
 	 * @param trackName
 	 *            the trackName to set
 	 */
-	public void setTrackName(String trackName) {
+	public void setTrackName(final String trackName) {
 		this.trackName = trackName;
 	}
 
@@ -161,14 +161,14 @@ public class Podcast {
 	 * @return the collectionCensoredName
 	 */
 	public String getCollectionCensoredName() {
-		return collectionCensoredName;
+		return this.collectionCensoredName;
 	}
 
 	/**
 	 * @param collectionCensoredName
 	 *            the collectionCensoredName to set
 	 */
-	public void setCollectionCensoredName(String collectionCensoredName) {
+	public void setCollectionCensoredName(final String collectionCensoredName) {
 		this.collectionCensoredName = collectionCensoredName;
 	}
 
@@ -176,14 +176,14 @@ public class Podcast {
 	 * @return the trackCensoredName
 	 */
 	public String getTrackCensoredName() {
-		return trackCensoredName;
+		return this.trackCensoredName;
 	}
 
 	/**
 	 * @param trackCensoredName
 	 *            the trackCensoredName to set
 	 */
-	public void setTrackCensoredName(String trackCensoredName) {
+	public void setTrackCensoredName(final String trackCensoredName) {
 		this.trackCensoredName = trackCensoredName;
 	}
 
@@ -191,14 +191,14 @@ public class Podcast {
 	 * @return the collectionViewUrl
 	 */
 	public String getCollectionViewUrl() {
-		return collectionViewUrl;
+		return this.collectionViewUrl;
 	}
 
 	/**
 	 * @param collectionViewUrl
 	 *            the collectionViewUrl to set
 	 */
-	public void setCollectionViewUrl(String collectionViewUrl) {
+	public void setCollectionViewUrl(final String collectionViewUrl) {
 		this.collectionViewUrl = collectionViewUrl;
 	}
 
@@ -206,14 +206,14 @@ public class Podcast {
 	 * @return the feedUrl
 	 */
 	public String getFeedUrl() {
-		return feedUrl;
+		return this.feedUrl;
 	}
 
 	/**
 	 * @param feedUrl
 	 *            the feedUrl to set
 	 */
-	public void setFeedUrl(String feedUrl) {
+	public void setFeedUrl(final String feedUrl) {
 		this.feedUrl = feedUrl;
 	}
 
@@ -221,14 +221,14 @@ public class Podcast {
 	 * @return the trackViewUrl
 	 */
 	public String getTrackViewUrl() {
-		return trackViewUrl;
+		return this.trackViewUrl;
 	}
 
 	/**
 	 * @param trackViewUrl
 	 *            the trackViewUrl to set
 	 */
-	public void setTrackViewUrl(String trackViewUrl) {
+	public void setTrackViewUrl(final String trackViewUrl) {
 		this.trackViewUrl = trackViewUrl;
 	}
 
@@ -236,14 +236,14 @@ public class Podcast {
 	 * @return the artworkUrl
 	 */
 	public String getArtworkUrl() {
-		return artworkUrl;
+		return this.artworkUrl;
 	}
 
 	/**
 	 * @param artworkUrl
 	 *            the artworkUrl to set
 	 */
-	public void setArtworkUrl(String artworkUrl) {
+	public void setArtworkUrl(final String artworkUrl) {
 		this.artworkUrl = artworkUrl;
 	}
 
@@ -251,14 +251,14 @@ public class Podcast {
 	 * @return the artworkUrl60
 	 */
 	public String getArtworkUrl60() {
-		return artworkUrl60;
+		return this.artworkUrl60;
 	}
 
 	/**
 	 * @param artworkUrl60
 	 *            the artworkUrl60 to set
 	 */
-	public void setArtworkUrl60(String artworkUrl60) {
+	public void setArtworkUrl60(final String artworkUrl60) {
 		this.artworkUrl60 = artworkUrl60;
 	}
 
@@ -266,14 +266,14 @@ public class Podcast {
 	 * @return the artworkUrl100
 	 */
 	public String getArtworkUrl100() {
-		return artworkUrl100;
+		return this.artworkUrl100;
 	}
 
 	/**
 	 * @param artworkUrl100
 	 *            the artworkUrl100 to set
 	 */
-	public void setArtworkUrl100(String artworkUrl100) {
+	public void setArtworkUrl100(final String artworkUrl100) {
 		this.artworkUrl100 = artworkUrl100;
 	}
 
@@ -281,14 +281,14 @@ public class Podcast {
 	 * @return the collectionPrice
 	 */
 	public String getCollectionPrice() {
-		return collectionPrice;
+		return this.collectionPrice;
 	}
 
 	/**
 	 * @param collectionPrice
 	 *            the collectionPrice to set
 	 */
-	public void setCollectionPrice(String collectionPrice) {
+	public void setCollectionPrice(final String collectionPrice) {
 		this.collectionPrice = collectionPrice;
 	}
 
@@ -296,14 +296,14 @@ public class Podcast {
 	 * @return the trackPrice
 	 */
 	public String getTrackPrice() {
-		return trackPrice;
+		return this.trackPrice;
 	}
 
 	/**
 	 * @param trackPrice
 	 *            the trackPrice to set
 	 */
-	public void setTrackPrice(String trackPrice) {
+	public void setTrackPrice(final String trackPrice) {
 		this.trackPrice = trackPrice;
 	}
 
@@ -311,14 +311,14 @@ public class Podcast {
 	 * @return the trackRentalPrice
 	 */
 	public String getTrackRentalPrice() {
-		return trackRentalPrice;
+		return this.trackRentalPrice;
 	}
 
 	/**
 	 * @param trackRentalPrice
 	 *            the trackRentalPrice to set
 	 */
-	public void setTrackRentalPrice(String trackRentalPrice) {
+	public void setTrackRentalPrice(final String trackRentalPrice) {
 		this.trackRentalPrice = trackRentalPrice;
 	}
 
@@ -326,14 +326,14 @@ public class Podcast {
 	 * @return the collectionHdPrice
 	 */
 	public String getCollectionHdPrice() {
-		return collectionHdPrice;
+		return this.collectionHdPrice;
 	}
 
 	/**
 	 * @param collectionHdPrice
 	 *            the collectionHdPrice to set
 	 */
-	public void setCollectionHdPrice(String collectionHdPrice) {
+	public void setCollectionHdPrice(final String collectionHdPrice) {
 		this.collectionHdPrice = collectionHdPrice;
 	}
 
@@ -341,14 +341,14 @@ public class Podcast {
 	 * @return the trackHdPrice
 	 */
 	public String getTrackHdPrice() {
-		return trackHdPrice;
+		return this.trackHdPrice;
 	}
 
 	/**
 	 * @param trackHdPrice
 	 *            the trackHdPrice to set
 	 */
-	public void setTrackHdPrice(String trackHdPrice) {
+	public void setTrackHdPrice(final String trackHdPrice) {
 		this.trackHdPrice = trackHdPrice;
 	}
 
@@ -356,14 +356,14 @@ public class Podcast {
 	 * @return the trackHdRentalPrice
 	 */
 	public String getTrackHdRentalPrice() {
-		return trackHdRentalPrice;
+		return this.trackHdRentalPrice;
 	}
 
 	/**
 	 * @param trackHdRentalPrice
 	 *            the trackHdRentalPrice to set
 	 */
-	public void setTrackHdRentalPrice(String trackHdRentalPrice) {
+	public void setTrackHdRentalPrice(final String trackHdRentalPrice) {
 		this.trackHdRentalPrice = trackHdRentalPrice;
 	}
 
@@ -371,14 +371,14 @@ public class Podcast {
 	 * @return the releaseDate
 	 */
 	public String getReleaseDate() {
-		return releaseDate;
+		return this.releaseDate;
 	}
 
 	/**
 	 * @param releaseDate
 	 *            the releaseDate to set
 	 */
-	public void setReleaseDate(String releaseDate) {
+	public void setReleaseDate(final String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
@@ -386,14 +386,14 @@ public class Podcast {
 	 * @return the collectionExplicitness
 	 */
 	public String getCollectionExplicitness() {
-		return collectionExplicitness;
+		return this.collectionExplicitness;
 	}
 
 	/**
 	 * @param collectionExplicitness
 	 *            the collectionExplicitness to set
 	 */
-	public void setCollectionExplicitness(String collectionExplicitness) {
+	public void setCollectionExplicitness(final String collectionExplicitness) {
 		this.collectionExplicitness = collectionExplicitness;
 	}
 
@@ -401,14 +401,14 @@ public class Podcast {
 	 * @return the trackExplicitness
 	 */
 	public String getTrackExplicitness() {
-		return trackExplicitness;
+		return this.trackExplicitness;
 	}
 
 	/**
 	 * @param trackExplicitness
 	 *            the trackExplicitness to set
 	 */
-	public void setTrackExplicitness(String trackExplicitness) {
+	public void setTrackExplicitness(final String trackExplicitness) {
 		this.trackExplicitness = trackExplicitness;
 	}
 
@@ -416,14 +416,14 @@ public class Podcast {
 	 * @return the trackCount
 	 */
 	public String getTrackCount() {
-		return trackCount;
+		return this.trackCount;
 	}
 
 	/**
 	 * @param trackCount
 	 *            the trackCount to set
 	 */
-	public void setTrackCount(String trackCount) {
+	public void setTrackCount(final String trackCount) {
 		this.trackCount = trackCount;
 	}
 
@@ -431,14 +431,14 @@ public class Podcast {
 	 * @return the country
 	 */
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	/**
 	 * @param country
 	 *            the country to set
 	 */
-	public void setCountry(String country) {
+	public void setCountry(final String country) {
 		this.country = country;
 	}
 
@@ -446,14 +446,14 @@ public class Podcast {
 	 * @return the currency
 	 */
 	public String getCurrency() {
-		return currency;
+		return this.currency;
 	}
 
 	/**
 	 * @param currency
 	 *            the currency to set
 	 */
-	public void setCurrency(String currency) {
+	public void setCurrency(final String currency) {
 		this.currency = currency;
 	}
 
@@ -461,14 +461,14 @@ public class Podcast {
 	 * @return the primaryGenreName
 	 */
 	public String getPrimaryGenreName() {
-		return primaryGenreName;
+		return this.primaryGenreName;
 	}
 
 	/**
 	 * @param primaryGenreName
 	 *            the primaryGenreName to set
 	 */
-	public void setPrimaryGenreName(String primaryGenreName) {
+	public void setPrimaryGenreName(final String primaryGenreName) {
 		this.primaryGenreName = primaryGenreName;
 	}
 
@@ -476,14 +476,14 @@ public class Podcast {
 	 * @return the radioStationUrl
 	 */
 	public String getRadioStationUrl() {
-		return radioStationUrl;
+		return this.radioStationUrl;
 	}
 
 	/**
 	 * @param radioStationUrl
 	 *            the radioStationUrl to set
 	 */
-	public void setRadioStationUrl(String radioStationUrl) {
+	public void setRadioStationUrl(final String radioStationUrl) {
 		this.radioStationUrl = radioStationUrl;
 	}
 
@@ -491,14 +491,14 @@ public class Podcast {
 	 * @return the artworkUrl600
 	 */
 	public String getArtworkUrl600() {
-		return artworkUrl600;
+		return this.artworkUrl600;
 	}
 
 	/**
 	 * @param artworkUrl600
 	 *            the artworkUrl600 to set
 	 */
-	public void setArtworkUrl600(String artworkUrl600) {
+	public void setArtworkUrl600(final String artworkUrl600) {
 		this.artworkUrl600 = artworkUrl600;
 	}
 
@@ -506,14 +506,14 @@ public class Podcast {
 	 * @return the genreIds
 	 */
 	public List<String> getGenreIds() {
-		return genreIds;
+		return this.genreIds;
 	}
 
 	/**
 	 * @param genreIds
 	 *            the genreIds to set
 	 */
-	public void setGenreIds(List<String> genreIds) {
+	public void setGenreIds(final List<String> genreIds) {
 		this.genreIds = genreIds;
 	}
 
@@ -521,15 +521,311 @@ public class Podcast {
 	 * @return the genres
 	 */
 	public List<String> getGenres() {
-		return genres;
+		return this.genres;
 	}
 
 	/**
 	 * @param genres
 	 *            the genres to set
 	 */
-	public void setGenres(List<String> genres) {
+	public void setGenres(final List<String> genres) {
 		this.genres = genres;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.artistName == null) ? 0 : this.artistName.hashCode());
+		result = prime * result + ((this.artworkUrl == null) ? 0 : this.artworkUrl.hashCode());
+		result = prime * result + ((this.artworkUrl100 == null) ? 0 : this.artworkUrl100.hashCode());
+		result = prime * result + ((this.artworkUrl60 == null) ? 0 : this.artworkUrl60.hashCode());
+		result = prime * result + ((this.artworkUrl600 == null) ? 0 : this.artworkUrl600.hashCode());
+		result = prime * result + ((this.collectionCensoredName == null) ? 0 : this.collectionCensoredName.hashCode());
+		result = prime * result + ((this.collectionExplicitness == null) ? 0 : this.collectionExplicitness.hashCode());
+		result = prime * result + ((this.collectionHdPrice == null) ? 0 : this.collectionHdPrice.hashCode());
+		result = prime * result + ((this.collectionId == null) ? 0 : this.collectionId.hashCode());
+		result = prime * result + ((this.collectionName == null) ? 0 : this.collectionName.hashCode());
+		result = prime * result + ((this.collectionPrice == null) ? 0 : this.collectionPrice.hashCode());
+		result = prime * result + ((this.collectionViewUrl == null) ? 0 : this.collectionViewUrl.hashCode());
+		result = prime * result + ((this.country == null) ? 0 : this.country.hashCode());
+		result = prime * result + ((this.currency == null) ? 0 : this.currency.hashCode());
+		result = prime * result + ((this.feedUrl == null) ? 0 : this.feedUrl.hashCode());
+		result = prime * result + ((this.genreIds == null) ? 0 : this.genreIds.hashCode());
+		result = prime * result + ((this.genres == null) ? 0 : this.genres.hashCode());
+		result = prime * result + ((this.kind == null) ? 0 : this.kind.hashCode());
+		result = prime * result + ((this.podcastEpisodes == null) ? 0 : this.podcastEpisodes.hashCode());
+		result = prime * result + ((this.primaryGenreName == null) ? 0 : this.primaryGenreName.hashCode());
+		result = prime * result + ((this.radioStationUrl == null) ? 0 : this.radioStationUrl.hashCode());
+		result = prime * result + ((this.releaseDate == null) ? 0 : this.releaseDate.hashCode());
+		result = prime * result + ((this.trackCensoredName == null) ? 0 : this.trackCensoredName.hashCode());
+		result = prime * result + ((this.trackCount == null) ? 0 : this.trackCount.hashCode());
+		result = prime * result + ((this.trackExplicitness == null) ? 0 : this.trackExplicitness.hashCode());
+		result = prime * result + ((this.trackHdPrice == null) ? 0 : this.trackHdPrice.hashCode());
+		result = prime * result + ((this.trackHdRentalPrice == null) ? 0 : this.trackHdRentalPrice.hashCode());
+		result = prime * result + ((this.trackId == null) ? 0 : this.trackId.hashCode());
+		result = prime * result + ((this.trackName == null) ? 0 : this.trackName.hashCode());
+		result = prime * result + ((this.trackPrice == null) ? 0 : this.trackPrice.hashCode());
+		result = prime * result + ((this.trackRentalPrice == null) ? 0 : this.trackRentalPrice.hashCode());
+		result = prime * result + ((this.trackViewUrl == null) ? 0 : this.trackViewUrl.hashCode());
+		result = prime * result + ((this.wrapperType == null) ? 0 : this.wrapperType.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Podcast other = (Podcast) obj;
+		if (this.artistName == null) {
+			if (other.artistName != null) {
+				return false;
+			}
+		} else if (!this.artistName.equals(other.artistName)) {
+			return false;
+		}
+		if (this.artworkUrl == null) {
+			if (other.artworkUrl != null) {
+				return false;
+			}
+		} else if (!this.artworkUrl.equals(other.artworkUrl)) {
+			return false;
+		}
+		if (this.artworkUrl100 == null) {
+			if (other.artworkUrl100 != null) {
+				return false;
+			}
+		} else if (!this.artworkUrl100.equals(other.artworkUrl100)) {
+			return false;
+		}
+		if (this.artworkUrl60 == null) {
+			if (other.artworkUrl60 != null) {
+				return false;
+			}
+		} else if (!this.artworkUrl60.equals(other.artworkUrl60)) {
+			return false;
+		}
+		if (this.artworkUrl600 == null) {
+			if (other.artworkUrl600 != null) {
+				return false;
+			}
+		} else if (!this.artworkUrl600.equals(other.artworkUrl600)) {
+			return false;
+		}
+		if (this.collectionCensoredName == null) {
+			if (other.collectionCensoredName != null) {
+				return false;
+			}
+		} else if (!this.collectionCensoredName.equals(other.collectionCensoredName)) {
+			return false;
+		}
+		if (this.collectionExplicitness == null) {
+			if (other.collectionExplicitness != null) {
+				return false;
+			}
+		} else if (!this.collectionExplicitness.equals(other.collectionExplicitness)) {
+			return false;
+		}
+		if (this.collectionHdPrice == null) {
+			if (other.collectionHdPrice != null) {
+				return false;
+			}
+		} else if (!this.collectionHdPrice.equals(other.collectionHdPrice)) {
+			return false;
+		}
+		if (this.collectionId == null) {
+			if (other.collectionId != null) {
+				return false;
+			}
+		} else if (!this.collectionId.equals(other.collectionId)) {
+			return false;
+		}
+		if (this.collectionName == null) {
+			if (other.collectionName != null) {
+				return false;
+			}
+		} else if (!this.collectionName.equals(other.collectionName)) {
+			return false;
+		}
+		if (this.collectionPrice == null) {
+			if (other.collectionPrice != null) {
+				return false;
+			}
+		} else if (!this.collectionPrice.equals(other.collectionPrice)) {
+			return false;
+		}
+		if (this.collectionViewUrl == null) {
+			if (other.collectionViewUrl != null) {
+				return false;
+			}
+		} else if (!this.collectionViewUrl.equals(other.collectionViewUrl)) {
+			return false;
+		}
+		if (this.country == null) {
+			if (other.country != null) {
+				return false;
+			}
+		} else if (!this.country.equals(other.country)) {
+			return false;
+		}
+		if (this.currency == null) {
+			if (other.currency != null) {
+				return false;
+			}
+		} else if (!this.currency.equals(other.currency)) {
+			return false;
+		}
+		if (this.feedUrl == null) {
+			if (other.feedUrl != null) {
+				return false;
+			}
+		} else if (!this.feedUrl.equals(other.feedUrl)) {
+			return false;
+		}
+		if (this.genreIds == null) {
+			if (other.genreIds != null) {
+				return false;
+			}
+		} else if (!this.genreIds.equals(other.genreIds)) {
+			return false;
+		}
+		if (this.genres == null) {
+			if (other.genres != null) {
+				return false;
+			}
+		} else if (!this.genres.equals(other.genres)) {
+			return false;
+		}
+		if (this.kind == null) {
+			if (other.kind != null) {
+				return false;
+			}
+		} else if (!this.kind.equals(other.kind)) {
+			return false;
+		}
+		if (this.podcastEpisodes == null) {
+			if (other.podcastEpisodes != null) {
+				return false;
+			}
+		} else if (!this.podcastEpisodes.equals(other.podcastEpisodes)) {
+			return false;
+		}
+		if (this.primaryGenreName == null) {
+			if (other.primaryGenreName != null) {
+				return false;
+			}
+		} else if (!this.primaryGenreName.equals(other.primaryGenreName)) {
+			return false;
+		}
+		if (this.radioStationUrl == null) {
+			if (other.radioStationUrl != null) {
+				return false;
+			}
+		} else if (!this.radioStationUrl.equals(other.radioStationUrl)) {
+			return false;
+		}
+		if (this.releaseDate == null) {
+			if (other.releaseDate != null) {
+				return false;
+			}
+		} else if (!this.releaseDate.equals(other.releaseDate)) {
+			return false;
+		}
+		if (this.trackCensoredName == null) {
+			if (other.trackCensoredName != null) {
+				return false;
+			}
+		} else if (!this.trackCensoredName.equals(other.trackCensoredName)) {
+			return false;
+		}
+		if (this.trackCount == null) {
+			if (other.trackCount != null) {
+				return false;
+			}
+		} else if (!this.trackCount.equals(other.trackCount)) {
+			return false;
+		}
+		if (this.trackExplicitness == null) {
+			if (other.trackExplicitness != null) {
+				return false;
+			}
+		} else if (!this.trackExplicitness.equals(other.trackExplicitness)) {
+			return false;
+		}
+		if (this.trackHdPrice == null) {
+			if (other.trackHdPrice != null) {
+				return false;
+			}
+		} else if (!this.trackHdPrice.equals(other.trackHdPrice)) {
+			return false;
+		}
+		if (this.trackHdRentalPrice == null) {
+			if (other.trackHdRentalPrice != null) {
+				return false;
+			}
+		} else if (!this.trackHdRentalPrice.equals(other.trackHdRentalPrice)) {
+			return false;
+		}
+		if (this.trackId == null) {
+			if (other.trackId != null) {
+				return false;
+			}
+		} else if (!this.trackId.equals(other.trackId)) {
+			return false;
+		}
+		if (this.trackName == null) {
+			if (other.trackName != null) {
+				return false;
+			}
+		} else if (!this.trackName.equals(other.trackName)) {
+			return false;
+		}
+		if (this.trackPrice == null) {
+			if (other.trackPrice != null) {
+				return false;
+			}
+		} else if (!this.trackPrice.equals(other.trackPrice)) {
+			return false;
+		}
+		if (this.trackRentalPrice == null) {
+			if (other.trackRentalPrice != null) {
+				return false;
+			}
+		} else if (!this.trackRentalPrice.equals(other.trackRentalPrice)) {
+			return false;
+		}
+		if (this.trackViewUrl == null) {
+			if (other.trackViewUrl != null) {
+				return false;
+			}
+		} else if (!this.trackViewUrl.equals(other.trackViewUrl)) {
+			return false;
+		}
+		if (this.wrapperType == null) {
+			if (other.wrapperType != null) {
+				return false;
+			}
+		} else if (!this.wrapperType.equals(other.wrapperType)) {
+			return false;
+		}
+		return true;
 	}
 
 	/*
@@ -539,18 +835,20 @@ public class Podcast {
 	 */
 	@Override
 	public String toString() {
-		return "SearchResultItem [wrapperType=" + wrapperType + ", kind=" + kind + ", collectionId=" + collectionId
-				+ ", trackId=" + trackId + ", artistName=" + artistName + ", collectionName=" + collectionName
-				+ ", trackName=" + trackName + ", collectionCensoredName=" + collectionCensoredName
-				+ ", trackCensoredName=" + trackCensoredName + ", collectionViewUrl=" + collectionViewUrl + ", feedUrl="
-				+ feedUrl + ", trackViewUrl=" + trackViewUrl + ", artworkUrl=" + artworkUrl + ", artworkUrl60="
-				+ artworkUrl60 + ", artworkUrl100=" + artworkUrl100 + ", collectionPrice=" + collectionPrice
-				+ ", trackPrice=" + trackPrice + ", trackRentalPrice=" + trackRentalPrice + ", collectionHdPrice="
-				+ collectionHdPrice + ", trackHdPrice=" + trackHdPrice + ", trackHdRentalPrice=" + trackHdRentalPrice
-				+ ", releaseDate=" + releaseDate + ", collectionExplicitness=" + collectionExplicitness
-				+ ", trackExplicitness=" + trackExplicitness + ", trackCount=" + trackCount + ", country=" + country
-				+ ", currency=" + currency + ", primaryGenreName=" + primaryGenreName + ", radioStationUrl="
-				+ radioStationUrl + ", artworkUrl600=" + artworkUrl600 + ", genreIds=" + genreIds + ", genres=" + genres
-				+ ", podcastEpisode=" + podcastEpisodes + "]";
+		return "SearchResultItem [wrapperType=" + this.wrapperType + ", kind=" + this.kind + ", collectionId="
+				+ this.collectionId + ", trackId=" + this.trackId + ", artistName=" + this.artistName
+				+ ", collectionName=" + this.collectionName + ", trackName=" + this.trackName
+				+ ", collectionCensoredName=" + this.collectionCensoredName + ", trackCensoredName="
+				+ this.trackCensoredName + ", collectionViewUrl=" + this.collectionViewUrl + ", feedUrl=" + this.feedUrl
+				+ ", trackViewUrl=" + this.trackViewUrl + ", artworkUrl=" + this.artworkUrl + ", artworkUrl60="
+				+ this.artworkUrl60 + ", artworkUrl100=" + this.artworkUrl100 + ", collectionPrice="
+				+ this.collectionPrice + ", trackPrice=" + this.trackPrice + ", trackRentalPrice="
+				+ this.trackRentalPrice + ", collectionHdPrice=" + this.collectionHdPrice + ", trackHdPrice="
+				+ this.trackHdPrice + ", trackHdRentalPrice=" + this.trackHdRentalPrice + ", releaseDate="
+				+ this.releaseDate + ", collectionExplicitness=" + this.collectionExplicitness + ", trackExplicitness="
+				+ this.trackExplicitness + ", trackCount=" + this.trackCount + ", country=" + this.country
+				+ ", currency=" + this.currency + ", primaryGenreName=" + this.primaryGenreName + ", radioStationUrl="
+				+ this.radioStationUrl + ", artworkUrl600=" + this.artworkUrl600 + ", genreIds=" + this.genreIds
+				+ ", genres=" + this.genres + ", podcastEpisode=" + this.podcastEpisodes + "]";
 	}
 }
