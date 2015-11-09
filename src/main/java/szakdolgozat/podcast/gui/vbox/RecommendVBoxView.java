@@ -3,12 +3,16 @@ package szakdolgozat.podcast.gui.vbox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
+import szakdolgozat.podcast.gui.borderpane.SearchBorderPaneView;
 import szakdolgozat.podcast.gui.decorator.RecommendListDecorator;
+import szakdolgozat.podcast.gui.tab.SearchTab;
+import szakdolgozat.podcast.gui.tabpane.ApplicationTabPane;
 
 public class RecommendVBoxView extends VBox {
 	private static final String RECOMMEND = "Similar podcast";
@@ -24,22 +28,25 @@ public class RecommendVBoxView extends VBox {
 			final HBox hboxitem = HBoxBuilder.create()
 									.smallRectangle(item.getImage())
 									.artist(item.getArtist())
+									.effectOn()
 									.build();
 			
 			hboxitem.setOnMousePressed(event -> {
-				
+				ApplicationTabPane.getInstance().getSelectionModel().select(0);
+				SearchTab.getInstance().setContent(new SearchBorderPaneView(this.recommendVBoxController.getRecommendListItems()
+						.get(this.recommendVBoxController.getRecommendListItems().indexOf(item)).getArtist()));
 			});
 			
 			recommendList.add(hboxitem);
 		}
-		getChildren().addAll(TextBuilder.create()
-										.bigText(RECOMMEND)
-										.build(),
-							ListViewBuilder.create()
-											.items(recommendList)
-											.size(RecommendListDecorator.LISTWIDTH, RecommendListDecorator.LISTHEIGHT)
-											.build());
+		//-.-off
+		final ListView<HBox> recommendListView =  ListViewBuilder.create()
+															.items(recommendList)
+															.size(RecommendListDecorator.LISTWIDTH, RecommendListDecorator.LISTHEIGHT)
+															.build();
 		
+		getChildren().addAll(TextBuilder.create().bigText(RECOMMEND).build(), recommendListView);
+
 		//-.-on
 		RecommendListDecorator.decorate(this);
 		setPadding();

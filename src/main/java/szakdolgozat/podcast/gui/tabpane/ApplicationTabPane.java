@@ -11,12 +11,21 @@ import szakdolgozat.podcast.gui.tab.SearchTab;
 public class ApplicationTabPane extends TabPane {
 	private static final int HEIGHT = 300;
 	private static final int WEIGHT = 300;
+	private static ApplicationTabPane instance = null;
 
-	public ApplicationTabPane() {
-		super(new SearchTab(), new PodcastListTab(), new PlayListTab(), new DownloadTab(), new NotificationTab());
+	private ApplicationTabPane() {
+		super(SearchTab.getInstance(), new PodcastListTab(), new PlayListTab(), new DownloadTab(),
+				new NotificationTab());
 		setSide(Side.LEFT);
 		setTabMaxHeight(HEIGHT);
 		setTabMaxWidth(WEIGHT);
+	}
+
+	public static ApplicationTabPane getInstance() {
+		if (instance == null) {
+			instance = new ApplicationTabPane();
+		}
+		return instance;
 	}
 
 }

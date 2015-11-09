@@ -13,7 +13,7 @@ public class MainBorderPane extends BorderPane {
 	}
 
 	private void buildCenter() {
-		setCenter(new ApplicationTabPane());
+		setCenter(ApplicationTabPane.getInstance());
 	}
 
 	private void buildRight() {

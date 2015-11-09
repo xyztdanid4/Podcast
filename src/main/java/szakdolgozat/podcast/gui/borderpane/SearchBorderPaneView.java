@@ -72,6 +72,35 @@ public class SearchBorderPaneView extends BorderPane {
 		SearchBPDecorator.decorateFactory(this);
 	}
 
+	public SearchBorderPaneView(final String searchText) {
+		this.searchBorderPaneController = new SearchBorderPaneController();
+		//-.-off
+		this.searchTextField = TextFieldBuilder.create()
+												.promptText(SEARCHTEXTFIELD_PROMPTTEXT)
+												.size(SearchBPDecorator.SEARCHTEXTFIELDWIDTH, SearchBPDecorator.SEARCHTEXTFIELDHEIGHT)
+												.build();
+		
+		setSearchTextFieldKeyEvent();
+		
+		this.searchButton = ButtonBuilder.create()
+									.text(SEARCHBUTTON_TEXT)
+									.build();
+		setSearchButtonFunction();
+		setButtonDisability();
+		setTop(HBoxBuilder.noCreate()
+							.noTextField(this.searchTextField)
+							.noButton(this.searchButton)
+							.build());
+		//-.-on
+		setPadding();
+		showPodcastList();
+		showEpisodesList();
+		SearchBPDecorator.decorateFactory(this);
+
+		this.searchTextField.setText(searchText);
+		this.searchButton.fire();
+	}
+
 	private void setPadding() {
 		setPadding(new Insets(Decorator.PADDING, Decorator.PADDING, Decorator.PADDING, Decorator.PADDING));
 	}
