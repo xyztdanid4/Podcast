@@ -73,6 +73,7 @@ public class PodcastBorderPaneView extends BorderPane {
 				podcastsContainer.add(HBoxBuilder.create()
 												.smallRectangle(podcastIterator.getArtworkUrl60())
 												.artist(podcastIterator.getArtistName())
+												.effectOn()
 												.button(new Button() {
 												{
 													setOnAction(event -> {
@@ -218,6 +219,7 @@ public class PodcastBorderPaneView extends BorderPane {
 				itemHbox = HBoxBuilder.create()
 										.image(podcastEpisode.getImage())
 										.title(podcastEpisode.getTitle())
+										.effectOn()
 										.build();
 				//-.-on
 			} else {
@@ -243,6 +245,7 @@ public class PodcastBorderPaneView extends BorderPane {
 				itemHbox = HBoxBuilder.create()
 										.smallRectangle(podcastEpisode.getImage())
 										.title(podcastEpisode.getTitle())
+										.effectOn()
 										.build();
 				//-.-on
 			}

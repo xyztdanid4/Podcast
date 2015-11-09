@@ -23,6 +23,11 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
+	public HBoxBuilder effectOn() {
+		hbox = Decorator.decorateEffect(hbox);
+		return getInstance();
+	}
+
 	public static HBoxBuilder noCreate() {
 		hbox = new HBox(Decorator.HBOXPADDING);
 		return getInstance();

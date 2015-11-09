@@ -12,6 +12,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class NotificationBPDecorator extends Decorator {
+	public static final int LISTWIDTH = 600;
+	public static final int LISTHEIGHT = 500;
 
 	public NotificationBPDecorator() {
 

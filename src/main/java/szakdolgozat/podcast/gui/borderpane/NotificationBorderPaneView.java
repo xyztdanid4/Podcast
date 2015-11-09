@@ -13,23 +13,23 @@ import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.NotificationBPDecorator;
 
 public class NotificationBorderPaneView extends BorderPane {
-	// private static
+	private static final String NOTIFICAITON = "Notifications";
 
 	public NotificationBorderPaneView() {
 		setPadding();
 		//-.-off
 		NotificationBPDecorator.decorateFactory(this);
 		final Text text = TextBuilder.create()
-									.bigText("Notifications")
+									.bigText(NOTIFICAITON)
 									.build();
 		
 		final ListView<HBox> listView = ListViewBuilder.create()
 				.items(NotificationBorderPaneController.getInstance().getNotificationContainer())
-				.size(600, 600)
+				.size(NotificationBPDecorator.LISTWIDTH, NotificationBPDecorator.LISTHEIGHT)
 				.build();
 		
 		final VBox vbox = VBoxBuilder.create()
-									.bigText("Notifications")
+									.bigText(NOTIFICAITON)
 									.noListView(listView)
 									.build(); 
 		setLeft(vbox);

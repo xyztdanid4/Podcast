@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import org.mongodb.morphia.query.Query;
 
+import javafx.application.Platform;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
@@ -54,7 +55,8 @@ public class TimerTaskPodcast extends TimerTask {
 				}
 			}
 			final int current = Integer.parseInt(actual.getTrackCount());
-			System.out.println(actual.getArtistName() + "current: " + current);
+			// System.out.println(actual.getArtistName() + "current: " +
+			// current);
 			if (prev == current) {
 				System.out.println("EGYENLO");
 			}
@@ -74,16 +76,20 @@ public class TimerTaskPodcast extends TimerTask {
 				// 2, ki kell tenni a notificationlistbe
 				final int difference = current - prev;
 				for (int i = 1; i <= difference; i++) {
-					System.out
-							.println(actual.getPodcastEpisode().get(actual.getPodcastEpisode().size() - i).getTitle());
+					// System.out
+					// .println(actual.getPodcastEpisode().get(actual.getPodcastEpisode().size()
+					// - i).getTitle());
 					//-.-off
-					NotificationBorderPaneController.getInstance().getNotificationContainer()
+					final Podcast a = actual;
+					final int ii = i;
+					Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNotificationContainer()
 									.add(HBoxBuilder.create()
 									.smallText("NEW EPISODE: ")
-									.artist(actual.getArtistName())
+									.artist(a.getArtistName())
 									.smallText(" ")
-									.smallText(actual.getPodcastEpisode().get(actual.getPodcastEpisode().size() - i).getTitle())
-									.build());
+									.smallText(a.getPodcastEpisode().get(a.getPodcastEpisode().size() - ii).getTitle())
+									.build()));
+					
 					//-.-on
 				}
 			}

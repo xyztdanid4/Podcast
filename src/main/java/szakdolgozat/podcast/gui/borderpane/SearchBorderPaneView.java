@@ -121,6 +121,7 @@ public class SearchBorderPaneView extends BorderPane {
 					.smallRectangle(podcast.getArtworkUrl60())
 					.artist(podcast.getArtistName())
 					.noButton(subscribeButton)
+					.effectOn()
 					.build());
 		}
 		//-.-on
@@ -169,6 +170,7 @@ public class SearchBorderPaneView extends BorderPane {
 							itemHbox = HBoxBuilder.create()
 													.image(podcastEpisode.getImage())
 													.title(podcastEpisode.getTitle())
+													.effectOn()
 													.build();
 							//-.-on
 						} catch (final Exception e) {

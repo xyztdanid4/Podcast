@@ -21,10 +21,16 @@ public class RecommendVBoxView extends VBox {
 		final ObservableList<HBox> recommendList = FXCollections.observableArrayList();
 		//-.-off
 		for (final RecommendListItem item : this.recommendVBoxController.getRecommendListItems()) {
-			recommendList.add(HBoxBuilder.create()
-										.smallRectangle(item.getImage())
-										.artist(item.getArtist())
-										.build());
+			final HBox hboxitem = HBoxBuilder.create()
+									.smallRectangle(item.getImage())
+									.artist(item.getArtist())
+									.build();
+			
+			hboxitem.setOnMousePressed(event -> {
+				
+			});
+			
+			recommendList.add(hboxitem);
 		}
 		getChildren().addAll(TextBuilder.create()
 										.bigText(RECOMMEND)
