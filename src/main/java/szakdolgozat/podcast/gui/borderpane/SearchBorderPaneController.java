@@ -7,7 +7,6 @@ import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
-import szakdolgozat.podcast.threads.PodcastListener;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class SearchBorderPaneController {
@@ -41,11 +40,5 @@ public class SearchBorderPaneController {
 		podcast.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
 		MorphiaConnector.getInstance();
 		MorphiaConnector.getDataStore().save(podcast);
-		// PodcastListener.getInstance().startNewListener();
 	}
-
-	public void startNewListener(final Podcast podcast) {
-		PodcastListener.getInstance().startNewListener(podcast);
-	}
-
 }

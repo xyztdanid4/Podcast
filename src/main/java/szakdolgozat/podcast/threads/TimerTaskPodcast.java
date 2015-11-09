@@ -1,70 +1,92 @@
 package szakdolgozat.podcast.threads;
 
-import java.util.Timer;
+import java.util.ArrayList;
 import java.util.TimerTask;
 
+import org.mongodb.morphia.query.Query;
+
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
+import szakdolgozat.podcast.data.podcast.PodcastContainer;
+import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.borderpane.NotificationBorderPaneController;
+import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
+import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class TimerTaskPodcast extends TimerTask {
-	private int prevTrackCount;
-	private int currentTrackCount;
-	// private int index;
-	private Podcast podcast;
-	private Timer timer;
 
-	public TimerTaskPodcast(final Podcast podcast) {
-		// this.index = index;
-		// this.podcast =
-		// MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()
-		// .get(TimerTaskPodcast.this.index);
-		this.podcast = podcast;
+	public TimerTaskPodcast() {
+
 	}
 
-	public Timer getTimer() {
-		return this.timer;
-	}
-
-	public Podcast getPodcast() {
-		return this.podcast;
-	}
-
-	public TimerTaskPodcast(final int prevTrackCount, final int currentTrackCount) {
-		super();
-		this.prevTrackCount = prevTrackCount;
-		this.currentTrackCount = currentTrackCount;
-	}
-	/*
 	@Override
 	public void run() {
-		this.timer = new Timer();
-		this.timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				PodcastListener.getInstance();
-				TimerTaskPodcast.this.prevTrackCount = MorphiaConnector.getDataStore().createQuery(Podcast.class)
-						.asList().get(PodcastListener.getPodcastsFromDBList().indexOf(TimerTaskPodcast.this.podcast))
-						.getPodcastEpisode().size();
-			}
-		}, 0);
+		// a lényeg itt az hogy a dbn, tehét a feliratkozott podcasteken végig
+		// kell menni.
+		// egyesével nézzü, hogy van a frissítés, ezt onna tudjuk, hogy a
+		// trackcount mezö nőtt e.
+		// tehát az aktuális mezőn állunk elkérjük a trackcountot eltároljuk a
+		// prev változoba.
+		// viszont utána a neten is meg kell keresni a hozzátartozo
+		// trackcountot.
+		// ehhez ujra kell keresni majd parsolni a podcastet, ezt a podcast
+		// artist alapján tesszük meg. ha megvan a podcast a neten akkor már
+		// csak a hasonlitás kell
+		// és ennek függvényében járunk el
+		// amikor ujra feláll a rednszer akkor is nézi, hogy mik az ujak és azt
+		// is kirakja.
 
-		this.timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				TimerTaskPodcast.this.currentTrackCount = MorphiaConnector.getDataStore().createQuery(Podcast.class)
-						.asList().get(PodcastListener.getPodcastsFromDBList().indexOf(TimerTaskPodcast.this.podcast))
-						.getPodcastEpisode().size();
-				System.out.println(
-						TimerTaskPodcast.this.podcast.getArtistName() + " prev" + TimerTaskPodcast.this.prevTrackCount);
-				System.out.println(TimerTaskPodcast.this.podcast.getArtistName() + " current"
-						+ TimerTaskPodcast.this.currentTrackCount);
-				System.out.println((PodcastListener.getPodcastsFromDBList().indexOf(TimerTaskPodcast.this.podcast)));
+		// final List<Podcast> podcastsFromDBList =
+		// MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
+		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
+			final int prev = Integer.parseInt(podcast.getTrackCount());
+			System.out.println(podcast.getArtistName() + " prev: " + prev);
 
-				if (TimerTaskPodcast.this.prevTrackCount < TimerTaskPodcast.this.currentTrackCount) {
-					System.out.println("FRISSÍTÉS");
+			final PodcastJsonParser jsonParser = new PodcastJsonParser(
+					new String("https://itunes.apple.com/search?term=" + podcast.getArtistName()
+							+ "&entity=podcast&media=podcast&limit=5"));
+			final PodcastContainer searchResultContainer = jsonParser.getSearchResult();
+			Podcast actual = new Podcast();
+			for (final Podcast podcastIterator : searchResultContainer.getResults()) {
+				if (podcastIterator.getArtistName().equals(podcast.getArtistName())) {
+					actual = podcastIterator;
 				}
 			}
-		}, 4000);
+			final int current = Integer.parseInt(actual.getTrackCount());
+			System.out.println(actual.getArtistName() + "current: " + current);
+			if (prev == current) {
+				System.out.println("EGYENLO");
+			}
+			if (prev < current) {
+				System.out.println("FRISSITES");
+				// 1, el kell menteni a dbbe az uj részt
+				// törlés
+				final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
+						.filter("artistName =", podcast.getArtistName());
+				MorphiaConnector.getDataStore().delete(deletePodcast);
+
+				// ujra vissza kell rakni a db be
+				final XmlParser xmlParser = new XmlParser(actual.getFeedUrl());
+				actual.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
+				MorphiaConnector.getInstance();
+				MorphiaConnector.getDataStore().save(actual);
+				// 2, ki kell tenni a notificationlistbe
+				final int difference = current - prev;
+				for (int i = 1; i <= difference; i++) {
+					System.out
+							.println(actual.getPodcastEpisode().get(actual.getPodcastEpisode().size() - i).getTitle());
+					//-.-off
+					NotificationBorderPaneController.getInstance().getNotificationContainer()
+									.add(HBoxBuilder.create()
+									.smallText("NEW EPISODE: ")
+									.artist(actual.getArtistName())
+									.smallText(" ")
+									.smallText(actual.getPodcastEpisode().get(actual.getPodcastEpisode().size() - i).getTitle())
+									.build());
+					//-.-on
+				}
+			}
+		}
 	}
-*/
 }

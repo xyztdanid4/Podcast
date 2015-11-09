@@ -17,7 +17,6 @@ import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.PodcastBPDecorator;
-import szakdolgozat.podcast.threads.PodcastListener;
 
 public class PodcastBorderPaneView extends BorderPane {
 	public static final String NOSUBSCRIPTIONS = "You have no subscriptions yet!";
@@ -79,9 +78,6 @@ public class PodcastBorderPaneView extends BorderPane {
 													setOnAction(event -> {
 														PodcastBorderPaneView.this.podcastBoderPaneController
 															.removefromDB(podcastIterator.getArtistName());
-														//PodcastBorderPaneView.this.podcastBoderPaneController.stopListener(PodcastBorderPaneView.this.podcastBoderPaneController.getPodcastsFromDBList().indexOf(podcastIterator));
-														//PodcastBorderPaneView.this.podcastBoderPaneController.stopListener(podcastIterator);
-														PodcastListener.getInstance().stopAll(podcastIterator);
 														showPodcastEmptyInformation();
 														showSubscribedPodcasts();
 														showEmptyEpisodesList();
