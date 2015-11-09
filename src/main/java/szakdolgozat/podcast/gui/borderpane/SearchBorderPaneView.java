@@ -112,7 +112,7 @@ public class SearchBorderPaneView extends BorderPane {
 												.build();
 				subscribeButton.setOnAction((final ActionEvent event) -> {
 					this.searchBorderPaneController.subscribe(podcast);
-					this.searchBorderPaneController.startNewListener();
+					this.searchBorderPaneController.startNewListener(podcast);
 					subscribeButton.setDisable(true);
 					subscribeButton.setText(ALREADYSUBSCRIBED_TEXT);
 				});

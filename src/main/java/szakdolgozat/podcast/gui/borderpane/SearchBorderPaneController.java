@@ -44,8 +44,8 @@ public class SearchBorderPaneController {
 		// PodcastListener.getInstance().startNewListener();
 	}
 
-	public void startNewListener() {
-		PodcastListener.getInstance().startNewListener();
+	public void startNewListener(final Podcast podcast) {
+		PodcastListener.getInstance().startNewListener(podcast);
 	}
 
 }

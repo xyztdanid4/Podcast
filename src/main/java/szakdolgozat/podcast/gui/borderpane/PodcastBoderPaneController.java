@@ -6,7 +6,6 @@ import org.mongodb.morphia.query.Query;
 
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
-import szakdolgozat.podcast.threads.PodcastListener;
 
 public class PodcastBoderPaneController {
 	private List<Podcast> podcastsFromDBList;
@@ -29,9 +28,19 @@ public class PodcastBoderPaneController {
 		MorphiaConnector.getDataStore().delete(deletePodcast);
 	}
 
-	public void stopListener(final int index) {
-		System.out.println("index: " + index);
-		PodcastListener.getInstance().getTasks().get(index).cancel();
-		PodcastListener.getInstance().getTasks().remove(index);
-	}
+	/*
+	 * public void stopListener(final Podcast podcast) { // System.out.println(
+	 * "index: " + index); System.out.println("STOP");
+	 * System.out.println(podcast); if
+	 * (PodcastListener.getInstance().getTasks().get(PodcastListener.getInstance
+	 * ().getTasks().indexOf(podcast)) .getPodcast().equals(podcast)) {
+	 * System.out.println("ANYÁD"); } //
+	 * System.out.println(PodcastListener.getInstance().getTasks() //
+	 * .get(PodcastListener.getInstance().getTasks().indexOf(podcast)).
+	 * getPodcast()); //
+	 * PodcastListener.getInstance().getTasks().get(PodcastListener.getInstance(
+	 * ).getTasks().indexOf(podcast)) // .cancel(); //
+	 * PodcastListener.getInstance().getTasks().get().getTimer().cancel(); //
+	 * PodcastListener.getInstance().getTasks().remove(); }
+	 */
 }
