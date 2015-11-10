@@ -5,9 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import szakdolgozat.podcast.builder.ListViewBuilder;
-import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.NotificationBPDecorator;
@@ -19,9 +17,6 @@ public class NotificationBorderPaneView extends BorderPane {
 		setPadding();
 		//-.-off
 		NotificationBPDecorator.decorateFactory(this);
-		final Text text = TextBuilder.create()
-									.bigText(NOTIFICAITON)
-									.build();
 		
 		final ListView<HBox> listView = ListViewBuilder.create()
 				.items(NotificationBorderPaneController.getInstance().getNotificationContainer())

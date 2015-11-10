@@ -98,8 +98,7 @@ public class LoginGridPaneView extends GridPaneSample {
 			} else {
 				if (this.loginGridPaneController.checkUserAndPassword(nameTextField.getText(),
 						passwordField.getText())) {
-					InformationContainer.getInstance();
-					InformationContainer.setOwner(nameTextField.getText());
+					InformationContainer.getInstance().setOwner(nameTextField.getText());
 					MainStage.getInstance().show();
 					LoginStage.getInstance().hide();
 				} else {

@@ -14,7 +14,7 @@ public class InformationContainer {
 	/**
 	 * @return the owner
 	 */
-	public static String getOwner() {
+	public String getOwner() {
 		return owner;
 	}
 
@@ -22,7 +22,7 @@ public class InformationContainer {
 	 * @param owner
 	 *            the owner to set
 	 */
-	public static void setOwner(String owner) {
+	public void setOwner(final String owner) {
 		InformationContainer.owner = owner;
 	}
 
@@ -30,7 +30,7 @@ public class InformationContainer {
 	 * @param instance
 	 *            the instance to set
 	 */
-	public static void setInstance(InformationContainer instance) {
+	public static void setInstance(final InformationContainer instance) {
 		InformationContainer.instance = instance;
 	}
 

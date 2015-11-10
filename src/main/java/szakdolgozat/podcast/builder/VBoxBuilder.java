@@ -55,7 +55,7 @@ public class VBoxBuilder {
 		return getInstance();
 	}
 
-	public VBoxBuilder noListView(final ListView listVIew) {
+	public VBoxBuilder noListView(final ListView<HBox> listVIew) {
 		vbox.getChildren().add(listVIew);
 		return getInstance();
 	}

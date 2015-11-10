@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.builder.HBoxBuilder;
@@ -31,11 +32,14 @@ public class RecommendVBoxView extends VBox {
 									.effectOn()
 									.build();
 			
-			hboxitem.setOnMousePressed(event -> {
-				ApplicationTabPane.getInstance().getSelectionModel().select(0);
-				SearchTab.getInstance().setContent(new SearchBorderPaneView(this.recommendVBoxController.getRecommendListItems()
-						.get(this.recommendVBoxController.getRecommendListItems().indexOf(item)).getArtist()));
-			});
+			hboxitem.setOnMouseClicked(event -> {
+				if(event.getButton().equals(MouseButton.PRIMARY)){
+		            if(event.getClickCount() == 2){
+		            	ApplicationTabPane.getInstance().getSelectionModel().select(0);
+						SearchTab.getInstance().setContent(new SearchBorderPaneView(RecommendVBoxView.this.recommendVBoxController.getRecommendListItems()
+								.get(RecommendVBoxView.this.recommendVBoxController.getRecommendListItems().indexOf(item)).getArtist()));
+		            }
+			}});
 			
 			recommendList.add(hboxitem);
 		}
