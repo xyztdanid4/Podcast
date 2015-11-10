@@ -3,6 +3,7 @@ package szakdolgozat.podcast.gui.decorator;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -67,6 +68,12 @@ public class Decorator {
 				new CornerRadii(BORDERPANEBORDERRADIUS),
 				new BorderWidths(BORDERSIZE, BORDERSIZE, BORDERSIZE, BORDERSIZE))));
 		return pane;
+	}
+
+	public static CheckBox decorateCheckBoxFactory(final CheckBox checkBox) {
+		checkBox.setTextFill(Color.web(TEXTCOLOR));
+		checkBox.setFont(Font.font("Arial", FontWeight.BOLD, SMALLTEXTSIZE));
+		return checkBox;
 	}
 
 	public static Text decorateTextFactory(final Text text, final int size) {

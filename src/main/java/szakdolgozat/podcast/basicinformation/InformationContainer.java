@@ -57,7 +57,7 @@ public class InformationContainer {
 		return updateFrequency;
 	}
 
-	public static void setUpdateFrequency(final int updateFrequency) {
+	public void setUpdateFrequency(final int updateFrequency) {
 		InformationContainer.updateFrequency = updateFrequency;
 	}
 

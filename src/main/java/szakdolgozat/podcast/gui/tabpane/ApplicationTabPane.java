@@ -2,11 +2,11 @@ package szakdolgozat.podcast.gui.tabpane;
 
 import javafx.geometry.Side;
 import javafx.scene.control.TabPane;
-import szakdolgozat.podcast.gui.tab.SettingsTab;
 import szakdolgozat.podcast.gui.tab.NotificationTab;
 import szakdolgozat.podcast.gui.tab.PlayListTab;
 import szakdolgozat.podcast.gui.tab.PodcastListTab;
 import szakdolgozat.podcast.gui.tab.SearchTab;
+import szakdolgozat.podcast.gui.tab.SettingsTab;
 
 public class ApplicationTabPane extends TabPane {
 	private static final int HEIGHT = 300;
@@ -14,8 +14,8 @@ public class ApplicationTabPane extends TabPane {
 	private static ApplicationTabPane instance = null;
 
 	private ApplicationTabPane() {
-		super(SearchTab.getInstance(), new PodcastListTab(), new PlayListTab(), new SettingsTab(),
-				new NotificationTab());
+		super(SearchTab.getInstance(), new PodcastListTab(), new PlayListTab(), new NotificationTab(),
+				SettingsTab.getInstance());
 		setSide(Side.LEFT);
 		setTabMaxHeight(HEIGHT);
 		setTabMaxWidth(WEIGHT);

@@ -1,7 +1,10 @@
 package szakdolgozat.podcast.builder;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -24,6 +27,11 @@ public class VBoxBuilder {
 		return vbox;
 	}
 
+	public VBoxBuilder checkBox(final CheckBox checkbox) {
+		vbox.getChildren().add(Decorator.decorateCheckBoxFactory(checkbox));
+		return getInstance();
+	}
+
 	public static VBoxBuilder create() {
 		vbox = Decorator.decorateVBoxFactory(new VBox(Decorator.VBOXPADDING));
 		vbox.setAlignment(Pos.CENTER_LEFT);
@@ -35,6 +43,16 @@ public class VBoxBuilder {
 		return getInstance();
 	}
 
+	public VBoxBuilder Button(final Button button) {
+		vbox.getChildren().add(Decorator.decorateButtonFactory(button));
+		return getInstance();
+	}
+
+	public VBoxBuilder noButton(final Button button) {
+		vbox.getChildren().add(Decorator.decorateButtonFactory(button));
+		return getInstance();
+	}
+
 	public VBoxBuilder centerLeftAlignment() {
 		vbox.setAlignment(Pos.CENTER_LEFT);
 		return getInstance();
@@ -42,6 +60,11 @@ public class VBoxBuilder {
 
 	public VBoxBuilder bigText(final String text) {
 		vbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.BIGTEXTSIZE));
+		return getInstance();
+	}
+
+	public VBoxBuilder noTextField(final TextField textField) {
+		vbox.getChildren().add(textField);
 		return getInstance();
 	}
 

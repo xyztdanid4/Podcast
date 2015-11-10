@@ -18,7 +18,7 @@ public class MailSender {
 	private static final String PASSWORD = "Xyzdopio4";
 	private static final String USERNAME = "varacskosmokus@gmail.com";
 	private static final String REGARDS = "\n\nRegards!";
-	private static final String DEAR_SUBSCRIBER_YOU_HAVE_UPDATES = "Dear"
+	private static final String DEAR_SUBSCRIBER_YOU_HAVE_UPDATES = "Dear "
 			+ InformationContainer.getInstance().getOwner() + "!\n\nYou have updates!\n\n";
 	private static MailSender instance = null;
 

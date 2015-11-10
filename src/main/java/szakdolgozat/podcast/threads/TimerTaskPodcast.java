@@ -58,10 +58,10 @@ public class TimerTaskPodcast extends TimerTask {
 			// System.out.println(actual.getArtistName() + "current: " +
 			// current);
 			if (prev == current) {
-				System.out.println("EGYENLO");
+				// System.out.println("EGYENLO");
 			}
 			if (prev < current) {
-				System.out.println("FRISSITES");
+				// System.out.println("FRISSITES");
 				// 1, el kell menteni a dbbe az uj részt
 				// törlés
 				final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
@@ -91,8 +91,10 @@ public class TimerTaskPodcast extends TimerTask {
 									.build()));
 					//-.-on
 					// 3, küldeni kell rola mailt ha az illető ugy akarja
-					MailSender.getInstance().send(InformationContainer.getInstance().getMail(),
-							a.getArtistName() + " " + a.getTrackName() + " " + a.getReleaseDate());
+					if (InformationContainer.getInstance().isEmailRequired()) {
+						MailSender.getInstance().send(InformationContainer.getInstance().getMail(),
+								a.getArtistName() + " " + a.getTrackName() + " " + a.getReleaseDate());
+					}
 				}
 			}
 		}
