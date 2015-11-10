@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import org.mongodb.morphia.query.Query;
 
 import javafx.application.Platform;
+import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
@@ -39,8 +40,6 @@ public class TimerTaskPodcast extends TimerTask {
 		// amikor ujra feláll a rednszer akkor is nézi, hogy mik az ujak és azt
 		// is kirakja.
 
-		// final List<Podcast> podcastsFromDBList =
-		// MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
 		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
 			final int prev = Integer.parseInt(podcast.getTrackCount());
 			System.out.println(podcast.getArtistName() + " prev: " + prev);
@@ -92,7 +91,8 @@ public class TimerTaskPodcast extends TimerTask {
 									.build()));
 					//-.-on
 					// 3, küldeni kell rola mailt ha az illető ugy akarja
-					MailSender.getInstance();
+					MailSender.getInstance().send(InformationContainer.getInstance().getMail(),
+							a.getArtistName() + " " + a.getTrackName() + " " + a.getReleaseDate());
 				}
 			}
 		}
