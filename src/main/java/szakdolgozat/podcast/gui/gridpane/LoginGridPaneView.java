@@ -1,13 +1,11 @@
 package szakdolgozat.podcast.gui.gridpane;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.builder.ButtonBuilder;
 import szakdolgozat.podcast.builder.LabelBuilder;
 import szakdolgozat.podcast.builder.PasswordFieldBuilder;
@@ -15,11 +13,8 @@ import szakdolgozat.podcast.builder.TextFieldBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.LoginGridPaneDecorator;
 import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
-import szakdolgozat.podcast.gui.samples.GridPaneSample;
-import szakdolgozat.podcast.gui.stage.LoginStage;
-import szakdolgozat.podcast.gui.stage.MainStage;
 
-public class LoginGridPaneView extends GridPaneSample {
+public class LoginGridPaneView extends BaseLoginView {
 	private static final String MESSAGELABEL_TEXT = "Welcome, please Login!";
 	private static final String ERRORMESSAGE = "Name or Password is incorrect!";
 	private static final String MATCHERROR = "You should use only englush abc letters!";
@@ -86,23 +81,25 @@ public class LoginGridPaneView extends GridPaneSample {
 
 	private void setCancelButtonFunctinality() {
 		cancelButton.setOnAction((final ActionEvent event) -> {
-			Platform.exit();
+			exit();
 		});
 	}
 
 	private void setOkButtonFunction() {
 		okButton.setOnAction((final ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
-				LoginStage.getInstance().hide();
+				hideLoginStage();
 				final LoginErrorDialog errorDialog = new LoginErrorDialog(MATCHERROR);
 			} else {
 				if (this.loginGridPaneController.checkUserAndPassword(nameTextField.getText(),
 						passwordField.getText())) {
-					InformationContainer.getInstance().setOwner(nameTextField.getText());
-					MainStage.getInstance().show();
-					LoginStage.getInstance().hide();
+					this.loginGridPaneController.setDBowner(nameTextField.getText());
+					this.loginGridPaneController.setEmail(
+							this.loginGridPaneController.getEmailFromDB(LoginGridPaneView.nameTextField.getText()));
+					showMainStage();
+					hideLoginStage();
 				} else {
-					LoginStage.getInstance().hide();
+					hideLoginStage();
 					final LoginErrorDialog errorDialog = new LoginErrorDialog(ERRORMESSAGE);
 				}
 			}
@@ -117,9 +114,13 @@ public class LoginGridPaneView extends GridPaneSample {
 	private void setPasswordFieldKeyEvent() {
 		passwordField.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
-				okButton.fire();
+				ActivateOkButton();
 			}
 		});
+	}
+
+	private void ActivateOkButton() {
+		okButton.fire();
 	}
 
 }

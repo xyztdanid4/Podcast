@@ -2,6 +2,7 @@ package szakdolgozat.podcast.basicinformation;
 
 public class InformationContainer {
 	private static String owner;
+	private static String mail;
 	private static InformationContainer instance = new InformationContainer();
 
 	private InformationContainer() {
@@ -32,6 +33,14 @@ public class InformationContainer {
 	 */
 	public static void setInstance(final InformationContainer instance) {
 		InformationContainer.instance = instance;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(final String mail) {
+		InformationContainer.mail = mail;
 	}
 
 }

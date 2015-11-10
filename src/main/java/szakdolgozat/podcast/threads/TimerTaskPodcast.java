@@ -12,6 +12,7 @@ import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.NotificationBorderPaneController;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
+import szakdolgozat.podcast.mail.MailSender;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
@@ -89,8 +90,9 @@ public class TimerTaskPodcast extends TimerTask {
 									.smallText(" ")
 									.smallText(a.getPodcastEpisode().get(a.getPodcastEpisode().size() - ii).getTitle())
 									.build()));
-					
 					//-.-on
+					// 3, küldeni kell rola mailt ha az illető ugy akarja
+					MailSender.getInstance();
 				}
 			}
 		}
