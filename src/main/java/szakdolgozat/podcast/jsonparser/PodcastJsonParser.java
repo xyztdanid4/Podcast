@@ -10,7 +10,7 @@ import szakdolgozat.podcast.data.podcast.PodcastContainer;
 public class PodcastJsonParser extends JsonParser {
 	private PodcastContainer searchResultContainer;
 
-	public PodcastJsonParser(String searchText) {
+	public PodcastJsonParser(final String searchText) {
 		super(searchText);
 		jsonToObject();
 		removeNotWorkingFeeds();
@@ -18,33 +18,34 @@ public class PodcastJsonParser extends JsonParser {
 
 	@Override
 	protected void jsonToObject() {
-		Gson gson = new Gson();
-		searchResultContainer = gson.fromJson(result, PodcastContainer.class);
+		final Gson gson = new Gson();
+		this.searchResultContainer = gson.fromJson(this.result, PodcastContainer.class);
 	}
 
 	protected void removeNotWorkingFeeds() {
-		for (int i = 0; i < searchResultContainer.getResults().size(); i++) {
-			String feedUrl = searchResultContainer.getResults().get(i).getFeedUrl();
+		for (int i = 0; i < this.searchResultContainer.getResults().size(); i++) {
+			final String feedUrl = this.searchResultContainer.getResults().get(i).getFeedUrl();
 			if (!isFeedUrlExists(feedUrl)) {
-				searchResultContainer.getResults().remove(i);
+				this.searchResultContainer.getResults().remove(i);
 			}
 		}
 	}
 
-	private boolean isFeedUrlExists(String URLName) {
+	private boolean isFeedUrlExists(final String URLName) {
 		try {
 			HttpURLConnection.setFollowRedirects(false);
-			HttpURLConnection connection = (HttpURLConnection) new URL(URLName).openConnection();
+			final HttpURLConnection connection = (HttpURLConnection) new URL(URLName).openConnection();
 			connection.setRequestMethod("HEAD");
 			return (connection.getResponseCode() == HttpURLConnection.HTTP_OK);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
+			// System.out.println("catch");
 			return false;
 		}
 	}
 
 	public PodcastContainer getSearchResult() {
-		return searchResultContainer;
+		return this.searchResultContainer;
 	}
 
 }

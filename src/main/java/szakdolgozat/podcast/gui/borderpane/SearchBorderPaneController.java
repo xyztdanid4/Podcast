@@ -2,6 +2,8 @@ package szakdolgozat.podcast.gui.borderpane;
 
 import java.util.ArrayList;
 
+import javafx.application.Platform;
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
@@ -41,4 +43,21 @@ public class SearchBorderPaneController {
 		MorphiaConnector.getInstance();
 		MorphiaConnector.getDataStore().save(podcast);
 	}
+
+	//-.-off
+		public void notice(final Podcast podcast) {
+			Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNotificationContainer()
+					.add(HBoxBuilder.create()
+									.smallText("SUBSCRIBED: ")
+									.artist(podcast.getArtistName())
+									.title(podcast.getTrackName())
+									.build()));
+			Platform.runLater(() -> NotificationBorderPaneController.getInstance().getSubscribeContainer()
+					.add(HBoxBuilder.create()
+									.smallText("SUBSCRIBED: ")
+									.artist(podcast.getArtistName())
+									.title(podcast.getTrackName())
+									.build()));
+		}
+		//-.-on
 }

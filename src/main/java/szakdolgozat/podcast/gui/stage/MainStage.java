@@ -12,7 +12,7 @@ public class MainStage extends StageSample {
 
 	private MainStage(final String title) {
 		super(title);
-		final Scene mainScene = new Scene(new MainBorderPane(), DEFAULTHSIZE, DEFAULTVSIZE);
+		final Scene mainScene = new Scene(MainBorderPane.getInstance(), DEFAULTHSIZE, DEFAULTVSIZE);
 		mainScene.getStylesheets().add("listcell.css");
 		setScene(mainScene);
 		MainStageController.create();

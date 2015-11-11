@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mongodb.morphia.query.Query;
 
+import javafx.application.Platform;
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
@@ -27,6 +29,23 @@ public class PodcastBoderPaneController {
 				.filter("artistName =", name);
 		MorphiaConnector.getDataStore().delete(deletePodcast);
 	}
+
+	//-.-off
+	public void notice(final Podcast podcast) {
+		Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNotificationContainer()
+				.add(HBoxBuilder.create()
+								.smallText("UNSUBSCRIBED: ")
+								.artist(podcast.getArtistName())
+								.title(podcast.getTrackName())
+								.build()));
+		Platform.runLater(() -> NotificationBorderPaneController.getInstance().getUnsubscribeContainer()
+				.add(HBoxBuilder.create()
+								.smallText("UNSUBSCRIBED: ")
+								.artist(podcast.getArtistName())
+								.title(podcast.getTrackName())
+								.build()));
+	}
+	//-.-on
 
 	/*
 	 * public void stopListener(final Podcast podcast) { // System.out.println(

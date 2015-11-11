@@ -83,6 +83,7 @@ public class PodcastBorderPaneView extends BorderPane {
 														showSubscribedPodcasts();
 														showEmptyEpisodesList();
 														setPodcastListInvalidationListener();
+														PodcastBorderPaneView.this.podcastBoderPaneController.notice(podcastIterator);
 													});
 												setText(UNSUBSCRIBE);
 												}

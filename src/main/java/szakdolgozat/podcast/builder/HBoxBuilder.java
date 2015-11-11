@@ -2,6 +2,7 @@ package szakdolgozat.podcast.builder;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -20,6 +21,11 @@ public class HBoxBuilder {
 
 	public static HBoxBuilder create() {
 		hbox = Decorator.decorateHBoxFactory(new HBox(Decorator.HBOXPADDING));
+		return getInstance();
+	}
+
+	public HBoxBuilder noHBox(final HBox hbox) {
+		hbox.getChildren().add(hbox);
 		return getInstance();
 	}
 
@@ -48,6 +54,11 @@ public class HBoxBuilder {
 	public HBoxBuilder bigRectangle(final String image) {
 		hbox.getChildren().add(Decorator.decorateRectangleFactory(new Rectangle(), Decorator.BIGRECTANGLEHEIGHT,
 				Decorator.BIGRECTANGLEWIDTH, image));
+		return getInstance();
+	}
+
+	public HBoxBuilder checkBox(final CheckBox checkbox) {
+		hbox.getChildren().add(Decorator.decorateCheckBoxFactory(checkbox));
 		return getInstance();
 	}
 

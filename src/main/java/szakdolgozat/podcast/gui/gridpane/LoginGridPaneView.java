@@ -13,6 +13,7 @@ import szakdolgozat.podcast.builder.TextFieldBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.LoginGridPaneDecorator;
 import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
+import szakdolgozat.podcast.gui.samples.ProgressBarSample;
 
 public class LoginGridPaneView extends BaseLoginView {
 	private static final String MESSAGELABEL_TEXT = "Welcome, please Login!";
@@ -74,6 +75,10 @@ public class LoginGridPaneView extends BaseLoginView {
 		add(passwordField, LoginGridPaneDecorator.PASSWORDFIELDX, LoginGridPaneDecorator.PASSWORDFIELDY);
 		add(okButton, LoginGridPaneDecorator.OKBUTTONX, LoginGridPaneDecorator.OKBUTTONY);
 		add(cancelButton, LoginGridPaneDecorator.CANCELBUTTONX, LoginGridPaneDecorator.CANCELBUTTONY);
+		
+		
+		add(ProgressBarSample.getProgressBar(),2,7);
+		
 		//-.-on
 		setButtonDisability();
 		Decorator.decorateFactory(this);

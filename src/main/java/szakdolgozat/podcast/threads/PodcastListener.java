@@ -34,7 +34,8 @@ public class PodcastListener {
 		// ÉLES:
 		timer = new Timer();
 		if (frequency == 0) {
-			timer.schedule(timerTaskPodcast, 0, 10000);
+			timer.schedule(timerTaskPodcast, 0, 10000); // teszt miatt van igy
+														// most
 		} else {
 			timer.schedule(timerTaskPodcast, 0, 1000 * 60 * 60 * frequency);
 		}

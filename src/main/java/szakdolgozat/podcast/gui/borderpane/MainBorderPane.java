@@ -6,7 +6,16 @@ import szakdolgozat.podcast.gui.tabpane.ApplicationTabPane;
 import szakdolgozat.podcast.gui.vbox.RecommendVBoxView;
 
 public class MainBorderPane extends BorderPane {
-	public MainBorderPane() {
+	private static MainBorderPane instance = null;
+
+	public static MainBorderPane getInstance() {
+		if (instance == null) {
+			instance = new MainBorderPane();
+		}
+		return instance;
+	}
+
+	private MainBorderPane() {
 		buildCenter();
 		buildRight();
 		buildBottom();
@@ -16,7 +25,7 @@ public class MainBorderPane extends BorderPane {
 		setCenter(ApplicationTabPane.getInstance());
 	}
 
-	private void buildRight() {
+	public void buildRight() {
 		setRight(new RecommendVBoxView());
 	}
 

@@ -49,7 +49,10 @@ public class RecommendVBoxView extends VBox {
 															.size(RecommendListDecorator.LISTWIDTH, RecommendListDecorator.LISTHEIGHT)
 															.build();
 		
-		getChildren().addAll(TextBuilder.create().bigText(RECOMMEND).build(), recommendListView);
+		getChildren().addAll(TextBuilder.create()
+										.bigText(RECOMMEND)
+										.build()
+										, recommendListView);
 
 		//-.-on
 		RecommendListDecorator.decorate(this);

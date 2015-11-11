@@ -88,7 +88,16 @@ public class TimerTaskPodcast extends TimerTask {
 									.artist(a.getArtistName())
 									.smallText(" ")
 									.smallText(a.getPodcastEpisode().get(a.getPodcastEpisode().size() - ii).getTitle())
-									.build()));
+									.build())
+							);
+					Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNewEpisodeContainer()
+							.add(HBoxBuilder.create()
+							.smallText("NEW EPISODE: ")
+							.artist(a.getArtistName())
+							.smallText(" ")
+							.smallText(a.getPodcastEpisode().get(a.getPodcastEpisode().size() - ii).getTitle())
+							.build())
+					);
 					//-.-on
 					// 3, küldeni kell rola mailt ha az illető ugy akarja
 					if (InformationContainer.getInstance().isEmailRequired()) {
