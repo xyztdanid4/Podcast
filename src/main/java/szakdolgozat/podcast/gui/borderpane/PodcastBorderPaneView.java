@@ -90,22 +90,12 @@ public class PodcastBorderPaneView extends BorderPane {
 												}).build());
 			}
 			//-.-on
-			// actionok miatt meg kell tartani a listviewt
-			// this.podcastListView = Decorator.decorateListViewFactory(new
-			// ListView<HBox>(podcastsContainer),
-			// PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
-			// PodcastBPDecorator.PODCASTLISTVIEWHEIGHT);
 			//-.-off
 			this.podcastListView = ListViewBuilder.create()
 													.items(podcastsContainer)
 													.size(PodcastBPDecorator.PODCASTLISTVIEWWIDTH, PodcastBPDecorator.PODCASTLISTVIEWHEIGHT)
 													.build();
 			//-.-on
-			// setmargin miatt meg kell tartani a podcastlistvboxot is
-			// final VBox podcastListVBox = new VBox(Decorator.VBOXPADDING,
-			// Decorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST),
-			// Decorator.BIGTEXTSIZE),
-			// this.podcastListView);
 			//-.-off
 			final VBox podcastListVBox = VBoxBuilder.create()
 													.bigText(SUBSCRIBEDPODCAST)
@@ -114,21 +104,8 @@ public class PodcastBorderPaneView extends BorderPane {
 													.build();
 			//-.-on
 			setMargin(podcastListVBox, new Insets(Decorator.PADDING));
-			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastListVBox);
 		} else {
-			// szintén a setmargin miatt kel a podcastVbox is
-			/*
-			 * final VBox podcastVBox1 = new VBox(Decorator.VBOXPADDING,
-			 * Decorator.decorateTextFactory(new Text(SUBSCRIBEDPODCAST),
-			 * Decorator.BIGTEXTSIZE), Decorator .decorateHBoxFactory( new
-			 * HBox(Decorator.HBOXPADDING, Decorator.decorateTextFactory(new
-			 * Text(NOSUBSCRIPTIONS), Decorator.SMALLTEXTSIZE)),
-			 * PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
-			 * PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT,
-			 * PodcastBPDecorator.PODCASTLISTVIEWWIDTH,
-			 * PodcastBPDecorator.NOSUBSCRIPTIONHBOXHEIGHT));
-			 */
 			//-.-off
 			final VBox podcastVBox = VBoxBuilder.create()
 												.bigText(SUBSCRIBEDPODCAST)
@@ -140,7 +117,6 @@ public class PodcastBorderPaneView extends BorderPane {
 												.build();
 			//-.-on
 			setMargin(podcastVBox, new Insets(Decorator.PADDING));
-			// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 			setLeft(podcastVBox);
 		}
 	}
@@ -200,22 +176,6 @@ public class PodcastBorderPaneView extends BorderPane {
 			final Image image = new Image(podcastEpisode.getImage());
 			HBox itemHbox = null;
 			if (image.isError()) {
-				// megtartjuk az objektumot, hiszen az actiont még hozzá kell
-				// füzni
-				/*
-				 * final HBox itemHbox = Decorator.decorateHBoxFactory(new
-				 * HBox(Decorator.HBOXPADDING,
-				 * Decorator.decorateImageViewFactory(new ImageView(image),
-				 * PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
-				 * PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH),
-				 * Decorator.decorateTextFactory(new
-				 * Text(podcastEpisode.getTitle().length() > 40 ? new String(
-				 * new StringBuilder(podcastEpisode.getTitle().substring(0,
-				 * 40)).append("...")) : podcastEpisode.getTitle()),
-				 * Decorator.SMALLTEXTSIZE), Decorator.decorateTextFactory(new
-				 * Text(podcastEpisode.getPubdate()),
-				 * Decorator.SMALLTEXTSIZE))); episodesContainer.add(itemHbox);
-				 */
 				//-.-off
 				itemHbox = HBoxBuilder.create()
 										.image(podcastEpisode.getImage())
@@ -224,24 +184,6 @@ public class PodcastBorderPaneView extends BorderPane {
 										.build();
 				//-.-on
 			} else {
-				// megtartjuk az objektumot, hiszen az actiont még hozzá kell
-				// füzni
-				/*
-				 * final HBox itemHbox = new HBox(Decorator.HBOXPADDING,
-				 * Decorator.decorateHelperVBoxFactory(new
-				 * VBox(Decorator.decorateRectangleFactory(new Rectangle(),
-				 * PodcastBPDecorator.EPISODESIMAGEVIEWHEIGHT,
-				 * PodcastBPDecorator.EPISODESIMAGEVIEWWIDTH,
-				 * podcastEpisode.getImage()))),
-				 * Decorator.decorateTextFactory(new
-				 * Text(podcastEpisode.getTitle().length() > 40 ? new String(
-				 * new StringBuilder(podcastEpisode.getTitle().substring(0,
-				 * 40)).append("...")) : podcastEpisode.getTitle()),
-				 * Decorator.SMALLTEXTSIZE), Decorator.decorateTextFactory(new
-				 * Text(podcastEpisode.getPubdate()), Decorator.SMALLTEXTSIZE));
-				 * Decorator.decorateHBoxFactory(itemHbox);
-				 * episodesContainer.add(itemHbox);
-				 */
 				//-.-off
 				itemHbox = HBoxBuilder.create()
 										.smallRectangle(podcastEpisode.getImage())
@@ -252,22 +194,12 @@ public class PodcastBorderPaneView extends BorderPane {
 			}
 			episodesContainer.add(itemHbox);
 		}
-		// this.episodeListView = Decorator.decorateListViewFactory(new
-		// ListView<HBox>(episodesContainer),
-		// PodcastBPDecorator.EPISODESLISTWIDTH,
-		// PodcastBPDecorator.EPISODESLISTHEIGHT);
 		//-.-off
 		this.episodeListView = ListViewBuilder.create()
 												.items(episodesContainer)
 												.size(PodcastBPDecorator.EPISODESLISTWIDTH, PodcastBPDecorator.EPISODESLISTHEIGHT)
 												.build();
 		//-.-on
-		// marad mer setmargin megint
-		/*
-		 * final VBox episodeVBox = new VBox(Decorator.VBOXPADDING,
-		 * Decorator.decorateTextFactory(new Text(SUBSCRIBEDEPISODES),
-		 * Decorator.BIGTEXTSIZE), this.episodeListView);
-		 */
 		//-.-off
 		final VBox episodeVBox = VBoxBuilder.create()
 											.bigText(SUBSCRIBEDEPISODES)
@@ -278,12 +210,4 @@ public class PodcastBorderPaneView extends BorderPane {
 		setMargin(episodeVBox, new Insets(Decorator.PADDING));
 		setCenter(episodeVBox);
 	}
-
-	/*
-	 * private void setSubscribeButtonAction(final ButtonSample button, final
-	 * Podcast podcast) { button.setOnAction((final ActionEvent event) -> {
-	 * this.podcastBoderPaneController.removefromDB(podcast.getArtistName());
-	 * showPodcastEmptyInformation(); showSubscribedPodcasts();
-	 * showEmptyEpisodesList(); setPodcastListInvalidationListener(); }); }
-	 */
 }

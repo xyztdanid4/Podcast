@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,6 +27,7 @@ import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.SearchBPDecorator;
+import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class SearchBorderPaneView extends BorderPane {
@@ -177,24 +179,6 @@ public class SearchBorderPaneView extends BorderPane {
 					final Image image = new Image(podcastEpisode.getImage());
 					if (image.isError()) {
 						try {
-							// action miatt meg kell hagyni
-
-							// itemHbox = Decorator
-							// .decorateHBoxFactory(
-							// new HBox(Decorator.PADDING,
-							// Decorator.decorateImageViewFactory(
-							// new ImageView(new Image(
-							// podcastEpisode.getImage())),
-							// SearchBPDecorator.IMAGEHEIGHT,
-							// SearchBPDecorator.IMAGEWIDTH), Decorator
-							// .decorateTextFactory(
-							// new Text(podcastEpisode.getTitle().length() > 40
-							// ? new String(new StringBuilder(
-							// podcastEpisode.getTitle()
-							// .substring(0, 40))
-							// .append("..."))
-							// : podcastEpisode.getTitle()),
-							// Decorator.SMALLTEXTSIZE)));
 							//-.-off
 							itemHbox = HBoxBuilder.create()
 													.image(podcastEpisode.getImage())
@@ -202,32 +186,41 @@ public class SearchBorderPaneView extends BorderPane {
 													.effectOn()
 													.build();
 							//-.-on
+							itemHbox.setOnMouseClicked(event -> {
+								if (event.getButton().equals(MouseButton.PRIMARY)) {
+									if (event.getClickCount() == 2) {
+										try {
+											MediaControlPodcast.getInstance().stop();
+											MainBorderPane.getInstance().buildBottom(podcastEpisode);
+										} catch (final Exception e) {
+											e.printStackTrace();
+										}
+									}
+								}
+							});
 						} catch (final Exception e) {
 							e.printStackTrace();
-							System.out.print("IMAGEHIBA SEARCHBORDERPANE");
 						}
 					} else {
-
-						/*
-						 * itemHbox = Decorator .decorateHBoxFactory(new
-						 * HBox(Decorator.PADDING,
-						 * Decorator.decorateRectangleFactory(new Rectangle(),
-						 * Decorator.SMALLRECTANGLEHEIGHT,
-						 * Decorator.SMALLRECTANGLEWIDTH, podcastEpisode
-						 * .getImage()), Decorator .decorateTextFactory( new
-						 * Text( podcastEpisode.getTitle().length() > 40 ? new
-						 * String(new StringBuilder(podcastEpisode
-						 * .getTitle().substring(0, 40)) .append("...")) :
-						 * podcastEpisode.getTitle()),
-						 * Decorator.SMALLTEXTSIZE)));
-						 */
-
 						//-.-off
 						itemHbox = HBoxBuilder.create()
 												.smallRectangle(podcastEpisode.getImage())
 												.title(podcastEpisode.getTitle())
+												.effectOn()
 												.build();
 						//-.-on
+						itemHbox.setOnMouseClicked(event -> {
+							if (event.getButton().equals(MouseButton.PRIMARY)) {
+								if (event.getClickCount() == 2) {
+									try {
+										MediaControlPodcast.getInstance().stop();
+										MainBorderPane.getInstance().buildBottom(podcastEpisode);
+									} catch (final Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}
+						});
 					}
 					this.episodesList.add(itemHbox);
 				}
@@ -238,13 +231,6 @@ public class SearchBorderPaneView extends BorderPane {
 
 	private void showEpisodesList() {
 		this.episodesList = FXCollections.observableArrayList();
-		// this.episodesListView = Decorator.decorateListViewFactory(new
-		// ListView<HBox>(this.episodesList),
-		// SearchBPDecorator.EPISODESLISTWIDTH,
-		// SearchBPDecorator.EPISODESLISTHEIGHT);
-		// this.episodesListVBox = new VBox(Decorator.PADDING,
-		// Decorator.decorateTextFactory(new Text(EPISODESTEXT),
-		// Decorator.BIGTEXTSIZE), this.episodesListView);
 		//-.-off
 		this.episodesListView = ListViewBuilder.create()
 												.items(this.episodesList)
@@ -262,15 +248,6 @@ public class SearchBorderPaneView extends BorderPane {
 
 	private void showPodcastList() {
 		this.searchResultList = FXCollections.observableArrayList();
-		// this.searchResultListView = Decorator.decorateListViewFactory(new
-		// ListView<HBox>(this.searchResultList),
-		// SearchBPDecorator.PODCASTLISTWIDTH,
-		// SearchBPDecorator.PODCASTLISTHEIGHT);
-
-		// this.podcastListVBox = new VBox(Decorator.PADDING,
-		// Decorator.decorateTextFactory(new Text(PODCASTTEXT),
-		// Decorator.BIGTEXTSIZE), this.searchResultListView);
-
 		//-.-off
 		this.searchResultListView = ListViewBuilder.create()
 													.items(this.searchResultList)
@@ -284,22 +261,12 @@ public class SearchBorderPaneView extends BorderPane {
 											.topLeftAlignment()
 											.build();
 		//-.-on
-		// setAlignment(podcastListVBox, Pos.CENTER_LEFT);
 		setMargin(this.podcastListVBox, new Insets(Decorator.PADDING));
 		setListViewInvalidationListener();
 		setLeft(this.podcastListVBox);
 	}
 
 	private void showNoResultFound() {
-		// final Text text = new Text(new String(NORESULT));
-		// Decorator.decorateTextFactory(text, Decorator.BIGTEXTSIZE);
-
-		// final Text text = TextBuilder.create().bigText(NORESULT).build();
-
-		// final HBox itemHbox = new HBox(Decorator.PADDING, text);
-		// Decorator.decorateHBoxFactory(itemHbox);
-
-		// final HBox itemHbox = HBoxBuilder.create().noText(text).build();
 		//-.-off
 		this.searchResultList.add(HBoxBuilder.create()
 												.noText(TextBuilder.create()
@@ -320,9 +287,4 @@ public class SearchBorderPaneView extends BorderPane {
 		this.searchResultList.clear();
 		this.episodesList.clear();
 	}
-
-	/*
-	 * private void subscribe(Podcast podcast) {
-	 * MorphiaConnector.getInstance().getDataStore().save(podcast); }
-	 */
 }

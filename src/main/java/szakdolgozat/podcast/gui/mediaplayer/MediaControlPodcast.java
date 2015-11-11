@@ -27,12 +27,15 @@ import javafx.util.Duration;
 import szakdolgozat.podcast.builder.LabelBuilder;
 import szakdolgozat.podcast.builder.MediaButtonBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
+import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 
 //TODO repeat változot lecserélni egy checkboxra
 // TODO sebességváltozás megcsinálásása
 // TODO random lejátszása
+// TODO mute gomb
 
 public class MediaControlPodcast extends VBox {
+	private static MediaControlPodcast instance = new MediaControlPodcast();
 	private static final String PLAYBUTTONURL = "appbar.control.play.png";
 	private static final String NEXTBUTTONURL = "appbar.control.fastforward.variant.png";
 	private static final String PREVBUTTONURL = "appbar.control.rewind.variant.png";
@@ -53,9 +56,65 @@ public class MediaControlPodcast extends VBox {
 	private static Text playedTime;
 	private static Text artistText;
 	private static Text episodeText;
+	private static boolean firstRun = true;
 
-	public MediaControlPodcast(/* final MediaPlayer mediaPlayer */) {
-		mediaPlayer = new MediaPlayer(new Media("http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv"));
+	public static MediaControlPodcast getInstance() {
+		if (instance == null) {
+			instance = new MediaControlPodcast();
+		}
+		return instance;
+	}
+
+	public MediaControlPodcast create(final PodcastEpisode podcastEpisode) {
+		try {
+			instance = new MediaControlPodcast(podcastEpisode);
+			return instance;
+		} catch (final Exception e) {
+			e.printStackTrace();
+			return new MediaControlPodcast();
+		}
+	}
+
+	public void stop() {
+		if (!firstRun) {
+			mediaPlayer.stop();
+			// mediaPlayer.currentTimeProperty().removeListener();
+		}
+		firstRun = false;
+	}
+
+	public MediaControlPodcast() {
+		final HBox mediaButtonVolume = new HBox(10);
+		final HBox mediaSlider = new HBox(10);
+		setMargin(mediaButtonVolume, new Insets(5));
+		setMargin(mediaSlider, new Insets(5));
+
+		playButton = MediaButtonBuilder.create().image(PLAYBUTTONURL).build();
+		pauseButton = MediaButtonBuilder.create().image(PAUSEBUTTONURL).build();
+		prevButton = MediaButtonBuilder.create().image(PREVBUTTONURL).build();
+		nextButton = MediaButtonBuilder.create().image(NEXTBUTTONURL).build();
+		volumeLabel = LabelBuilder.create().text(VOLUMELABEL_TEXT).build();
+		volumeSlider = new Slider();
+		timeSlider = new Slider();
+		timeSlider.setPrefWidth(600);
+		playedTime = TextBuilder.create().smallText("00:00:00").build();
+
+		mediaButtonVolume.getChildren().addAll(prevButton, pauseButton, playButton, nextButton, volumeLabel,
+				volumeSlider);
+		mediaButtonVolume.setAlignment(Pos.CENTER);
+
+		mediaSlider.getChildren().addAll(playedTime, timeSlider);
+		mediaSlider.setAlignment(Pos.CENTER);
+		mediaSlider.setPadding(new Insets(10, 0, 5, 0));
+
+		getChildren().addAll(mediaSlider, mediaButtonVolume);
+		decorateVBox(this);
+	}
+
+	private MediaControlPodcast(final PodcastEpisode podcastEpisode) throws Exception {
+		// emiatt kell throws exception
+		mediaPlayer = new MediaPlayer(new Media(podcastEpisode.getGuid()));
+		mediaPlayer.setAutoPlay(true);
 
 		final HBox mediaButtonVolume = new HBox(10);
 		final HBox mediaSlider = new HBox(10);
@@ -71,6 +130,8 @@ public class MediaControlPodcast extends VBox {
 		timeSlider = new Slider();
 		timeSlider.setPrefWidth(600);
 		playedTime = TextBuilder.create().smallText("00:00:00").build();
+		artistText = TextBuilder.create().bigText(podcastEpisode.getAuthor()).build();
+		episodeText = TextBuilder.create().bigText(podcastEpisode.getTitle()).build();
 
 		playButton.setOnAction(event -> {
 			final Status status = mediaPlayer.getStatus();
@@ -133,11 +194,21 @@ public class MediaControlPodcast extends VBox {
 		mediaPlayer.setOnReady(() -> {
 			System.out.println("ready");
 			duration = mediaPlayer.getMedia().getDuration();
-			updateValues();
+			Platform.runLater(() -> {
+				final Duration currentTime = mediaPlayer.getCurrentTime();
+				timeSlider.setDisable(duration.isUnknown());
+				if (!timeSlider.isDisabled() && duration.greaterThan(Duration.ZERO) && !timeSlider.isValueChanging()) {
+					timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0);
+				}
+				if (!volumeSlider.isValueChanging()) {
+					volumeSlider.setValue((int) Math.round(mediaPlayer.getVolume() * 100));
+				}
+
+			});
 		});
 
 		mediaPlayer.currentTimeProperty().addListener((InvalidationListener) ov -> {
-			updateValues();
+			// updateValues();
 			final LocalTime timeOfDay = LocalTime.ofSecondOfDay((long) mediaPlayer.getCurrentTime().toSeconds());
 			final String time = timeOfDay.toString();
 			playedTime.setText(time);
@@ -160,31 +231,26 @@ public class MediaControlPodcast extends VBox {
 				volumeSlider);
 		mediaButtonVolume.setAlignment(Pos.CENTER);
 
-		mediaSlider.getChildren().addAll(playedTime, timeSlider);
+		mediaSlider.getChildren().addAll(artistText, playedTime, timeSlider, episodeText);
 		mediaSlider.setAlignment(Pos.CENTER);
-		mediaSlider.setPadding(new Insets(10, 0, 5, 0)); // milyen távol legyen
-															// a többi elemtől
+		mediaSlider.setPadding(new Insets(10, 0, 5, 0));
 
 		getChildren().addAll(mediaSlider, mediaButtonVolume);
 		decorateVBox(this);
 	}
 
-	private void updateValues() {
-		if (timeSlider != null && volumeSlider != null) {
-			Platform.runLater(() -> {
-				final Duration currentTime = mediaPlayer.getCurrentTime();
-				timeSlider.setDisable(duration.isUnknown());
-				if (!timeSlider.isDisabled() && duration.greaterThan(Duration.ZERO) && !timeSlider.isValueChanging()) {
-					timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0);
-				}
-				if (!volumeSlider.isValueChanging()) {
-					volumeSlider.setValue((int) Math.round(mediaPlayer.getVolume() * 100));
-				}
-
-			});
-		}
-	}
-
+	/*
+	 * private void updateValues() { if (timeSlider != null && volumeSlider !=
+	 * null) { Platform.runLater(() -> { final Duration currentTime =
+	 * mediaPlayer.getCurrentTime();
+	 * timeSlider.setDisable(duration.isUnknown()); if (!timeSlider.isDisabled()
+	 * && duration.greaterThan(Duration.ZERO) && !timeSlider.isValueChanging())
+	 * { timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0); }
+	 * if (!volumeSlider.isValueChanging()) { volumeSlider.setValue((int)
+	 * Math.round(mediaPlayer.getVolume() * 100)); }
+	 * 
+	 * }); } }
+	 */
 	private void decorateVBox(final VBox vbox) {
 		vbox.setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(0), Insets.EMPTY)));
 		vbox.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(0),
