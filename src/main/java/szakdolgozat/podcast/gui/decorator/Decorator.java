@@ -193,5 +193,4 @@ public class Decorator {
 		textField.setPrefSize(width, height);
 		return textField;
 	}
-
 }

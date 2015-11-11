@@ -1,7 +1,7 @@
 package szakdolgozat.podcast.gui.borderpane;
 
 import javafx.scene.layout.BorderPane;
-import szakdolgozat.podcast.gui.mediaplayer.MediaControlDani;
+import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.gui.tabpane.ApplicationTabPane;
 import szakdolgozat.podcast.gui.vbox.RecommendVBoxView;
 
@@ -30,7 +30,7 @@ public class MainBorderPane extends BorderPane {
 	}
 
 	private void buildBottom() {
-		setBottom(new MediaControlDani());
+		setBottom(new MediaControlPodcast());
 	}
 
 }

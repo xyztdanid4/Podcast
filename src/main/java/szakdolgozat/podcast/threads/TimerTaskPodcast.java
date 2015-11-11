@@ -42,7 +42,7 @@ public class TimerTaskPodcast extends TimerTask {
 
 		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
 			final int prev = Integer.parseInt(podcast.getTrackCount());
-			System.out.println(podcast.getArtistName() + " prev: " + prev);
+			// System.out.println(podcast.getArtistName() + " prev: " + prev);
 
 			final PodcastJsonParser jsonParser = new PodcastJsonParser(
 					new String("https://itunes.apple.com/search?term=" + podcast.getArtistName()

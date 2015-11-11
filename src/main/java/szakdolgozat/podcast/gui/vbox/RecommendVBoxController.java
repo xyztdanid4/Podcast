@@ -21,7 +21,6 @@ public class RecommendVBoxController {
 			if (isPodcastSubscribed(podcast.getArtistName())) {
 				for (final SimilarPodcastItem item : similarPodcastJsonParser.getSearchResult().getSimilar()
 						.getResults()) {
-					// System.out.println(item.getName());
 					final PodcastJsonParser jsonParser = new PodcastJsonParser(
 							new String("https://itunes.apple.com/search?term=" + item.getName()
 									+ "&entity=podcast&media=podcast&limit=5"));
