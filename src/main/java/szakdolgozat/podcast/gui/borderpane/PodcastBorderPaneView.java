@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -182,6 +183,13 @@ public class PodcastBorderPaneView extends BorderPane {
 										.title(podcastEpisode.getTitle())
 										.effectOn()
 										.build();
+				itemHbox.setOnMouseClicked(event -> {
+					if (event.getButton().equals(MouseButton.PRIMARY)) {
+						if (event.getClickCount() == 2) {
+							this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+						}
+					}
+				});
 				//-.-on
 			} else {
 				//-.-off
@@ -190,6 +198,13 @@ public class PodcastBorderPaneView extends BorderPane {
 										.title(podcastEpisode.getTitle())
 										.effectOn()
 										.build();
+				itemHbox.setOnMouseClicked(event -> {
+					if (event.getButton().equals(MouseButton.PRIMARY)) {
+						if (event.getClickCount() == 2) {
+							this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+						}
+					}
+				});
 				//-.-on
 			}
 			episodesContainer.add(itemHbox);

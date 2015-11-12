@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.builder.CheckBoxBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.builder.TextFieldBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
@@ -16,6 +17,9 @@ import szakdolgozat.podcast.gui.decorator.SettingsBPDecorator;
 import szakdolgozat.podcast.threads.PodcastListener;
 
 public class SettingsBorderPane extends BorderPane {
+	private static final String SUBSCRIBED_PODCAST_REFRESH_FREQUENCY_IN_HOURS = "Subscribed Podcast Refresh Frequency in hours:";
+	private static final String UPDATE_FREQUENCY = "Update Frequency";
+	private static final String FREQUENCY = "Frequency";
 	private static final String EMAIL = "Email, turn on if you would like to get email updates!";
 	private static final String SETTINGS = "Settings";
 	private final CheckBox emailCheckBox;
@@ -23,19 +27,19 @@ public class SettingsBorderPane extends BorderPane {
 	private final Button updateButton;
 
 	public SettingsBorderPane() {
-		this.emailCheckBox = new CheckBox(EMAIL);
+		this.emailCheckBox = CheckBoxBuilder.create().text(EMAIL).build();
 		//-.-off
 		this.frequencyTextField = TextFieldBuilder.create()
 												.size(80, 30)
-												.promptText("Frequency")
+												.promptText(FREQUENCY)
 												.build();
 		
-		this.updateButton = new Button("Update Frequency");
+		this.updateButton = new Button(UPDATE_FREQUENCY);
 		setButtonBehaviour();
 		
 		final VBox settingsVBox = VBoxBuilder.create()
 											.checkBox(this.emailCheckBox)
-											.smallText("Subscribed Podcast Refresh Frequency in hours:")
+											.smallText(SUBSCRIBED_PODCAST_REFRESH_FREQUENCY_IN_HOURS)
 											.noTextField(this.frequencyTextField)
 											.noButton(this.updateButton)
 											.topLeftAlignment()

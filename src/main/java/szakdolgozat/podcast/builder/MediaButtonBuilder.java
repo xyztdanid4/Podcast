@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class MediaButtonBuilder {
+public class MediaButtonBuilder implements Builder {
 	static MediaButtonBuilder instance = new MediaButtonBuilder();
 	private static Button button;
 
@@ -23,6 +23,7 @@ public class MediaButtonBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public Button build() {
 		return button;
 	}

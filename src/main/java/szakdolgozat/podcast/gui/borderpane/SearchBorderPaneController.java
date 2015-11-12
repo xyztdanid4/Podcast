@@ -7,6 +7,7 @@ import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
@@ -60,4 +61,13 @@ public class SearchBorderPaneController {
 									.build()));
 		}
 		//-.-on
+
+	public void startNewMediaPlayer(final PodcastEpisode podcastEpisode) {
+		try {
+			MediaControlPodcast.getInstance().stop();
+			MainBorderPane.getInstance().buildBottom(podcastEpisode);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

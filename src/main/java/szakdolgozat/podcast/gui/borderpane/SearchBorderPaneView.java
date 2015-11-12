@@ -27,27 +27,91 @@ import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.SearchBPDecorator;
-import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
+/**
+ * The Class SearchBorderPaneView. Contains the view of the SearchBorderpane.
+ * Use the class to represent a search function for the program
+ * 
+ * @author Tóth Dániel YQZQMJ
+ * @since 2015-09-01
+ * @version 1.0
+ * @see BorderPane
+ * 
+ */
 public class SearchBorderPaneView extends BorderPane {
+
+	/**
+	 * The Constant SEARCHTEXTFIELD_PROMPTTEXT. Use this constant as prompttext
+	 * for our searchTextField.
+	 * 
+	 * @see TextField
+	 * @see String
+	 */
 	private static final String SEARCHTEXTFIELD_PROMPTTEXT = "SEARCH ME!";
+
+	/**
+	 * The Constant SEARCHBUTTON_TEXT. Use this constant as Button text.
+	 * 
+	 * @see Button
+	 * @see String
+	 */
 	private static final String SEARCHBUTTON_TEXT = "Search!";
+
+	/**
+	 * The Constant EPISODESTEXT. Use this constant for indicate the episodes
+	 * which are contained by ListView.
+	 * 
+	 * @see ListView
+	 * @see String
+	 */
 	private static final String EPISODESTEXT = "Episodes";
+
+	/**
+	 * The Constant PODCASTTEXT.
+	 * 
+	 */
 	private static final String PODCASTTEXT = "Podcasts";
+
+	/** The Constant SUBSCRIBED_TEXT. */
 	private static final String SUBSCRIBED_TEXT = "Subscribe!";
+
+	/** The Constant ALREADYSUBSCRIBED_TEXT. */
 	private static final String ALREADYSUBSCRIBED_TEXT = "Already subscribed!";
+
+	/** The Constant NORESULT. */
 	private static final String NORESULT = "No result found!";
+
+	/** The search button. */
 	private final Button searchButton;
+
+	/** The search text field. */
 	private final TextField searchTextField;
+
+	/** The search result list. */
 	private ObservableList<HBox> searchResultList;
+
+	/** The search result list view. */
 	private ListView<HBox> searchResultListView;
+
+	/** The episodes list. */
 	private ObservableList<HBox> episodesList;
+
+	/** The episodes list view. */
 	private ListView<HBox> episodesListView;
+
+	/** The podcast list v box. */
 	private VBox podcastListVBox;
+
+	/** The episodes list v box. */
 	private VBox episodesListVBox;
+
+	/** The search border pane controller. */
 	private final SearchBorderPaneController searchBorderPaneController;
 
+	/**
+	 * Instantiates a new search border pane view.
+	 */
 	public SearchBorderPaneView() {
 		this.searchBorderPaneController = new SearchBorderPaneController();
 		//-.-off
@@ -74,6 +138,12 @@ public class SearchBorderPaneView extends BorderPane {
 		SearchBPDecorator.decorateFactory(this);
 	}
 
+	/**
+	 * Instantiates a new search border pane view.
+	 *
+	 * @param searchText
+	 *            the search text
+	 */
 	public SearchBorderPaneView(final String searchText) {
 		this.searchBorderPaneController = new SearchBorderPaneController();
 		//-.-off
@@ -103,10 +173,16 @@ public class SearchBorderPaneView extends BorderPane {
 		this.searchButton.fire();
 	}
 
+	/**
+	 * Sets the padding.
+	 */
 	private void setPadding() {
 		setPadding(new Insets(Decorator.PADDING, Decorator.PADDING, Decorator.PADDING, Decorator.PADDING));
 	}
 
+	/**
+	 * Sets the search text field key event.
+	 */
 	private void setSearchTextFieldKeyEvent() {
 		this.searchTextField.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
@@ -115,10 +191,16 @@ public class SearchBorderPaneView extends BorderPane {
 		});
 	}
 
+	/**
+	 * Sets the button disability.
+	 */
 	private void setButtonDisability() {
 		this.searchButton.disableProperty().bind(Bindings.isEmpty(this.searchTextField.textProperty()));
 	}
 
+	/**
+	 * Sets the search button function.
+	 */
 	private void setSearchButtonFunction() {
 		this.searchButton.setOnAction((final ActionEvent event) -> {
 			this.searchBorderPaneController.startSearchPodcast(SearchBorderPaneView.this.searchTextField.getText());
@@ -126,6 +208,9 @@ public class SearchBorderPaneView extends BorderPane {
 		});
 	}
 
+	/**
+	 * Show search result.
+	 */
 	private void showSearchResult() {
 		clearLists();
 		for (final Podcast podcast : this.searchBorderPaneController.getSearchPodcastContainer().getResults()) {
@@ -164,6 +249,9 @@ public class SearchBorderPaneView extends BorderPane {
 		this.searchResultListView.setItems(this.searchResultList);
 	}
 
+	/**
+	 * Sets the list view invalidation listener.
+	 */
 	private void setListViewInvalidationListener() {
 		this.searchResultListView.getSelectionModel().selectedIndexProperty().addListener((final Observable o) -> {
 			if (!this.searchResultListView.getSelectionModel().isEmpty()) {
@@ -188,12 +276,9 @@ public class SearchBorderPaneView extends BorderPane {
 							//-.-on
 							itemHbox.setOnMouseClicked(event -> {
 								if (event.getButton().equals(MouseButton.PRIMARY)) {
-									if (event.getClickCount() == 2) {
-										try {
-											MediaControlPodcast.getInstance().stop();
-											MainBorderPane.getInstance().buildBottom(podcastEpisode);
-										} catch (final Exception e) {
-											e.printStackTrace();
+									if (event.getButton().equals(MouseButton.PRIMARY)) {
+										if (event.getClickCount() == 2) {
+											this.searchBorderPaneController.startNewMediaPlayer(podcastEpisode);
 										}
 									}
 								}
@@ -211,12 +296,9 @@ public class SearchBorderPaneView extends BorderPane {
 						//-.-on
 						itemHbox.setOnMouseClicked(event -> {
 							if (event.getButton().equals(MouseButton.PRIMARY)) {
-								if (event.getClickCount() == 2) {
-									try {
-										MediaControlPodcast.getInstance().stop();
-										MainBorderPane.getInstance().buildBottom(podcastEpisode);
-									} catch (final Exception e) {
-										e.printStackTrace();
+								if (event.getButton().equals(MouseButton.PRIMARY)) {
+									if (event.getClickCount() == 2) {
+										this.searchBorderPaneController.startNewMediaPlayer(podcastEpisode);
 									}
 								}
 							}
@@ -229,6 +311,9 @@ public class SearchBorderPaneView extends BorderPane {
 		});
 	}
 
+	/**
+	 * Show episodes list.
+	 */
 	private void showEpisodesList() {
 		this.episodesList = FXCollections.observableArrayList();
 		//-.-off
@@ -246,6 +331,9 @@ public class SearchBorderPaneView extends BorderPane {
 		setCenter(this.episodesListVBox);
 	}
 
+	/**
+	 * Show podcast list.
+	 */
 	private void showPodcastList() {
 		this.searchResultList = FXCollections.observableArrayList();
 		//-.-off
@@ -266,6 +354,9 @@ public class SearchBorderPaneView extends BorderPane {
 		setLeft(this.podcastListVBox);
 	}
 
+	/**
+	 * Show no result found.
+	 */
 	private void showNoResultFound() {
 		//-.-off
 		this.searchResultList.add(HBoxBuilder.create()
@@ -278,11 +369,19 @@ public class SearchBorderPaneView extends BorderPane {
 		this.episodesListView.setDisable(true);
 	}
 
+	/**
+	 * Enable lists. Use the method for enable our lists
+	 * 
+	 */
 	private void enableLists() {
 		this.searchResultListView.setDisable(false);
 		this.episodesListView.setDisable(false);
 	}
 
+	/**
+	 * Clear lists. Use the method for clearing our lists
+	 *
+	 */
 	private void clearLists() {
 		this.searchResultList.clear();
 		this.episodesList.clear();

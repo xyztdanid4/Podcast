@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import szakdolgozat.podcast.gui.samples.StageSample;
 
-public class StageBuilder {
+public class StageBuilder implements Builder {
 	static StageBuilder instance = new StageBuilder();
 	private static StageSample stage;
 
@@ -26,6 +26,7 @@ public class StageBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public StageSample build() {
 		return stage;
 	}

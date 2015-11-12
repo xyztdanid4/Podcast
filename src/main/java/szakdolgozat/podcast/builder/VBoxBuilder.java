@@ -11,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class VBoxBuilder {
+public class VBoxBuilder implements Builder {
 	static VBoxBuilder instance = new VBoxBuilder();
 	private static VBox vbox;
 
@@ -23,12 +23,14 @@ public class VBoxBuilder {
 		return instance;
 	}
 
+	@Override
 	public VBox build() {
 		return vbox;
 	}
 
 	public VBoxBuilder checkBox(final CheckBox checkbox) {
-		vbox.getChildren().add(Decorator.decorateCheckBoxFactory(checkbox));
+		// vbox.getChildren().add(Decorator.decorateCheckBoxFactory(checkbox));
+		vbox.getChildren().add(checkbox);
 		return getInstance();
 	}
 

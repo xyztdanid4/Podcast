@@ -5,7 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class ListViewBuilder {
+public class ListViewBuilder implements Builder {
 	static ListViewBuilder instance = new ListViewBuilder();
 	private static ListView<HBox> listView;
 
@@ -22,6 +22,7 @@ public class ListViewBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public ListView<HBox> build() {
 		return listView;
 	}

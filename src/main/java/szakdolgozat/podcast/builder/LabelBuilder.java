@@ -3,7 +3,7 @@ package szakdolgozat.podcast.builder;
 import javafx.scene.control.Label;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class LabelBuilder {
+public class LabelBuilder implements Builder {
 	static LabelBuilder instance = new LabelBuilder();
 	private static Label label;
 
@@ -25,6 +25,7 @@ public class LabelBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public Label build() {
 		return label;
 	}

@@ -3,7 +3,7 @@ package szakdolgozat.podcast.builder;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class TextBuilder {
+public class TextBuilder implements Builder {
 	static TextBuilder instance = new TextBuilder();
 	private static Text text;
 
@@ -30,6 +30,7 @@ public class TextBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public Text build() {
 		return text;
 	}

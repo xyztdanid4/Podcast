@@ -3,7 +3,7 @@ package szakdolgozat.podcast.builder;
 import javafx.scene.control.PasswordField;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class PasswordFieldBuilder {
+public class PasswordFieldBuilder implements Builder {
 	static PasswordFieldBuilder instance = new PasswordFieldBuilder();
 	private static PasswordField passwordField;
 
@@ -20,6 +20,7 @@ public class PasswordFieldBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public PasswordField build() {
 		return passwordField;
 	}

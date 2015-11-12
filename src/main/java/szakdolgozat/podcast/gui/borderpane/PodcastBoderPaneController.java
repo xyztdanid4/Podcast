@@ -7,6 +7,8 @@ import org.mongodb.morphia.query.Query;
 import javafx.application.Platform;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
+import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
 public class PodcastBoderPaneController {
@@ -47,19 +49,12 @@ public class PodcastBoderPaneController {
 	}
 	//-.-on
 
-	/*
-	 * public void stopListener(final Podcast podcast) { // System.out.println(
-	 * "index: " + index); System.out.println("STOP");
-	 * System.out.println(podcast); if
-	 * (PodcastListener.getInstance().getTasks().get(PodcastListener.getInstance
-	 * ().getTasks().indexOf(podcast)) .getPodcast().equals(podcast)) {
-	 * System.out.println("ANYÁD"); } //
-	 * System.out.println(PodcastListener.getInstance().getTasks() //
-	 * .get(PodcastListener.getInstance().getTasks().indexOf(podcast)).
-	 * getPodcast()); //
-	 * PodcastListener.getInstance().getTasks().get(PodcastListener.getInstance(
-	 * ).getTasks().indexOf(podcast)) // .cancel(); //
-	 * PodcastListener.getInstance().getTasks().get().getTimer().cancel(); //
-	 * PodcastListener.getInstance().getTasks().remove(); }
-	 */
+	public void startNewMediaPlayer(final PodcastEpisode podcastEpisode) {
+		try {
+			MediaControlPodcast.getInstance().stop();
+			MainBorderPane.getInstance().buildBottom(podcastEpisode);
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -3,6 +3,8 @@ package szakdolgozat.podcast.builder;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -11,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class HBoxBuilder {
+public class HBoxBuilder implements Builder {
 	static HBoxBuilder instance = new HBoxBuilder();
 	private static HBox hbox;
 
@@ -42,6 +44,11 @@ public class HBoxBuilder {
 	public HBoxBuilder image(final String image) {
 		hbox.getChildren().add(Decorator.decorateImageViewFactory(new ImageView(image), Decorator.SMALLRECTANGLEHEIGHT,
 				Decorator.SMALLRECTANGLEWIDTH));
+		return getInstance();
+	}
+
+	public HBoxBuilder slider(final Slider slider) {
+		hbox.getChildren().add(slider);
 		return getInstance();
 	}
 
@@ -100,6 +107,11 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
+	public HBoxBuilder noLabel(final Label label) {
+		hbox.getChildren().add(label);
+		return getInstance();
+	}
+
 	public HBoxBuilder noText(final Text text) {
 		hbox.getChildren().add(text);
 		return getInstance();
@@ -121,6 +133,7 @@ public class HBoxBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public HBox build() {
 		return hbox;
 	}

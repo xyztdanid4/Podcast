@@ -7,6 +7,7 @@ import javafx.beans.InvalidationListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Background;
@@ -24,17 +25,24 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import szakdolgozat.podcast.builder.CheckBoxBuilder;
+import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.builder.LabelBuilder;
 import szakdolgozat.podcast.builder.MediaButtonBuilder;
+import szakdolgozat.podcast.builder.SliderBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.decorator.MediaControlDecorator;
 
 //TODO repeat változot lecserélni egy checkboxra
 // TODO sebességváltozás megcsinálásása
 // TODO random lejátszása
 // TODO mute gomb
+// TODO repeat checkbox
 
 public class MediaControlPodcast extends VBox {
+	private static final String REPEAT2 = "Repeat";
+	private static final String _00_00_00 = "00:00:00";
 	private static MediaControlPodcast instance = new MediaControlPodcast();
 	private static final String PLAYBUTTONURL = "appbar.control.play.png";
 	private static final String NEXTBUTTONURL = "appbar.control.fastforward.variant.png";
@@ -46,16 +54,8 @@ public class MediaControlPodcast extends VBox {
 	private static boolean repeat = false;
 	private static Button playButton;
 	private static Button pauseButton;
-	private static Button prevButton;
-	private static Button nextButton;
 	private static Duration duration;
-	private static Slider timeSlider;
-	private static Slider volumeSlider;
 	private static MediaPlayer mediaPlayer;
-	private static Label volumeLabel;
-	private static Text playedTime;
-	private static Text artistText;
-	private static Text episodeText;
 	private static boolean firstRun = true;
 
 	public static MediaControlPodcast getInstance() {
@@ -78,36 +78,67 @@ public class MediaControlPodcast extends VBox {
 	public void stop() {
 		if (!firstRun) {
 			mediaPlayer.stop();
-			// mediaPlayer.currentTimeProperty().removeListener();
 		}
 		firstRun = false;
 	}
 
 	public MediaControlPodcast() {
-		final HBox mediaButtonVolume = new HBox(10);
-		final HBox mediaSlider = new HBox(10);
-		setMargin(mediaButtonVolume, new Insets(5));
-		setMargin(mediaSlider, new Insets(5));
-
-		playButton = MediaButtonBuilder.create().image(PLAYBUTTONURL).build();
-		pauseButton = MediaButtonBuilder.create().image(PAUSEBUTTONURL).build();
-		prevButton = MediaButtonBuilder.create().image(PREVBUTTONURL).build();
-		nextButton = MediaButtonBuilder.create().image(NEXTBUTTONURL).build();
-		volumeLabel = LabelBuilder.create().text(VOLUMELABEL_TEXT).build();
-		volumeSlider = new Slider();
-		timeSlider = new Slider();
-		timeSlider.setPrefWidth(600);
-		playedTime = TextBuilder.create().smallText("00:00:00").build();
-
-		mediaButtonVolume.getChildren().addAll(prevButton, pauseButton, playButton, nextButton, volumeLabel,
-				volumeSlider);
-		mediaButtonVolume.setAlignment(Pos.CENTER);
-
-		mediaSlider.getChildren().addAll(playedTime, timeSlider);
+		//-.-off
+		final Button playButton = MediaButtonBuilder.create()
+													.image(PLAYBUTTONURL)
+													.build();
+		
+		final Button pauseButton = MediaButtonBuilder.create()
+													.image(PAUSEBUTTONURL)
+													.build();
+		
+		final Button prevButton = MediaButtonBuilder.create()
+													.image(PREVBUTTONURL)
+													.build();
+		
+		final Button nextButton = MediaButtonBuilder.create()
+													.image(NEXTBUTTONURL)
+													.build();
+		
+		final Slider volumeSlider = SliderBuilder.create()
+												.build();
+		
+		final Slider timeSlider = SliderBuilder.create()
+												.build();
+		timeSlider.setPrefWidth(MediaControlDecorator.TIMESLIDER);
+		
+		final Text playedTime = TextBuilder.create()
+											.smallText(_00_00_00)
+											.build();
+		
+		final CheckBox repeatCheckBox = CheckBoxBuilder.create()
+														.text(REPEAT2)
+														.setDefaultValue(false)
+														.build();
+		
+		final HBox mediaButtonVolumeHBox = HBoxBuilder.create()
+													.noButton(prevButton)
+													.noButton(pauseButton)
+													.noButton(playButton)
+													.noButton(nextButton)
+													.noLabel(LabelBuilder.create()
+																		.text(VOLUMELABEL_TEXT)
+																		.build())
+													.slider(volumeSlider)
+													.build();
+		mediaButtonVolumeHBox.setAlignment(Pos.CENTER);
+		setMargin(mediaButtonVolumeHBox, new Insets(MediaControlDecorator.PADDING));
+		
+		final HBox mediaSlider = HBoxBuilder.create()
+											.noText(playedTime)
+											.slider(timeSlider)
+											.checkBox(repeatCheckBox)
+											.build();
 		mediaSlider.setAlignment(Pos.CENTER);
-		mediaSlider.setPadding(new Insets(10, 0, 5, 0));
+		setMargin(mediaSlider, new Insets(MediaControlDecorator.PADDING));
+		//-.-on
 
-		getChildren().addAll(mediaSlider, mediaButtonVolume);
+		getChildren().addAll(mediaSlider, mediaButtonVolumeHBox);
 		decorateVBox(this);
 	}
 
@@ -121,17 +152,18 @@ public class MediaControlPodcast extends VBox {
 		setMargin(mediaButtonVolume, new Insets(5));
 		setMargin(mediaSlider, new Insets(5));
 
-		playButton = MediaButtonBuilder.create().image(PLAYBUTTONURL).build();
-		pauseButton = MediaButtonBuilder.create().image(PAUSEBUTTONURL).build();
-		prevButton = MediaButtonBuilder.create().image(PREVBUTTONURL).build();
-		nextButton = MediaButtonBuilder.create().image(NEXTBUTTONURL).build();
-		volumeLabel = LabelBuilder.create().text(VOLUMELABEL_TEXT).build();
-		volumeSlider = new Slider();
-		timeSlider = new Slider();
+		final Button playButton = MediaButtonBuilder.create().image(PLAYBUTTONURL).build();
+		final Button pauseButton = MediaButtonBuilder.create().image(PAUSEBUTTONURL).build();
+		final Button prevButton = MediaButtonBuilder.create().image(PREVBUTTONURL).build();
+		final Button nextButton = MediaButtonBuilder.create().image(NEXTBUTTONURL).build();
+		final Label volumeLabel = LabelBuilder.create().text(VOLUMELABEL_TEXT).build();
+		final Slider volumeSlider = new Slider();
+		final Slider timeSlider = new Slider();
 		timeSlider.setPrefWidth(600);
-		playedTime = TextBuilder.create().smallText("00:00:00").build();
-		artistText = TextBuilder.create().bigText(podcastEpisode.getAuthor()).build();
-		episodeText = TextBuilder.create().bigText(podcastEpisode.getTitle()).build();
+		final Text playedTime = TextBuilder.create().smallText(_00_00_00).build();
+		final Text artistText = TextBuilder.create().bigText(podcastEpisode.getAuthor()).build();
+		final Text episodeText = TextBuilder.create().bigText(podcastEpisode.getTitle()).build();
+		final CheckBox repeatCheckBox = CheckBoxBuilder.create().text(REPEAT2).setDefaultValue(false).build();
 
 		playButton.setOnAction(event -> {
 			final Status status = mediaPlayer.getStatus();
@@ -208,7 +240,6 @@ public class MediaControlPodcast extends VBox {
 		});
 
 		mediaPlayer.currentTimeProperty().addListener((InvalidationListener) ov -> {
-			// updateValues();
 			final LocalTime timeOfDay = LocalTime.ofSecondOfDay((long) mediaPlayer.getCurrentTime().toSeconds());
 			final String time = timeOfDay.toString();
 			playedTime.setText(time);
@@ -231,26 +262,13 @@ public class MediaControlPodcast extends VBox {
 				volumeSlider);
 		mediaButtonVolume.setAlignment(Pos.CENTER);
 
-		mediaSlider.getChildren().addAll(artistText, playedTime, timeSlider, episodeText);
+		mediaSlider.getChildren().addAll(artistText, playedTime, timeSlider, episodeText, repeatCheckBox);
 		mediaSlider.setAlignment(Pos.CENTER);
-		mediaSlider.setPadding(new Insets(10, 0, 5, 0));
 
 		getChildren().addAll(mediaSlider, mediaButtonVolume);
 		decorateVBox(this);
 	}
 
-	/*
-	 * private void updateValues() { if (timeSlider != null && volumeSlider !=
-	 * null) { Platform.runLater(() -> { final Duration currentTime =
-	 * mediaPlayer.getCurrentTime();
-	 * timeSlider.setDisable(duration.isUnknown()); if (!timeSlider.isDisabled()
-	 * && duration.greaterThan(Duration.ZERO) && !timeSlider.isValueChanging())
-	 * { timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0); }
-	 * if (!volumeSlider.isValueChanging()) { volumeSlider.setValue((int)
-	 * Math.round(mediaPlayer.getVolume() * 100)); }
-	 * 
-	 * }); } }
-	 */
 	private void decorateVBox(final VBox vbox) {
 		vbox.setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(0), Insets.EMPTY)));
 		vbox.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(0),

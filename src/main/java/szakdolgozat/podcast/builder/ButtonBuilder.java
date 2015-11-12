@@ -3,7 +3,7 @@ package szakdolgozat.podcast.builder;
 import javafx.scene.control.Button;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class ButtonBuilder {
+public class ButtonBuilder implements Builder {
 	static ButtonBuilder instance = new ButtonBuilder();
 	private static Button button;
 
@@ -20,6 +20,7 @@ public class ButtonBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public Button build() {
 		return button;
 	}

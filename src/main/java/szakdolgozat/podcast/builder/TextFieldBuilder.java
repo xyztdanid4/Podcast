@@ -3,7 +3,7 @@ package szakdolgozat.podcast.builder;
 import javafx.scene.control.TextField;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 
-public class TextFieldBuilder {
+public class TextFieldBuilder implements Builder {
 	static TextFieldBuilder instance = new TextFieldBuilder();
 	private static TextField textField;
 
@@ -20,6 +20,7 @@ public class TextFieldBuilder {
 		return getInstance();
 	}
 
+	@Override
 	public TextField build() {
 		return textField;
 	}
