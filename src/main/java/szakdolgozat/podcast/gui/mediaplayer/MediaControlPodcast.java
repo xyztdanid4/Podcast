@@ -9,19 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import szakdolgozat.podcast.builder.CheckBoxBuilder;
@@ -33,13 +25,11 @@ import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.MediaControlDecorator;
 
-//TODO repeat változot lecserélni egy checkboxra
-// TODO sebességváltozás megcsinálásása
 // TODO random lejátszása
 // TODO mute gomb
-// TODO repeat checkbox
 
 public class MediaControlPodcast extends VBox {
+	private static final String MUTE = "Mute";
 	private static final String REPEAT2 = "Repeat";
 	private static final String _00_00_00 = "00:00:00";
 	private static MediaControlPodcast instance = new MediaControlPodcast();
@@ -64,6 +54,7 @@ public class MediaControlPodcast extends VBox {
 	private static CheckBox repeatCheckBox;
 	private static HBox mediaButtonVolumeHBox;
 	private static HBox mediaSlider;
+	private static CheckBox muteCheckhBox;
 
 	public static MediaControlPodcast getInstance() {
 		if (instance == null) {
@@ -123,6 +114,11 @@ public class MediaControlPodcast extends VBox {
 										.setDefaultValue(false)
 										.build();
 		
+		muteCheckhBox = CheckBoxBuilder.create()
+										.text(MUTE)
+										.setDefaultValue(false)
+										.build();
+		
 		mediaButtonVolumeHBox = HBoxBuilder.noCreate()
 											.noButton(prevButton)
 											.noButton(pauseButton)
@@ -132,6 +128,8 @@ public class MediaControlPodcast extends VBox {
 																.text(VOLUMELABEL_TEXT)
 																.build())
 											.slider(volumeSlider)
+											.checkBox(repeatCheckBox)
+											.checkBox(muteCheckhBox)
 											.build();
 		mediaButtonVolumeHBox.setAlignment(Pos.CENTER);
 		setMargin(mediaButtonVolumeHBox, new Insets(MediaControlDecorator.PADDING));
@@ -139,14 +137,13 @@ public class MediaControlPodcast extends VBox {
 		mediaSlider = HBoxBuilder.noCreate()
 									.noText(playedTime)
 									.slider(timeSlider)
-									.checkBox(repeatCheckBox)
 									.build();
 		mediaSlider.setAlignment(Pos.CENTER);
 		setMargin(mediaSlider, new Insets(MediaControlDecorator.PADDING));
 		//-.-on
 
 		getChildren().addAll(mediaSlider, mediaButtonVolumeHBox);
-		decorateVBox(this);
+		MediaControlDecorator.decorateFactory(this);
 	}
 
 	private MediaControlPodcast(final PodcastEpisode podcastEpisode) throws Exception {
@@ -183,10 +180,24 @@ public class MediaControlPodcast extends VBox {
 												.text(REPEAT2)
 												.setDefaultValue(false)
 												.build();
+				
+				muteCheckhBox = CheckBoxBuilder.create()
+												.text(MUTE)
+												.setDefaultValue(false)
+												.build();
 		
 		// emiatt kell throws exception
 		mediaPlayer = new MediaPlayer(new Media(podcastEpisode.getGuid()));
 		mediaPlayer.setAutoPlay(true);
+		
+		muteCheckhBox.selectedProperty().addListener((InvalidationListener) observable -> {
+			if(muteCheckhBox.isSelected()){
+				mediaPlayer.setMute(true);
+			}
+			else{
+				mediaPlayer.setMute(false);
+			}
+		});
 
 		playButton.setOnAction(event -> {
 			final Status status = mediaPlayer.getStatus();
@@ -310,6 +321,8 @@ public class MediaControlPodcast extends VBox {
 																.text(VOLUMELABEL_TEXT)
 																.build())
 											.slider(volumeSlider)
+											.checkBox(repeatCheckBox)
+											.checkBox(muteCheckhBox)
 											.build();
 		mediaButtonVolumeHBox.setAlignment(Pos.CENTER);
 		
@@ -320,20 +333,13 @@ public class MediaControlPodcast extends VBox {
 				.noText(playedTime)
 				.slider(timeSlider)
 				.noText(episodeText)
-				.checkBox(repeatCheckBox)
 				.build();
 		mediaSlider.setAlignment(Pos.CENTER);
 		setMargin(mediaSlider, new Insets(MediaControlDecorator.PADDING));
 		//-.-on
 
 		getChildren().addAll(mediaSlider, mediaButtonVolumeHBox);
-		decorateVBox(this);
+		MediaControlDecorator.decorateFactory(this);
 	}
 
-	private void decorateVBox(final VBox vbox) {
-		vbox.setBackground(new Background(new BackgroundFill(Color.web("#191919"), new CornerRadii(0), Insets.EMPTY)));
-		vbox.setBorder(new Border(new BorderStroke(Color.web("#006666"), BorderStrokeStyle.SOLID, new CornerRadii(0),
-				new BorderWidths(3))));
-		vbox.setPrefHeight(80);
-	}
 }
