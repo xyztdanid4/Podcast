@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import szakdolgozat.podcast.gui.borderpane.SerialHBox;
 
 public class Decorator {
 	// border - radius
@@ -83,6 +84,17 @@ public class Decorator {
 	}
 
 	public static HBox decorateHBoxFactory(final HBox hbox) {
+		hbox.setBackground(new Background(
+				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		hbox.setAlignment(Pos.CENTER_LEFT);
+		// setMouseEnteredEventHBox(hbox);
+		// setMouseExitedEventHBox(hbox);
+		return hbox;
+	}
+
+	public static SerialHBox decorateSerialHBoxFactory(final SerialHBox hbox) {
 		hbox.setBackground(new Background(
 				new BackgroundFill(Color.web(ITEMBACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
 		hbox.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
