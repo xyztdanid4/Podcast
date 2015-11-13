@@ -37,4 +37,5 @@ public class SerialListViewBuilder implements Builder {
 		listView.setItems(list);
 		return getInstance();
 	}
+
 }

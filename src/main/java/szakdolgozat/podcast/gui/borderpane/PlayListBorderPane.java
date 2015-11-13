@@ -28,10 +28,12 @@ public class PlayListBorderPane extends BorderPane {
 	private static final String PLAY_LIST = "PlayList";
 	private static final String EPISODES = "Episodes";
 	static final DataFormat ITEM_LIST = new DataFormat("jdojo/itemlist");
+
+	static ObservableList<SerialHBox> episodeList;
+	static ListView<SerialHBox> episodeListView;
+
 	static ObservableList<SerialHBox> playList;
 	static ListView<SerialHBox> playListView;
-	static ListView<SerialHBox> episodeListView;
-	static ObservableList<SerialHBox> episodesList;
 
 	public PlayListBorderPane() {
 		populateEpisodesList();
@@ -47,8 +49,8 @@ public class PlayListBorderPane extends BorderPane {
 		setLeft(episodesVBox);
 
 		//-.-off
-		 populatePlayList();
-		 populatePlayListView();
+		populatePlayList();
+		populatePlayListView();
 		final VBox playListVBox = SerialVBoxBuilder.create()
 											.bigText(PLAY_LIST)
 											.noListView(playListView)
@@ -58,142 +60,15 @@ public class PlayListBorderPane extends BorderPane {
 		setMargin(playListVBox, new Insets(20));
 		setCenter(playListVBox);
 		PlayListBPDecorator.decorateFactory(this);
-
-		setDragAndDropEvents();
-
-		// episodeListView.setOnDragDetected(e -> dragDetected(e,
-		// episodeListView));
-		// playListView.setOnDragDetected(e -> dragDetected(e, playListView));
-		// episodeListView.setOnDragOver(e -> dragOver(e, episodeListView));
-		// playListView.setOnDragOver(e -> dragOver(e, playListView));
-		// episodeListView.setOnDragDropped(e -> dragDropped(e,
-		// episodeListView));
-		// playListView.setOnDragDropped(e -> dragDropped(e, playListView));
-		// episodeListView.setOnDragDone(e -> dragDone(e, episodeListView));
-		// playListView.setOnDragDone(e -> dragDone(e, playListView));
+		addDnDEventHanders();
 	}
 
-	/**
-	 * 
-	 */
-	private void setDragAndDropEvents() {
-		episodeListView.setOnDragDetected(event -> {
-			final int selectedCount = episodeListView.getSelectionModel().getSelectedIndices().size();
-			if (selectedCount == 0) {
-				event.consume();
-				return;
-			}
-			final Dragboard dragboard = episodeListView.startDragAndDrop(TransferMode.COPY_OR_MOVE);
-			final ArrayList<SerialHBox> selectedItems = this.getSelectedItems(episodeListView);
-			final ClipboardContent content = new ClipboardContent();
-			content.put(ITEM_LIST, selectedItems);
-			dragboard.setContent(content);
-			event.consume();
-		});
-
-		playListView.setOnDragDetected(event -> {
-			final int selectedCount = playListView.getSelectionModel().getSelectedIndices().size();
-			if (selectedCount == 0) {
-				event.consume();
-				return;
-			}
-			final Dragboard dragboard = playListView.startDragAndDrop(TransferMode.COPY_OR_MOVE);
-			final ArrayList<SerialHBox> selectedItems = this.getSelectedItems(playListView);
-			final ClipboardContent content = new ClipboardContent();
-			content.put(ITEM_LIST, selectedItems);
-			dragboard.setContent(content);
-			event.consume();
-		});
-
-		episodeListView.setOnDragOver(event -> {
-			final Dragboard dragboard = event.getDragboard();
-			if (event.getGestureSource() != episodeListView && dragboard.hasContent(ITEM_LIST)) {
-				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-			}
-			event.consume();
-		});
-
-		playListView.setOnDragOver(event -> {
-			final Dragboard dragboard = event.getDragboard();
-			if (event.getGestureSource() != playListView && dragboard.hasContent(ITEM_LIST)) {
-				event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-			}
-			event.consume();
-		});
-
-		episodeListView.setOnDragDropped(event -> {
-			boolean dragCompleted = false;
-			final Dragboard dragboard = event.getDragboard();
-			if (dragboard.hasContent(ITEM_LIST)) {
-				final ArrayList<SerialHBox> list = (ArrayList<SerialHBox>) dragboard.getContent(ITEM_LIST);
-				// episodeListView.getItems().addAll(list);
-				episodesList.addAll(list);
-				episodeListView.setItems(episodesList);
-				dragCompleted = true;
-			}
-			event.setDropCompleted(dragCompleted);
-			event.consume();
-		});
-
-		playListView.setOnDragDropped(event -> {
-			boolean dragCompleted = false;
-			final Dragboard dragboard = event.getDragboard();
-			if (dragboard.hasContent(ITEM_LIST)) {
-				final ArrayList<SerialHBox> list = (ArrayList<SerialHBox>) dragboard.getContent(ITEM_LIST);
-				// playListView.getItems().addAll(list);
-				playList.addAll(list);
-				playListView.setItems(episodesList);
-				dragCompleted = true;
-			}
-			event.setDropCompleted(dragCompleted);
-			event.consume();
-		});
-
-		episodeListView.setOnDragDone(event -> {
-			final TransferMode tm = event.getTransferMode();
-			if (tm == TransferMode.MOVE) {
-				removeSelectedItems(episodeListView);
-			}
-			event.consume();
-		});
-
-		playListView.setOnDragDone(event -> {
-			final TransferMode tm = event.getTransferMode();
-			if (tm == TransferMode.MOVE) {
-				removeSelectedItems(playListView);
-			}
-			event.consume();
-		});
-	}
-
-	/**
-	 * 
-	 */
-	private void populatePlayListView() {
-		//-.-off
-		playListView = SerialListViewBuilder.create()
-											.size(PlayListBPDecorator.LISTVIEWWIDTH, PlayListBPDecorator.LISTVIEWHEIGHT)
-											.items(playList)
-											.build();
-		//-.-on
-	}
-
-	/**
-	 * 
-	 */
-	private void populatePlayList() {
-		playList = FXCollections.observableArrayList();
-	}
-
-	/**
-	 * 
-	 */
 	private void populateEpisodesList() {
-		episodesList = FXCollections.observableArrayList();
+		PlayListBorderPane.episodeList = FXCollections.<SerialHBox> observableArrayList();
 		for (final Podcast podcast : readfromDB()) {
 			//-.-off
 			for (final PodcastEpisode podcastEpisode : podcast.getPodcastEpisode()) {
-				episodesList.add(SerialHboxBuilder.create()
+				PlayListBorderPane.episodeList.add(SerialHboxBuilder.create()
 						.artist(podcast.getArtistName())
 						.smallText(" : ")
 						.effectOn()
@@ -205,15 +80,41 @@ public class PlayListBorderPane extends BorderPane {
 	}
 
 	private void populateEpisodesListView() {
-		//-.-off
 		episodeListView = SerialListViewBuilder.create()
-												.items(episodesList)
-												.size(PlayListBPDecorator.LISTVIEWWIDTH, PlayListBPDecorator.LISTVIEWHEIGHT)
-												.build();
+				.size(PlayListBPDecorator.LISTVIEWWIDTH, PlayListBPDecorator.LISTVIEWHEIGHT).build();
+		episodeListView.getItems().addAll(PlayListBorderPane.episodeList);
+	}
+
+	private void populatePlayList() {
+		playList = FXCollections.<SerialHBox> observableArrayList();
+	}
+
+	private void populatePlayListView() {
+		//-.-off
+		playListView = SerialListViewBuilder.create()
+									.size(PlayListBPDecorator.LISTVIEWWIDTH, PlayListBPDecorator.LISTVIEWHEIGHT)
+									.build();
+		playListView.getItems().addAll(playList);
 		//-.-on
 	}
 
+	public List<Podcast> readfromDB() {
+		return MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
+	}
+
+	private void addDnDEventHanders() {
+		PlayListBorderPane.episodeListView.setOnDragDetected(e -> dragDetected(e, PlayListBorderPane.episodeListView));
+		PlayListBorderPane.playListView.setOnDragDetected(e -> dragDetected(e, PlayListBorderPane.playListView));
+		PlayListBorderPane.episodeListView.setOnDragOver(e -> dragOver(e, PlayListBorderPane.episodeListView));
+		PlayListBorderPane.playListView.setOnDragOver(e -> dragOver(e, PlayListBorderPane.playListView));
+		PlayListBorderPane.episodeListView.setOnDragDropped(e -> dragDropped(e, PlayListBorderPane.episodeListView));
+		PlayListBorderPane.playListView.setOnDragDropped(e -> dragDropped(e, PlayListBorderPane.playListView));
+		PlayListBorderPane.episodeListView.setOnDragDone(e -> dragDone(e, PlayListBorderPane.episodeListView));
+		PlayListBorderPane.playListView.setOnDragDone(e -> dragDone(e, PlayListBorderPane.playListView));
+	}
+
 	private void dragDetected(final MouseEvent e, final ListView<SerialHBox> listView) {
+		// Make sure at least one item is selected
 		final int selectedCount = listView.getSelectionModel().getSelectedIndices().size();
 		if (selectedCount == 0) {
 			e.consume();
@@ -240,13 +141,10 @@ public class PlayListBorderPane extends BorderPane {
 	}
 
 	private void dragDropped(final DragEvent e, final ListView<SerialHBox> listView) {
-		playList.add(SerialHboxBuilder.create().smallText("aaaa").build());
-		playListView.setItems(playList);
-
+		System.out.println("dragdropped");
 		boolean dragCompleted = false;
 		// Transfer the data to the target
 		final Dragboard dragboard = e.getDragboard();
-		System.out.println("dragdropped");
 		if (dragboard.hasContent(ITEM_LIST)) {
 			final ArrayList<SerialHBox> list = (ArrayList<SerialHBox>) dragboard.getContent(ITEM_LIST);
 			listView.getItems().addAll(list);
@@ -286,10 +184,6 @@ public class PlayListBorderPane extends BorderPane {
 		listView.getSelectionModel().clearSelection();
 		// Remove items from the selected list
 		listView.getItems().removeAll(selectedList);
-	}
-
-	public List<Podcast> readfromDB() {
-		return MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
 	}
 
 }
