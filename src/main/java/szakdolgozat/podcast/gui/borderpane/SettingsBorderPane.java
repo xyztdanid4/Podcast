@@ -27,8 +27,11 @@ public class SettingsBorderPane extends BorderPane {
 	private final Button updateButton;
 
 	public SettingsBorderPane() {
-		this.emailCheckBox = CheckBoxBuilder.create().text(EMAIL).build();
 		//-.-off
+		this.emailCheckBox = CheckBoxBuilder.create()
+											.text(EMAIL)
+											.build();
+		
 		this.frequencyTextField = TextFieldBuilder.create()
 												.size(80, 30)
 												.promptText(FREQUENCY)

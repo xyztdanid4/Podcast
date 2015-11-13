@@ -32,10 +32,17 @@ public class MainBorderPane extends BorderPane {
 
 	public void buildBottom(final PodcastEpisode podcastEpisode) {
 		try {
-			setBottom(MediaControlPodcast.getInstance().create(podcastEpisode));
+			buildMedia(podcastEpisode);
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * @param podcastEpisode
+	 */
+	private void buildMedia(final PodcastEpisode podcastEpisode) {
+		setBottom(MediaControlPodcast.getInstance().create(podcastEpisode));
 	}
 
 	private void buildBottom() {

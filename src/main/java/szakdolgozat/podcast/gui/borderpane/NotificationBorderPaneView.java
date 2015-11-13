@@ -9,24 +9,38 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import szakdolgozat.podcast.builder.CheckBoxBuilder;
 import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.NotificationBPDecorator;
 
 public class NotificationBorderPaneView extends BorderPane {
+	private static final String SHOW_SUBSCRIPTIONS = "Show subscriptions";
+	private static final String SHOW_UNSUBSCRITPIONS = "Show unsubscritpions";
+	private static final String SHOW_NEW_EPISODES = "Show new episodes";
 	private static final String NOTIFICAITON = "Notifications";
 
 	public NotificationBorderPaneView() {
 		final ObservableList<HBox> filterableList = FXCollections.observableArrayList();
-		final CheckBox newEpisodeCB = new CheckBox("Show new episodes");
-		final CheckBox unsubscribeCB = new CheckBox("Show unsubscritpions");
-		final CheckBox subscribeCB = new CheckBox("Show subscriptions");
-		setDefaultCheckBoxValues(newEpisodeCB, unsubscribeCB, subscribeCB);
+		// final CheckBox newEpisodeCB = new CheckBox("Show new episodes");
+		// final CheckBox unsubscribeCB = new CheckBox("Show unsubscritpions");
+		// final CheckBox subscribeCB = new CheckBox("Show subscriptions");
 		//-.-off
+		final CheckBox newEpisodeCB =  CheckBoxBuilder.create()
+														.text(SHOW_NEW_EPISODES)
+														.build();
+		final CheckBox unsubscribeCB = CheckBoxBuilder.create()
+														.text(SHOW_UNSUBSCRITPIONS)
+														.build();
+		final CheckBox subscribeCB = CheckBoxBuilder.create()
+													.text(SHOW_SUBSCRIPTIONS)
+													.build();
+		setDefaultCheckBoxValues(newEpisodeCB, unsubscribeCB, subscribeCB);
+		
 		final ListView<HBox> listView = ListViewBuilder.create()
-				.size(NotificationBPDecorator.LISTWIDTH, NotificationBPDecorator.LISTHEIGHT)
-				.build();
+														.size(NotificationBPDecorator.LISTWIDTH, NotificationBPDecorator.LISTHEIGHT)
+														.build();
 		
 		buildFilteredList(filterableList, newEpisodeCB, unsubscribeCB, subscribeCB, listView);
 		
