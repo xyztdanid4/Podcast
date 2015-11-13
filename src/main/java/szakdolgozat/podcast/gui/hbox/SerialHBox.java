@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.borderpane;
+package szakdolgozat.podcast.gui.hbox;
 
 import java.io.Serializable;
 

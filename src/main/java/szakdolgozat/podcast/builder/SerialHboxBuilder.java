@@ -1,7 +1,8 @@
 package szakdolgozat.podcast.builder;
 
-import szakdolgozat.podcast.gui.borderpane.SerialHBox;
+import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
+import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
 public class SerialHboxBuilder implements Builder {
 	static SerialHboxBuilder instance = new SerialHboxBuilder();
@@ -19,6 +20,34 @@ public class SerialHboxBuilder implements Builder {
 
 	private static SerialHboxBuilder getInstance() {
 		return instance;
+	}
+
+	public SerialHboxBuilder artist(final String artist) {
+		hbox.getChildren()
+				.add(Decorator.decorateTextFactory(
+						new Text(artist.length() > 20
+								? new String(new StringBuilder(artist.substring(0, 20)).append("...")) : artist),
+				Decorator.SMALLTEXTSIZE));
+		return getInstance();
+	}
+
+	public SerialHboxBuilder smallText(final String text) {
+		hbox.getChildren().add(Decorator.decorateTextFactory(new Text(text), Decorator.SMALLTEXTSIZE));
+		return getInstance();
+	}
+
+	public SerialHboxBuilder effectOn() {
+		hbox = Decorator.decorateSerialEffect(hbox);
+		return getInstance();
+	}
+
+	public SerialHboxBuilder title(final String artist) {
+		hbox.getChildren()
+				.add(Decorator.decorateTextFactory(
+						new Text(artist.length() > 40
+								? new String(new StringBuilder(artist.substring(0, 40)).append("...")) : artist),
+				Decorator.SMALLTEXTSIZE));
+		return getInstance();
 	}
 
 }

@@ -37,4 +37,5 @@ public class ListViewBuilder implements Builder {
 		listView.setItems(list);
 		return getInstance();
 	}
+
 }

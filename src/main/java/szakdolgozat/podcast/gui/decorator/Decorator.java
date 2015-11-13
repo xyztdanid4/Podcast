@@ -26,7 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.gui.borderpane.SerialHBox;
+import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
 public class Decorator {
 	// border - radius
@@ -111,7 +111,22 @@ public class Decorator {
 		return hbox;
 	}
 
+	public static SerialHBox decorateSerialEffect(final SerialHBox hbox) {
+		setMouseEnteredEventHBox(hbox);
+		setMouseExitedEventHBox(hbox);
+		return hbox;
+	}
+
 	public static ListView<HBox> decorateListViewFactory(final ListView<HBox> listView) {
+		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
+				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
+		listView.setBackground(new Background(
+				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(CORNERRADIUS), Insets.EMPTY)));
+		listView.setPadding(new Insets(LISTVIEWINSETS));
+		return listView;
+	}
+
+	public static ListView<SerialHBox> decorateSerialListViewFactory(final ListView<SerialHBox> listView) {
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		listView.setBackground(new Background(
