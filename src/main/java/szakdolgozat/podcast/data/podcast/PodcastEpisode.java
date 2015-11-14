@@ -156,7 +156,7 @@ public class PodcastEpisode implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return this.title;
+		return this.author + " " + this.title;
 	}
 
 	/*

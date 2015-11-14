@@ -2,12 +2,12 @@ package szakdolgozat.podcast.builder;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
+import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
 public class SerialListViewBuilder implements Builder {
 	static SerialListViewBuilder instance = new SerialListViewBuilder();
-	private static ListView<PodcastEpisode> listView;
+	private static ListView<SerialHBox> listView;
 
 	private SerialListViewBuilder() {
 
@@ -18,12 +18,12 @@ public class SerialListViewBuilder implements Builder {
 	}
 
 	public static SerialListViewBuilder create() {
-		listView = Decorator.decoratePlayListViewFactory(new ListView<PodcastEpisode>());
+		listView = Decorator.decoratePlayListViewFactory(new ListView<SerialHBox>());
 		return getInstance();
 	}
 
 	@Override
-	public ListView<PodcastEpisode> build() {
+	public ListView<SerialHBox> build() {
 		return listView;
 	}
 
@@ -33,7 +33,7 @@ public class SerialListViewBuilder implements Builder {
 		return getInstance();
 	}
 
-	public SerialListViewBuilder items(final ObservableList<PodcastEpisode> list) {
+	public SerialListViewBuilder items(final ObservableList<SerialHBox> list) {
 		listView.setItems(list);
 		return getInstance();
 	}

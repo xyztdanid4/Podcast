@@ -9,8 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
+import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
 public class SerialVBoxBuilder implements Builder {
 	static SerialVBoxBuilder instance = new SerialVBoxBuilder();
@@ -81,7 +81,7 @@ public class SerialVBoxBuilder implements Builder {
 		return getInstance();
 	}
 
-	public SerialVBoxBuilder noListView(final ListView<PodcastEpisode> listView) {
+	public SerialVBoxBuilder noListView(final ListView<SerialHBox> listView) {
 		vbox.getChildren().add(listView);
 		return getInstance();
 	}

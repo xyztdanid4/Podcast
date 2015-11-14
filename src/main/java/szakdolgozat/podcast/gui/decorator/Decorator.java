@@ -26,7 +26,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
 public class Decorator {
@@ -136,7 +135,7 @@ public class Decorator {
 		return listView;
 	}
 
-	public static ListView<PodcastEpisode> decoratePlayListViewFactory(final ListView<PodcastEpisode> listView) {
+	public static ListView<SerialHBox> decoratePlayListViewFactory(final ListView<SerialHBox> listView) {
 		listView.setBorder(new Border(new BorderStroke(Color.web(BORDERCOLOR), BorderStrokeStyle.SOLID,
 				new CornerRadii(CORNERRADIUS), new BorderWidths(BORDERSIZE))));
 		listView.setBackground(new Background(
