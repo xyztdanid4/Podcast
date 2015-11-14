@@ -139,7 +139,6 @@ public class PlayListBorderPane extends BorderPane {
 		realEpisodeListView.setOnDragDone(e -> {
 			final TransferMode tm = e.getTransferMode();
 			if (tm == TransferMode.MOVE) {
-				// removeSelectedItems(realEpisodeListView);
 
 			}
 			e.consume();
@@ -148,7 +147,6 @@ public class PlayListBorderPane extends BorderPane {
 		realPlayListView.setOnDragDone(e -> {
 			final TransferMode tm = e.getTransferMode();
 			if (tm == TransferMode.MOVE) {
-				// removeSelectedItems(realEpisodeListView);
 
 			}
 			e.consume();

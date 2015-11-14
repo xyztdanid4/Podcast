@@ -12,6 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class SettingsBPDecorator extends Decorator {
+	public static int TEXTFIELDWIDTH = 80;
+	public static int TEXTFIELDHEIGHT = 30;
+	public static int INSETS = 20;
+
 	public SettingsBPDecorator() {
 
 	}
