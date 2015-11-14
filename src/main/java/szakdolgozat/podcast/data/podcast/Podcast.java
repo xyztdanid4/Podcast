@@ -1,8 +1,9 @@
 package szakdolgozat.podcast.data.podcast;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Podcast {
+public class Podcast implements Serializable {
 	private String wrapperType;
 	private String kind;
 	private String collectionId;
@@ -835,20 +836,7 @@ public class Podcast {
 	 */
 	@Override
 	public String toString() {
-		return "SearchResultItem [wrapperType=" + this.wrapperType + ", kind=" + this.kind + ", collectionId="
-				+ this.collectionId + ", trackId=" + this.trackId + ", artistName=" + this.artistName
-				+ ", collectionName=" + this.collectionName + ", trackName=" + this.trackName
-				+ ", collectionCensoredName=" + this.collectionCensoredName + ", trackCensoredName="
-				+ this.trackCensoredName + ", collectionViewUrl=" + this.collectionViewUrl + ", feedUrl=" + this.feedUrl
-				+ ", trackViewUrl=" + this.trackViewUrl + ", artworkUrl=" + this.artworkUrl + ", artworkUrl60="
-				+ this.artworkUrl60 + ", artworkUrl100=" + this.artworkUrl100 + ", collectionPrice="
-				+ this.collectionPrice + ", trackPrice=" + this.trackPrice + ", trackRentalPrice="
-				+ this.trackRentalPrice + ", collectionHdPrice=" + this.collectionHdPrice + ", trackHdPrice="
-				+ this.trackHdPrice + ", trackHdRentalPrice=" + this.trackHdRentalPrice + ", releaseDate="
-				+ this.releaseDate + ", collectionExplicitness=" + this.collectionExplicitness + ", trackExplicitness="
-				+ this.trackExplicitness + ", trackCount=" + this.trackCount + ", country=" + this.country
-				+ ", currency=" + this.currency + ", primaryGenreName=" + this.primaryGenreName + ", radioStationUrl="
-				+ this.radioStationUrl + ", artworkUrl600=" + this.artworkUrl600 + ", genreIds=" + this.genreIds
-				+ ", genres=" + this.genres + ", podcastEpisode=" + this.podcastEpisodes + "]";
+		return this.artistName + " " + this.podcastEpisodes;
 	}
+
 }

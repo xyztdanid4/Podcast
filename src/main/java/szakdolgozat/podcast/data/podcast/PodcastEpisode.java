@@ -1,6 +1,8 @@
 package szakdolgozat.podcast.data.podcast;
 
-public class PodcastEpisode {
+import java.io.Serializable;
+
+public class PodcastEpisode implements Serializable {
 	private String title;
 	private String author;
 	private String subtitle;
@@ -154,9 +156,7 @@ public class PodcastEpisode {
 	 */
 	@Override
 	public String toString() {
-		return "PodcastEpisode [title=" + this.title + ", author=" + this.author + ", subtitle=" + this.subtitle
-				+ ", summary=" + this.summary + ", guid=" + this.guid + ", pubdate=" + this.pubDate + ", duration="
-				+ this.duration + ", image=" + this.image + "]";
+		return this.title;
 	}
 
 	/*
