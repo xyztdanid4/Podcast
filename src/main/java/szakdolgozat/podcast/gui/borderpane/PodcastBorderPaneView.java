@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
+import szakdolgozat.podcast.controller.PodcastBoderPaneController;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;

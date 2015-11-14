@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.builder.CheckBoxBuilder;
 import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
+import szakdolgozat.podcast.controller.NotificationBorderPaneController;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.NotificationBPDecorator;
 

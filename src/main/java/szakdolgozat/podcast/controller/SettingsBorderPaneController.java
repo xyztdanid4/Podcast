@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.borderpane;
+package szakdolgozat.podcast.controller;
 
 import szakdolgozat.podcast.basicinformation.InformationContainer;
 import szakdolgozat.podcast.threads.PodcastListener;

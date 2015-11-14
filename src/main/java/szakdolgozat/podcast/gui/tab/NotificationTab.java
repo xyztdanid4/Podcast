@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import szakdolgozat.podcast.gui.borderpane.NotificationBorderPaneController;
+import szakdolgozat.podcast.controller.NotificationBorderPaneController;
 import szakdolgozat.podcast.gui.borderpane.NotificationBorderPaneView;
 
 public class NotificationTab extends ApplicationTab {

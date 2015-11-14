@@ -1,7 +1,8 @@
 package szakdolgozat.podcast.gui.stage;
 
 import javafx.scene.Scene;
-import szakdolgozat.podcast.gui.borderpane.MainBorderPane;
+import szakdolgozat.podcast.controller.MainStageController;
+import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.samples.StageSample;
 
 public class MainStage extends StageSample {
@@ -12,7 +13,7 @@ public class MainStage extends StageSample {
 
 	private MainStage(final String title) {
 		super(title);
-		final Scene mainScene = new Scene(MainBorderPane.getInstance(), DEFAULTHSIZE, DEFAULTVSIZE);
+		final Scene mainScene = new Scene(MainBorderPaneView.getInstance(), DEFAULTHSIZE, DEFAULTVSIZE);
 		mainScene.getStylesheets().add("listcell.css");
 		setScene(mainScene);
 		MainStageController.create();

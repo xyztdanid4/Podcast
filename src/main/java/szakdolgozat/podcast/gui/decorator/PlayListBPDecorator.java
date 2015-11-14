@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 public class PlayListBPDecorator extends Decorator {
 	public static int LISTVIEWWIDTH = 400;
 	public static int LISTVIEWHEIGHT = 400;
+	public static int INSETS = 20;
 
 	public PlayListBPDecorator() {
 

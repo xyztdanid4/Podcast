@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,11 +23,10 @@ import szakdolgozat.podcast.builder.LabelBuilder;
 import szakdolgozat.podcast.builder.MediaButtonBuilder;
 import szakdolgozat.podcast.builder.SliderBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
+import szakdolgozat.podcast.controller.PlayListController;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.decorator.MediaControlDecorator;
-
-// TODO random lejátszása
-// TODO mute gomb
 
 public class MediaControlPodcast extends VBox {
 	private static final String MUTE = "Mute";
@@ -40,7 +40,6 @@ public class MediaControlPodcast extends VBox {
 	private static final String VOLUMELABEL_TEXT = "Volume: ";
 	private static boolean atEndOfMedia = false;
 	private static boolean stopRequested = false;
-	private static boolean repeat = false;
 	private static Button playButton;
 	private static Button pauseButton;
 	private static Duration duration;
@@ -55,6 +54,7 @@ public class MediaControlPodcast extends VBox {
 	private static HBox mediaButtonVolumeHBox;
 	private static HBox mediaSlider;
 	private static CheckBox muteCheckhBox;
+	private static int playListCounter = 0;
 
 	public static MediaControlPodcast getInstance() {
 		if (instance == null) {
@@ -84,18 +84,22 @@ public class MediaControlPodcast extends VBox {
 		//-.-off
 		playButton = MediaButtonBuilder.create()
 										.image(PLAYBUTTONURL)
+										.disable(true)
 										.build();
 		
 		pauseButton = MediaButtonBuilder.create()
 										.image(PAUSEBUTTONURL)
+										.disable(true)
 										.build();
 		
 		prevButton = MediaButtonBuilder.create()
 										.image(PREVBUTTONURL)
+										.disable(true)
 										.build();
 		
 		nextButton = MediaButtonBuilder.create()
 										.image(NEXTBUTTONURL)
+										.disable(true)
 										.build();
 		
 		volumeSlider = SliderBuilder.create()
@@ -151,18 +155,22 @@ public class MediaControlPodcast extends VBox {
 		//-.-off
 				playButton = MediaButtonBuilder.create()
 												.image(PLAYBUTTONURL)
+												.disable(false)
 												.build();
 				
 				pauseButton = MediaButtonBuilder.create()
 												.image(PAUSEBUTTONURL)
+												.disable(false)
 												.build();
 				
 				prevButton = MediaButtonBuilder.create()
 												.image(PREVBUTTONURL)
+												.disable(false)
 												.build();
 				
 				nextButton = MediaButtonBuilder.create()
 												.image(NEXTBUTTONURL)
+												.disable(false)
 												.build();
 				
 				volumeSlider = SliderBuilder.create()
@@ -218,7 +226,28 @@ public class MediaControlPodcast extends VBox {
 				MediaControlPodcast.playButton.setDisable(true);
 			}
 		});
-
+		
+		nextButton.disableProperty().bind(Bindings.isEmpty(PlayListController.getInstance().getPlayList()));
+		
+		nextButton.setOnAction(event -> {
+			try {
+				MediaControlPodcast.getInstance().stop();
+				MainBorderPaneView.getInstance().buildBottom(PlayListController.getInstance().getPlayList().get(0));
+				playListCounter++;
+				PlayListController.getInstance().getPlayList().remove(0);
+				PlayListController.getInstance().getRealPlayList().remove(0);
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		});
+		
+		prevButton.setOnAction(event -> {
+			mediaPlayer.seek(mediaPlayer.getStartTime());
+			mediaPlayer.play();
+			final Duration currentTime = mediaPlayer.getCurrentTime();
+			timeSlider.setValue(currentTime.divide(duration).toMillis() * 100.0);
+		});
+		
 		pauseButton.setOnAction(event -> {
 			final Status status = mediaPlayer.getStatus();
 			if (status == Status.UNKNOWN || status == Status.HALTED) {

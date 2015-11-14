@@ -12,6 +12,7 @@ import szakdolgozat.podcast.builder.CheckBoxBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.builder.TextFieldBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
+import szakdolgozat.podcast.controller.SettingsBorderPaneController;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.SettingsBPDecorator;
 

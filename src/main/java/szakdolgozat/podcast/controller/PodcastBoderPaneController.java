@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.borderpane;
+package szakdolgozat.podcast.controller;
 
 import java.util.List;
 
@@ -8,10 +8,12 @@ import javafx.application.Platform;
 import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
 public class PodcastBoderPaneController {
+	private static final String UNSUBSCRIBED = "UNSUBSCRIBED: ";
 	private List<Podcast> podcastsFromDBList;
 
 	public PodcastBoderPaneController() {
@@ -36,13 +38,13 @@ public class PodcastBoderPaneController {
 	public void notice(final Podcast podcast) {
 		Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNotificationContainer()
 				.add(HBoxBuilder.create()
-								.smallText("UNSUBSCRIBED: ")
+								.smallText(UNSUBSCRIBED)
 								.artist(podcast.getArtistName())
 								.title(podcast.getTrackName())
 								.build()));
 		Platform.runLater(() -> NotificationBorderPaneController.getInstance().getUnsubscribeContainer()
 				.add(HBoxBuilder.create()
-								.smallText("UNSUBSCRIBED: ")
+								.smallText(UNSUBSCRIBED)
 								.artist(podcast.getArtistName())
 								.title(podcast.getTrackName())
 								.build()));
@@ -52,7 +54,7 @@ public class PodcastBoderPaneController {
 	public void startNewMediaPlayer(final PodcastEpisode podcastEpisode) {
 		try {
 			MediaControlPodcast.getInstance().stop();
-			MainBorderPane.getInstance().buildBottom(podcastEpisode);
+			MainBorderPaneView.getInstance().buildBottom(podcastEpisode);
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}

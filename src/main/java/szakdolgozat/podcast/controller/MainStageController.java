@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.stage;
+package szakdolgozat.podcast.controller;
 
 import szakdolgozat.podcast.threads.PodcastListener;
 

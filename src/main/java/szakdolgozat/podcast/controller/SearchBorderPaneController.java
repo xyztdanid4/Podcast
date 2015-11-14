@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.borderpane;
+package szakdolgozat.podcast.controller;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
@@ -65,7 +66,7 @@ public class SearchBorderPaneController {
 	public void startNewMediaPlayer(final PodcastEpisode podcastEpisode) {
 		try {
 			MediaControlPodcast.getInstance().stop();
-			MainBorderPane.getInstance().buildBottom(podcastEpisode);
+			MainBorderPaneView.getInstance().buildBottom(podcastEpisode);
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}

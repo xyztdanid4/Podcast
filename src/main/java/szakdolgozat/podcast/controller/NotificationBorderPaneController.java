@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.gui.borderpane;
+package szakdolgozat.podcast.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

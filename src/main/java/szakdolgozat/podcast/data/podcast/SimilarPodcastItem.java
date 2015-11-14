@@ -8,30 +8,30 @@ public class SimilarPodcastItem {
 
 	}
 
-	public SimilarPodcastItem(String name, String type) {
-		Name = name;
-		Type = type;
+	public SimilarPodcastItem(final String name, final String type) {
+		this.Name = name;
+		this.Type = type;
 	}
 
 	public String getName() {
-		return Name;
+		return this.Name;
 	}
 
-	public void setName(String name) {
-		Name = name;
+	public void setName(final String name) {
+		this.Name = name;
 	}
 
 	public String getType() {
-		return Type;
+		return this.Type;
 	}
 
-	public void setType(String type) {
-		Type = type;
+	public void setType(final String type) {
+		this.Type = type;
 	}
 
 	@Override
 	public String toString() {
-		return "SimilarPodcastItem [Name=" + Name + ", Type=" + Type + "]";
+		return "SimilarPodcastItem [Name=" + this.Name + ", Type=" + this.Type + "]";
 	}
 
 }

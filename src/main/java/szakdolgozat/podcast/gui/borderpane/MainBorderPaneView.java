@@ -6,17 +6,17 @@ import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.gui.tabpane.ApplicationTabPane;
 import szakdolgozat.podcast.gui.vbox.RecommendVBoxView;
 
-public class MainBorderPane extends BorderPane {
-	private static MainBorderPane instance = null;
+public class MainBorderPaneView extends BorderPane {
+	private static MainBorderPaneView instance = null;
 
-	public static MainBorderPane getInstance() {
+	public static MainBorderPaneView getInstance() {
 		if (instance == null) {
-			instance = new MainBorderPane();
+			instance = new MainBorderPaneView();
 		}
 		return instance;
 	}
 
-	private MainBorderPane() {
+	private MainBorderPaneView() {
 		buildCenter();
 		buildRight();
 		buildBottom();

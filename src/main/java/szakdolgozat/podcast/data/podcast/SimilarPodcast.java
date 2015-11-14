@@ -10,30 +10,30 @@ public class SimilarPodcast {
 		super();
 	}
 
-	public SimilarPodcast(List<SimilarPodcastItem> info, List<SimilarPodcastItem> results) {
+	public SimilarPodcast(final List<SimilarPodcastItem> info, final List<SimilarPodcastItem> results) {
 		super();
-		Info = info;
-		Results = results;
+		this.Info = info;
+		this.Results = results;
 	}
 
 	public List<SimilarPodcastItem> getInfo() {
-		return Info;
+		return this.Info;
 	}
 
-	public void setInfo(List<SimilarPodcastItem> info) {
-		Info = info;
+	public void setInfo(final List<SimilarPodcastItem> info) {
+		this.Info = info;
 	}
 
 	public List<SimilarPodcastItem> getResults() {
-		return Results;
+		return this.Results;
 	}
 
-	public void setResults(List<SimilarPodcastItem> results) {
-		Results = results;
+	public void setResults(final List<SimilarPodcastItem> results) {
+		this.Results = results;
 	}
 
 	@Override
 	public String toString() {
-		return "SimilarPodcastContainer [Info=" + Info + ", Results=" + Results + "]";
+		return "SimilarPodcastContainer [Info=" + this.Info + ", Results=" + this.Results + "]";
 	}
 }

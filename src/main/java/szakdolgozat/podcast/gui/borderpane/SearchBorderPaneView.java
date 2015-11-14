@@ -23,6 +23,7 @@ import szakdolgozat.podcast.builder.ListViewBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.builder.TextFieldBuilder;
 import szakdolgozat.podcast.builder.VBoxBuilder;
+import szakdolgozat.podcast.controller.SearchBorderPaneController;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.decorator.Decorator;
