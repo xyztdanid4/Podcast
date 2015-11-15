@@ -2,11 +2,15 @@ package szakdolgozat.podcast.threads;
 
 import java.util.Timer;
 
+import szakdolgozat.podcast.data.podcast.Podcast;
+
 public class PodcastListener {
 	private static PodcastListener instance = null;
-	private static Timer timer;
+	private static Timer timerSubscriber;
 	private static int frequency = 0; /// elso futás miatt most épp teszt, de a
 										/// default az legyen 1 óra mondjuk
+
+	private static Timer timerDownloader;
 
 	private PodcastListener() {
 		// timer = new Timer();
@@ -24,7 +28,7 @@ public class PodcastListener {
 	}
 
 	public Timer getTimer() {
-		return timer;
+		return timerSubscriber;
 	}
 
 	public void startListeningToSubscribedPodcasts() {
@@ -32,13 +36,20 @@ public class PodcastListener {
 		// TESZT
 		// timer.schedule(timerTaskPodcast, 0, 10000);
 		// ÉLES:
-		timer = new Timer();
+		timerSubscriber = new Timer();
 		if (frequency == 0) {
-			timer.schedule(timerTaskPodcast, 0, 10000); // teszt miatt van igy
-														// most
+			timerSubscriber.schedule(timerTaskPodcast, 0, 10000); // teszt miatt
+																	// van igy
+			// most
 		} else {
-			timer.schedule(timerTaskPodcast, 0, 1000 * 60 * 60 * frequency);
+			timerSubscriber.schedule(timerTaskPodcast, 0, 1000 * 60 * 60 * frequency);
 		}
+	}
+
+	public void startDownload(final Podcast podcast) {
+		final TimerTaskDownload timerTaskDownload = new TimerTaskDownload(podcast);
+		timerDownloader = new Timer();
+		timerDownloader.schedule(timerTaskDownload, 0);
 	}
 
 }

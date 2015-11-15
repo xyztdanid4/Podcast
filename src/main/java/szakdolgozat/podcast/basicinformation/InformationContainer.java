@@ -6,12 +6,17 @@ public class InformationContainer {
 	private static InformationContainer instance = new InformationContainer();
 	private static boolean isEmailRequired;
 	private static int updateFrequency;
+	private static String home = System.getProperty("user.home");
 
 	private InformationContainer() {
 	}
 
 	public static InformationContainer getInstance() {
 		return instance;
+	}
+
+	public String getHome() {
+		return home;
 	}
 
 	/**

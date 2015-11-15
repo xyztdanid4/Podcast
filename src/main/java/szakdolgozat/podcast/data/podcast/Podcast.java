@@ -836,7 +836,7 @@ public class Podcast implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return this.artistName + " " + this.podcastEpisodes;
+		return this.artistName + " " + this.feedUrl + " " + this.podcastEpisodes;
 	}
 
 }

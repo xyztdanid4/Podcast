@@ -11,6 +11,7 @@ import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
+import szakdolgozat.podcast.threads.PodcastListener;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
 public class SearchBorderPaneController {
@@ -70,5 +71,9 @@ public class SearchBorderPaneController {
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void startDownload(final Podcast podcast) {
+		PodcastListener.getInstance().startDownload(podcast);
 	}
 }

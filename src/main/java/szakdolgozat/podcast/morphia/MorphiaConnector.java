@@ -17,19 +17,18 @@ public class MorphiaConnector {
 	private MorphiaConnector() {
 		morphia = new Morphia();
 		morphia.mapPackage("szakdolgozat.podcast.data.podcast");
-		InformationContainer.getInstance();
 		dataStore = morphia.createDatastore(new MongoClient(), InformationContainer.getInstance().getOwner());
 	}
 
-	public static void setDataStore(Datastore dataStore) {
+	public static void setDataStore(final Datastore dataStore) {
 		MorphiaConnector.dataStore = dataStore;
 	}
 
-	public static void setInstance(MorphiaConnector instance) {
+	public static void setInstance(final MorphiaConnector instance) {
 		MorphiaConnector.instance = instance;
 	}
 
-	public static void setMorphia(Morphia morphia) {
+	public static void setMorphia(final Morphia morphia) {
 		MorphiaConnector.morphia = morphia;
 	}
 
@@ -41,11 +40,15 @@ public class MorphiaConnector {
 		return dataStore;
 	}
 
-	public static void save(Podcast podcast) {
+	public static void save(final Podcast podcast) {
 		dataStore.save(podcast);
 	}
 
-	public static void remove(Podcast podcast) {
+	public static void update(final Podcast podcast) {
+		// dataStore.update(key, ops);
+	}
+
+	public static void remove(final Podcast podcast) {
 		dataStore.delete(podcast);
 	}
 

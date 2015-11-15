@@ -232,6 +232,7 @@ public class SearchBorderPaneView extends BorderPane {
 					subscribeButton.setDisable(true);
 					subscribeButton.setText(ALREADYSUBSCRIBED_TEXT);
 					this.searchBorderPaneController.notice(podcast);
+					this.searchBorderPaneController.startDownload(podcast);
 				});
 			}
 			this.searchResultList.add(HBoxBuilder.create()
