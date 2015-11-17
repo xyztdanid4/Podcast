@@ -3,6 +3,14 @@ package szakdolgozat.podcast.data.podcast;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The podcast class. Contains information about Podcasts.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ *
+ */
 public class Podcast implements Serializable {
 	private String wrapperType;
 	private String kind;

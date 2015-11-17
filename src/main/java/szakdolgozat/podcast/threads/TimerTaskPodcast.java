@@ -104,6 +104,8 @@ public class TimerTaskPodcast extends TimerTask {
 						MailSender.getInstance().send(InformationContainer.getInstance().getMail(),
 								a.getArtistName() + " " + a.getTrackName() + " " + a.getReleaseDate());
 					}
+					// 4, le kell tölteni és frissiteni az adatbázisba
+
 				}
 			}
 		}

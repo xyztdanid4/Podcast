@@ -13,7 +13,7 @@ public class PodcastListener {
 	private static Timer timerDownloader;
 
 	private PodcastListener() {
-		// timer = new Timer();
+
 	}
 
 	public void setFrequency(final int frequency) {

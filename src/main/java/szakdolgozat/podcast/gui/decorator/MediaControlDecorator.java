@@ -14,6 +14,10 @@ import javafx.scene.paint.Color;
 public class MediaControlDecorator extends Decorator {
 	public static int TIMESLIDER = 600;
 	public static final int PADDING = 5;
+	public static final int RECTANGLESIZE = 3;
+	public static final int ARCHEIGHT = 3;
+	public static final int ARCHWIDTH = 3;
+	public static final int BUTTONSIZE = 50;
 
 	public MediaControlDecorator() {
 

@@ -2,26 +2,67 @@ package szakdolgozat.podcast.data.podcast;
 
 import java.util.List;
 
+/**
+ * The Class PodcastContainer. Contains information about a whole search, it
+ * will be list of podcasts.
+ *
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ *
+ */
+
 public class PodcastContainer {
+
+	/** The result count. */
 	private int resultCount;
+
+	/** The results. */
 	private List<Podcast> results;
 
+	/**
+	 * Gets the result count.
+	 *
+	 * @return the result count
+	 */
 	public int getResultCount() {
 		return this.resultCount;
 	}
 
+	/**
+	 * Sets the resultcount.
+	 *
+	 * @param resultcount
+	 *            the new resultcount
+	 */
 	public void setResultcount(final int resultcount) {
 		this.resultCount = resultcount;
 	}
 
+	/**
+	 * Gets the results.
+	 *
+	 * @return the results
+	 */
 	public List<Podcast> getResults() {
 		return this.results;
 	}
 
+	/**
+	 * Sets the results.
+	 *
+	 * @param results
+	 *            the new results
+	 */
 	public void setResults(final List<Podcast> results) {
 		this.results = results;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "SearchResultContainer [resultcount=" + this.resultCount + ", results=" + this.results

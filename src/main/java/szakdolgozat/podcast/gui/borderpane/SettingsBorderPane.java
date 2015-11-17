@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.builder.ButtonBuilder;
 import szakdolgozat.podcast.builder.CheckBoxBuilder;
 import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.builder.TextFieldBuilder;
@@ -41,7 +42,7 @@ public class SettingsBorderPane extends BorderPane {
 												.promptText(FREQUENCY)
 												.build();
 		
-		this.updateButton = new Button(UPDATE_FREQUENCY);
+		this.updateButton = ButtonBuilder.create().text(UPDATE_FREQUENCY).build();
 		setUpdateButtonBehaviour();
 		
 		this.settingsVBox = VBoxBuilder.create()

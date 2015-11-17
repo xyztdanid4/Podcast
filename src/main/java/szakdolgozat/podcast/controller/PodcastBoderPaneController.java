@@ -9,31 +9,70 @@ import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
+import szakdolgozat.podcast.gui.borderpane.PodcastBorderPaneView;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
+/**
+ * The PodcastBoderPaneController class
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ * 
+ *        This class controls, and store data for {@link PodcastBorderPaneView}
+ *        And it is responsible for starting a new media player.
+ * 
+ * @see MediaControlPodcast
+ *
+ */
+
 public class PodcastBoderPaneController {
 	private static final String UNSUBSCRIBED = "UNSUBSCRIBED: ";
+	/**
+	 * podcastsFromDBList, Stores data from the database.
+	 */
 	private List<Podcast> podcastsFromDBList;
 
 	public PodcastBoderPaneController() {
 
 	}
 
+	/**
+	 * reads data from the DB.
+	 */
 	public void readfromDB() {
 		this.podcastsFromDBList = MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
 	}
 
+	/**
+	 * Getter for podcastsFromDBList
+	 * 
+	 * @return podcastsFromDBList
+	 */
 	public List<Podcast> getPodcastsFromDBList() {
 		return this.podcastsFromDBList;
 	}
 
+	/**
+	 * Remove the given named object from DB
+	 * 
+	 * @param name
+	 *            parameter, we recognize items in DB by name
+	 */
 	public void removefromDB(final String name) {
 		final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
 				.filter("artistName =", name);
 		MorphiaConnector.getDataStore().delete(deletePodcast);
 	}
 
+	/**
+	 * Notice the notificationcontainer with unsubscribe action.
+	 * 
+	 * @see NotificationBorderPaneController#getNotificationContainer()
+	 * @see NotificationBorderPaneController#getUnsubscribeContainer()
+	 * @param podcast
+	 */
 	//-.-off
 	public void notice(final Podcast podcast) {
 		Platform.runLater(() -> NotificationBorderPaneController.getInstance().getNotificationContainer()
@@ -50,7 +89,13 @@ public class PodcastBoderPaneController {
 								.build()));
 	}
 	//-.-on
-
+	/**
+	 * Starts a new media player with the given podcastepisode.
+	 * 
+	 * @see MediaControlPodcast
+	 * @see MainBorderPaneView#buildBottom(PodcastEpisode)
+	 * @param podcastEpisode
+	 */
 	public void startNewMediaPlayer(final PodcastEpisode podcastEpisode) {
 		try {
 			MediaControlPodcast.getInstance().stop();

@@ -86,7 +86,9 @@ public class TimerTaskDownload extends TimerTask {
 		} else {
 			file.mkdir();
 		}
-		final String destName = fileUrl + fileName.substring(fileName.lastIndexOf("/"));
+		String destName = fileUrl + fileName.substring(fileName.lastIndexOf("/"));
+		destName = destName.replace("?", "");
+		System.out.println(destName);
 		final InputStream is = url.openStream();
 		final OutputStream os = new FileOutputStream(destName);
 		final byte[] b = new byte[100000];
@@ -105,6 +107,7 @@ public class TimerTaskDownload extends TimerTask {
 		System.out.println(oldImageUrl);
 		String realFileUrl = new String("file:/" + fileUrl + "/" + url.getFile());
 		realFileUrl = realFileUrl.replace("\\", "/");
+		realFileUrl = realFileUrl.replace("?", "");
 		System.out.println(realFileUrl);
 		final String command = "db.Podcast.update({'podcastEpisodes.guid':" + "'" + oldImageUrl + "'" + "},{$set:{"
 				+ '"' + "podcastEpisodes." + indexOf + ".guid" + '"' + ':' + '"' + realFileUrl + '"' + "}})";

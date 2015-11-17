@@ -2,20 +2,66 @@ package szakdolgozat.podcast.data.podcast;
 
 import java.io.Serializable;
 
+/**
+ * The Class PodcastEpisode. Contains information about podcastEpisodes.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class PodcastEpisode implements Serializable {
+
+	/** The title. */
 	private String title;
+
+	/** The author. */
 	private String author;
+
+	/** The subtitle. */
 	private String subtitle;
+
+	/** The summary. */
 	private String summary;
+
+	/** The guid. */
 	private String guid;
+
+	/** The pub date. */
 	private String pubDate;
+
+	/** The duration. */
 	private String duration;
+
+	/** The image. */
 	private String image;
 
+	/**
+	 * Instantiates a new podcast episode.
+	 */
 	public PodcastEpisode() {
 
 	}
 
+	/**
+	 * Instantiates a new podcast episode.
+	 *
+	 * @param title
+	 *            the title
+	 * @param author
+	 *            the author
+	 * @param subtitle
+	 *            the subtitle
+	 * @param summary
+	 *            the summary
+	 * @param guid
+	 *            the guid
+	 * @param pubDate
+	 *            the pub date
+	 * @param duration
+	 *            the duration
+	 * @param image
+	 *            the image
+	 */
 	public PodcastEpisode(final String title, final String author, final String subtitle, final String summary,
 			final String guid, final String pubDate, final String duration, final String image) {
 		super();
@@ -30,6 +76,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the title.
+	 *
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -37,6 +85,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the title.
+	 *
 	 * @param title
 	 *            the title to set
 	 */
@@ -45,6 +95,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the author.
+	 *
 	 * @return the author
 	 */
 	public String getAuthor() {
@@ -52,6 +104,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the author.
+	 *
 	 * @param author
 	 *            the author to set
 	 */
@@ -60,6 +114,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the subtitle.
+	 *
 	 * @return the subtitle
 	 */
 	public String getSubtitle() {
@@ -67,6 +123,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the subtitle.
+	 *
 	 * @param subtitle
 	 *            the subtitle to set
 	 */
@@ -75,6 +133,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the summary.
+	 *
 	 * @return the summary
 	 */
 	public String getSummary() {
@@ -82,6 +142,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the summary.
+	 *
 	 * @param summary
 	 *            the summary to set
 	 */
@@ -90,6 +152,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the guid.
+	 *
 	 * @return the guid
 	 */
 	public String getGuid() {
@@ -97,6 +161,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the guid.
+	 *
 	 * @param guid
 	 *            the guid to set
 	 */
@@ -105,6 +171,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the pubdate.
+	 *
 	 * @return the pubdate
 	 */
 	public String getPubdate() {
@@ -112,6 +180,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the pubdate.
+	 *
 	 * @param pubdate
 	 *            the pubdate to set
 	 */
@@ -120,6 +190,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the duration.
+	 *
 	 * @return the duration
 	 */
 	public String getDuration() {
@@ -127,6 +199,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the duration.
+	 *
 	 * @param duration
 	 *            the duration to set
 	 */
@@ -135,6 +209,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Gets the image.
+	 *
 	 * @return the image
 	 */
 	public String getImage() {
@@ -142,6 +218,8 @@ public class PodcastEpisode implements Serializable {
 	}
 
 	/**
+	 * Sets the image.
+	 *
 	 * @param image
 	 *            the image to set
 	 */
