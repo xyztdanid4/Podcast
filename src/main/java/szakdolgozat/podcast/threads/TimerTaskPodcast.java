@@ -17,12 +17,27 @@ import szakdolgozat.podcast.mail.MailSender;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 import szakdolgozat.podcast.xmlparser.XmlParser;
 
+/**
+ * The Class TimerTaskPodcast.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class TimerTaskPodcast extends TimerTask {
 
+	/**
+	 * Instantiates a new timer task podcast.
+	 */
 	public TimerTaskPodcast() {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.TimerTask#run()
+	 */
 	@Override
 	public void run() {
 		// a lényeg itt az hogy a dbn, tehét a feliratkozott podcasteken végig

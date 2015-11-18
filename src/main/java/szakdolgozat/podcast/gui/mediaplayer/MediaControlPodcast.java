@@ -28,34 +28,98 @@ import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.decorator.MediaControlDecorator;
 
+/**
+ * The Class MediaControlPodcast.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class MediaControlPodcast extends VBox {
+
+	/** The Constant MUTE. */
 	private static final String MUTE = "Mute";
+
+	/** The Constant REPEAT2. */
 	private static final String REPEAT2 = "Repeat";
+
+	/** The Constant _00_00_00. */
 	private static final String _00_00_00 = "00:00:00";
+
+	/** The instance. */
 	private static MediaControlPodcast instance = new MediaControlPodcast();
+
+	/** The Constant PLAYBUTTONURL. */
 	private static final String PLAYBUTTONURL = "appbar.control.play.png";
+
+	/** The Constant NEXTBUTTONURL. */
 	private static final String NEXTBUTTONURL = "appbar.control.fastforward.variant.png";
+
+	/** The Constant PREVBUTTONURL. */
 	private static final String PREVBUTTONURL = "appbar.control.rewind.variant.png";
+
+	/** The Constant PAUSEBUTTONURL. */
 	private static final String PAUSEBUTTONURL = "appbar.control.pause.png";
+
+	/** The Constant VOLUMELABEL_TEXT. */
 	private static final String VOLUMELABEL_TEXT = "Volume: ";
+
+	/** The at end of media. */
 	private static boolean atEndOfMedia = false;
+
+	/** The stop requested. */
 	private static boolean stopRequested = false;
+
+	/** The play button. */
 	private static Button playButton;
+
+	/** The pause button. */
 	private static Button pauseButton;
+
+	/** The duration. */
 	private static Duration duration;
+
+	/** The media player. */
 	private static MediaPlayer mediaPlayer;
+
+	/** The first run. */
 	private static boolean firstRun = true;
+
+	/** The prev button. */
 	private static Button prevButton;
+
+	/** The next button. */
 	private static Button nextButton;
+
+	/** The volume slider. */
 	private static Slider volumeSlider;
+
+	/** The time slider. */
 	private static Slider timeSlider;
+
+	/** The played time. */
 	private static Text playedTime;
+
+	/** The repeat check box. */
 	private static CheckBox repeatCheckBox;
+
+	/** The media button volume h box. */
 	private static HBox mediaButtonVolumeHBox;
+
+	/** The media slider. */
 	private static HBox mediaSlider;
+
+	/** The mute checkh box. */
 	private static CheckBox muteCheckhBox;
+
+	/** The play list counter. */
 	private static int playListCounter = 0;
 
+	/**
+	 * Gets the single instance of MediaControlPodcast.
+	 *
+	 * @return single instance of MediaControlPodcast
+	 */
 	public static MediaControlPodcast getInstance() {
 		if (instance == null) {
 			instance = new MediaControlPodcast();
@@ -63,6 +127,13 @@ public class MediaControlPodcast extends VBox {
 		return instance;
 	}
 
+	/**
+	 * Creates the.
+	 *
+	 * @param podcastEpisode
+	 *            the podcast episode
+	 * @return the media control podcast
+	 */
 	public MediaControlPodcast create(final PodcastEpisode podcastEpisode) {
 		try {
 			instance = new MediaControlPodcast(podcastEpisode);
@@ -73,6 +144,9 @@ public class MediaControlPodcast extends VBox {
 		}
 	}
 
+	/**
+	 * Stop.
+	 */
 	public void stop() {
 		if (!firstRun) {
 			mediaPlayer.stop();
@@ -80,6 +154,9 @@ public class MediaControlPodcast extends VBox {
 		firstRun = false;
 	}
 
+	/**
+	 * Instantiates a new media control podcast.
+	 */
 	public MediaControlPodcast() {
 		//-.-off
 		playButton = MediaButtonBuilder.create()
@@ -150,6 +227,14 @@ public class MediaControlPodcast extends VBox {
 		MediaControlDecorator.decorateFactory(this);
 	}
 
+	/**
+	 * Instantiates a new media control podcast.
+	 *
+	 * @param podcastEpisode
+	 *            the podcast episode
+	 * @throws Exception
+	 *             the exception
+	 */
 	private MediaControlPodcast(final PodcastEpisode podcastEpisode) throws Exception {
 
 		//-.-off

@@ -15,10 +15,25 @@ import szakdolgozat.podcast.gui.decorator.RecommendListDecorator;
 import szakdolgozat.podcast.gui.tab.SearchTab;
 import szakdolgozat.podcast.gui.tabpane.ApplicationTabPane;
 
+/**
+ * The Class RecommendVBoxView.
+ * 
+ * * @author Daniel Toth
+ * 
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class RecommendVBoxView extends VBox {
+
+	/** The Constant RECOMMEND. */
 	private static final String RECOMMEND = "Similar podcast";
+
+	/** The recommend v box controller. */
 	final RecommendVBoxController recommendVBoxController;
 
+	/**
+	 * Instantiates a new recommend v box view.
+	 */
 	public RecommendVBoxView() {
 		super(RecommendListDecorator.PADDING);
 		this.recommendVBoxController = new RecommendVBoxController();
@@ -60,6 +75,9 @@ public class RecommendVBoxView extends VBox {
 
 	}
 
+	/**
+	 * Sets the padding.
+	 */
 	private void setPadding() {
 		setPadding(new Insets(RecommendListDecorator.PADDING, RecommendListDecorator.PADDING,
 				RecommendListDecorator.PADDING, RecommendListDecorator.PADDING));

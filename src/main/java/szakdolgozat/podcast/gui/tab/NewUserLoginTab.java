@@ -7,17 +7,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.gridpane.NewLoginGridPaneView;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NewUserLoginTab.
+ */
 public class NewUserLoginTab extends Tab {
+
+	/** The Constant NEWUSERLOGINTABTEXT. */
 	private static final String NEWUSERLOGINTABTEXT = "New User";
+
+	/** The Constant NEWUSERLOGINTAB_TOOLTIP. */
 	private static final String NEWUSERLOGINTAB_TOOLTIP = "Click here for register!";
 
+	/**
+	 * Instantiates a new new user login tab.
+	 */
 	public NewUserLoginTab() {
 		super();
 		final Text text = new Text(NEWUSERLOGINTABTEXT);
 		text.setFill(Color.web("#FFFFFF"));
 		setGraphic(text);
-		// setStyle("-fx-background-color: #808080; -fx-border-color: #006666;
-		// -fx-border-width: 4px; -fx-border-radius:3; ;");
 		setStyle("-fx-background-color: #808080; -fx-border-radius:3;");
 		selectedProperty().addListener((InvalidationListener) observable -> {
 			if (isSelected()) {

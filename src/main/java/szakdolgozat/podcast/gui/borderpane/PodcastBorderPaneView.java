@@ -1,5 +1,7 @@
 package szakdolgozat.podcast.gui.borderpane;
 
+import org.apache.log4j.Logger;
+
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +41,8 @@ public class PodcastBorderPaneView extends BorderPane {
 	private ListView<HBox> episodeListView;
 	PodcastBoderPaneController podcastBoderPaneController;
 
+	final static Logger logger = Logger.getLogger(PodcastBorderPaneView.class);
+
 	public PodcastBorderPaneView() {
 		this.podcastBoderPaneController = new PodcastBoderPaneController();
 		this.podcastBoderPaneController.readfromDB();
@@ -72,24 +76,30 @@ public class PodcastBorderPaneView extends BorderPane {
 			final ObservableList<HBox> podcastsContainer = FXCollections.observableArrayList();
 			for (final Podcast podcastIterator : this.podcastBoderPaneController.getPodcastsFromDBList()) {
 				//-.-off
-				podcastsContainer.add(HBoxBuilder.create()
-												.smallRectangle(podcastIterator.getArtworkUrl60())
-												.artist(podcastIterator.getArtistName())
-												.effectOn()
-												.button(new Button() {
-												{
-													setOnAction(event -> {
-														PodcastBorderPaneView.this.podcastBoderPaneController
-															.removefromDB(podcastIterator.getArtistName());
-														showPodcastEmptyInformation();
-														showSubscribedPodcasts();
-														showEmptyEpisodesList();
-														setPodcastListInvalidationListener();
-														PodcastBorderPaneView.this.podcastBoderPaneController.notice(podcastIterator);
-													});
-												setText(UNSUBSCRIBE);
-												}
-												}).build());
+				
+				try {
+					podcastsContainer.add(HBoxBuilder.create()
+													.smallRectangle(podcastIterator.getArtworkUrl60())
+													.artist(podcastIterator.getArtistName())
+													.effectOn()
+													.button(new Button() {
+													{
+														setOnAction(event -> {
+															PodcastBorderPaneView.this.podcastBoderPaneController
+																.removefromDB(podcastIterator.getArtistName());
+															showPodcastEmptyInformation();
+															showSubscribedPodcasts();
+															showEmptyEpisodesList();
+															setPodcastListInvalidationListener();
+															PodcastBorderPaneView.this.podcastBoderPaneController.notice(podcastIterator);
+														});
+													setText(UNSUBSCRIBE);
+													}
+													}).build());
+				} catch (final Exception e) {
+					logger.error(e);
+					
+				}
 			}
 			//-.-on
 			//-.-off
@@ -126,7 +136,9 @@ public class PodcastBorderPaneView extends BorderPane {
 	private void setPodcastListInvalidationListener() {
 		this.podcastListView.getSelectionModel().selectedIndexProperty().addListener((final Observable o) -> {
 			showPodcastInformation();
+			logger.debug("showPodcastInformation");
 			showpodcastEpisodes();
+			logger.debug("showpodcastEpisodes");
 		});
 
 	}
@@ -170,60 +182,65 @@ public class PodcastBorderPaneView extends BorderPane {
 	}
 
 	private void showpodcastEpisodes() {
+
 		this.podcastBoderPaneController.readfromDB();
 		final int selected = this.podcastListView.getSelectionModel().getSelectedIndex();
 		final ObservableList<HBox> episodesContainer = FXCollections.observableArrayList();
 		for (final PodcastEpisode podcastEpisode : this.podcastBoderPaneController.getPodcastsFromDBList().get(selected)
 				.getPodcastEpisode()) {
 			final Image image = new Image(podcastEpisode.getImage());
+			// final Image image = new
+			// Image(getClass().getResourceAsStream(podcastEpisode.getImage()));
+			logger.debug(podcastEpisode.getImage());
 			HBox itemHbox = null;
 			if (image.isError()) {
 				//-.-off
-				itemHbox = HBoxBuilder.create()
-										.image(podcastEpisode.getImage())
-										.title(podcastEpisode.getTitle())
-										.effectOn()
-										.build();
-				itemHbox.setOnMouseClicked(event -> {
-					if (event.getButton().equals(MouseButton.PRIMARY)) {
-						if (event.getClickCount() == 2) {
-							this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+					itemHbox = HBoxBuilder.create()
+											.image(podcastEpisode.getImage())
+											.title(podcastEpisode.getTitle())
+											.effectOn()
+											.build();
+					itemHbox.setOnMouseClicked(event -> {
+						if (event.getButton().equals(MouseButton.PRIMARY)) {
+							if (event.getClickCount() == 2) {
+								this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+							}
 						}
-					}
-				});
-				//-.-on
+					});
+					//-.-on
 			} else {
 				//-.-off
-				itemHbox = HBoxBuilder.create()
-										.smallRectangle(podcastEpisode.getImage())
-										.title(podcastEpisode.getTitle())
-										.effectOn()
-										.build();
-				itemHbox.setOnMouseClicked(event -> {
-					if (event.getButton().equals(MouseButton.PRIMARY)) {
-						if (event.getClickCount() == 2) {
-							this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+					itemHbox = HBoxBuilder.create()
+											.smallRectangle(podcastEpisode.getImage())
+											.title(podcastEpisode.getTitle())
+											.effectOn()
+											.build();
+					itemHbox.setOnMouseClicked(event -> {
+						if (event.getButton().equals(MouseButton.PRIMARY)) {
+							if (event.getClickCount() == 2) {
+								this.podcastBoderPaneController.startNewMediaPlayer(podcastEpisode);
+							}
 						}
-					}
-				});
-				//-.-on
+					});
+					//-.-on
 			}
 			episodesContainer.add(itemHbox);
 		}
 		//-.-off
-		this.episodeListView = ListViewBuilder.create()
-												.items(episodesContainer)
-												.size(PodcastBPDecorator.EPISODESLISTWIDTH, PodcastBPDecorator.EPISODESLISTHEIGHT)
-												.build();
-		//-.-on
+			this.episodeListView = ListViewBuilder.create()
+													.items(episodesContainer)
+													.size(PodcastBPDecorator.EPISODESLISTWIDTH, PodcastBPDecorator.EPISODESLISTHEIGHT)
+													.build();
+			//-.-on
 		//-.-off
-		final VBox episodeVBox = VBoxBuilder.create()
-											.bigText(SUBSCRIBEDEPISODES)
-											.noListView(this.episodeListView)
-											.topLeftAlignment()
-											.build();
-		//-.-on
+			final VBox episodeVBox = VBoxBuilder.create()
+												.bigText(SUBSCRIBEDEPISODES)
+												.noListView(this.episodeListView)
+												.topLeftAlignment()
+												.build();
+			//-.-on
 		setMargin(episodeVBox, new Insets(Decorator.PADDING));
 		setCenter(episodeVBox);
+
 	}
 }

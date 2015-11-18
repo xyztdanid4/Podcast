@@ -100,12 +100,20 @@ public class HBoxBuilder implements Builder {
 	 * 
 	 * @return the hbox builder instance.
 	 */
+
 	public HBoxBuilder image(final String image) {
 		hbox.getChildren().add(Decorator.decorateImageViewFactory(new ImageView(image), Decorator.SMALLRECTANGLEHEIGHT,
 				Decorator.SMALLRECTANGLEWIDTH));
 		return getInstance();
 	}
 
+	/*
+	 * public HBoxBuilder image(final String image) { hbox.getChildren()
+	 * .add(Decorator.decorateImageViewFactory(new ImageView(new
+	 * Image(getClass().getResourceAsStream(image))),
+	 * Decorator.SMALLRECTANGLEHEIGHT, Decorator.SMALLRECTANGLEWIDTH)); return
+	 * getInstance(); }
+	 */
 	/**
 	 * This method will create and add a slider to our hbox.
 	 *
@@ -234,7 +242,7 @@ public class HBoxBuilder implements Builder {
 	/**
 	 * This method will add a special text to our hbox. We only get the string
 	 * of the text as parameter, the instantiation is inside the decoration
-	 * progress. It is special cause we store only the first 40 letters of the
+	 * progress. It is special cause we store only the first 60 letters of the
 	 * string.
 	 *
 	 * @param artist
@@ -244,8 +252,8 @@ public class HBoxBuilder implements Builder {
 	public HBoxBuilder title(final String artist) {
 		hbox.getChildren()
 				.add(Decorator.decorateTextFactory(
-						new Text(artist.length() > 40
-								? new String(new StringBuilder(artist.substring(0, 40)).append("...")) : artist),
+						new Text(artist.length() > 60
+								? new String(new StringBuilder(artist.substring(0, 60)).append("...")) : artist),
 				Decorator.SMALLTEXTSIZE));
 		return getInstance();
 	}

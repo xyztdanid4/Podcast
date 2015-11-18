@@ -2,7 +2,7 @@ package szakdolgozat.podcast.builder;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import szakdolgozat.podcast.gui.samples.StageSample;
+import szakdolgozat.podcast.gui.stage.BaseStage;
 
 /**
  * The Class StageBuilder.
@@ -23,7 +23,7 @@ public class StageBuilder implements Builder {
 	 * The stage that we would like to assemble. This is the object that we
 	 * return after the construction.
 	 */
-	private static StageSample stage;
+	private static BaseStage stage;
 
 	/**
 	 * Instantiates a new stage builder.
@@ -41,7 +41,7 @@ public class StageBuilder implements Builder {
 	 * @return the stage builder object.
 	 */
 	public static StageBuilder create(final String title) {
-		stage = new StageSample(title);
+		stage = new BaseStage(title);
 		return getInstance();
 	}
 
@@ -78,7 +78,7 @@ public class StageBuilder implements Builder {
 	 * @see szakdolgozat.podcast.builder.Builder#build()
 	 */
 	@Override
-	public StageSample build() {
+	public BaseStage build() {
 		return stage;
 	}
 }

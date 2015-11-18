@@ -10,34 +10,89 @@ import szakdolgozat.podcast.builder.ButtonBuilder;
 import szakdolgozat.podcast.builder.LabelBuilder;
 import szakdolgozat.podcast.builder.PasswordFieldBuilder;
 import szakdolgozat.podcast.builder.TextFieldBuilder;
+import szakdolgozat.podcast.controller.NewLoginGridPaneController;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.NewLoginGridPaneDecorator;
 import szakdolgozat.podcast.gui.dialog.LoginErrorDialog;
 
+/**
+ * The Class NewLoginGridPaneView.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class NewLoginGridPaneView extends BaseLoginView {
+
+	/** The Constant MATCHERROR. */
 	private static final String MATCHERROR = "You should use only englush abc letters!";
+
+	/** The Constant NAMETEXTFIELD_PROMPTEXT. */
 	private static final String NAMETEXTFIELD_PROMPTEXT = "Name";
+
+	/** The Constant PASSWORDTEXTFIELD_PROMPTEXT. */
 	private static final String PASSWORDTEXTFIELD_PROMPTEXT = "Password";
+
+	/** The Constant NAMELABEL_TEXT. */
 	private static final String NAMELABEL_TEXT = "Name";
+
+	/** The Constant PASSWORDLABEL_TEXT. */
 	private static final String PASSWORDLABEL_TEXT = "Password";
+
+	/** The Constant OKBUTTON_TEXT. */
 	private static final String OKBUTTON_TEXT = "Login";
+
+	/** The Constant CANCELBUTTON_TEXT. */
 	private static final String CANCELBUTTON_TEXT = "Cancel (exit)";
+
+	/** The Constant MESSAGELABEL_TEXT. */
 	private static final String MESSAGELABEL_TEXT = "Welcome, please Login!";
+
+	/** The Constant EMAILLABEL_TEXT. */
 	private static final String EMAILLABEL_TEXT = "E-mail";
+
+	/** The Constant PASSWORDAGAINTEXTFIELD_PROMPTTEXT. */
 	private static final String PASSWORDAGAINTEXTFIELD_PROMPTTEXT = "Password again";
+
+	/** The Constant PASSWORDAGAINLABEL_TEXT. */
 	private static final String PASSWORDAGAINLABEL_TEXT = "Password again";
+
+	/** The Constant EMAILTEXTFIELD_PROMTTEXT. */
 	private static final String EMAILTEXTFIELD_PROMTTEXT = "E-mail";
+
+	/** The Constant ERRORMESSAGE. */
 	private static final String ERRORMESSAGE = "This name or e-mail address is in use!";
+
+	/** The Constant ERRORPASSWORD. */
 	private static final String ERRORPASSWORD = "The two password is different!";
+
+	/** The Constant ERRORMAILFORMAT. */
 	private static final String ERRORMAILFORMAT = "Wrong e-mail format!";
+
+	/** The ok button. */
 	private static Button okButton;
+
+	/** The cancel button. */
 	private static Button cancelButton;
+
+	/** The password again text field. */
 	private static PasswordField passwordAgainTextField;
+
+	/** The email text field. */
 	private static TextField emailTextField;
+
+	/** The name text field. */
 	private static TextField nameTextField;
+
+	/** The password field. */
 	private static PasswordField passwordField;
+
+	/** The new login grid pane controller. */
 	final NewLoginGridPaneController newLoginGridPaneController;
 
+	/**
+	 * Instantiates a new new login grid pane view.
+	 */
 	public NewLoginGridPaneView() {
 		this.newLoginGridPaneController = new NewLoginGridPaneController();
 		//-.-off
@@ -109,12 +164,18 @@ public class NewLoginGridPaneView extends BaseLoginView {
 		Decorator.decorateFactory(this);
 	}
 
+	/**
+	 * Sets the cancel button functinality.
+	 */
 	private void setCancelButtonFunctinality() {
 		cancelButton.setOnAction((final ActionEvent event) -> {
 			exit();
 		});
 	}
 
+	/**
+	 * Sets the ok button functionality.
+	 */
 	private void setOkButtonFunctionality() {
 		okButton.setOnAction((final ActionEvent event) -> {
 			if (!(nameTextField.getText().matches("[a-zA-Z]+"))) {
@@ -143,6 +204,9 @@ public class NewLoginGridPaneView extends BaseLoginView {
 		});
 	}
 
+	/**
+	 * Sets the button disability.
+	 */
 	private void setButtonDisability() {
 		okButton.disableProperty().bind(Bindings.isEmpty(nameTextField.textProperty()));
 		okButton.disableProperty().bind(Bindings.isEmpty(passwordField.textProperty()));
@@ -150,6 +214,9 @@ public class NewLoginGridPaneView extends BaseLoginView {
 		okButton.disableProperty().bind(Bindings.isEmpty(emailTextField.textProperty()));
 	}
 
+	/**
+	 * Sets the password field key event.
+	 */
 	private void setPasswordFieldKeyEvent() {
 		emailTextField.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
@@ -158,6 +225,9 @@ public class NewLoginGridPaneView extends BaseLoginView {
 		});
 	}
 
+	/**
+	 * Activate ok button.
+	 */
 	private void activateOkButton() {
 		okButton.fire();
 	}

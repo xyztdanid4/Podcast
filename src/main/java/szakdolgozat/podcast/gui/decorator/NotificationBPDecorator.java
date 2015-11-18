@@ -11,14 +11,35 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * The Class NotificationBPDecorator.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class NotificationBPDecorator extends Decorator {
+
+	/** The Constant LISTWIDTH. */
 	public static final int LISTWIDTH = 600;
+
+	/** The Constant LISTHEIGHT. */
 	public static final int LISTHEIGHT = 500;
 
+	/**
+	 * Instantiates a new notification bp decorator.
+	 */
 	public NotificationBPDecorator() {
 
 	}
 
+	/**
+	 * Decorate factory.
+	 *
+	 * @param pane
+	 *            the pane
+	 * @return the pane
+	 */
 	public static Pane decorateFactory(final Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));

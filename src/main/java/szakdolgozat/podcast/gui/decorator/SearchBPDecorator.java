@@ -11,24 +11,53 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+/**
+ * The Class SearchBPDecorator.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class SearchBPDecorator extends Decorator {
+
+	/** The Constant SEARCHTEXTFIELDWIDTH. */
 	public static final int SEARCHTEXTFIELDWIDTH = 600;
+
+	/** The Constant SEARCHTEXTFIELDHEIGHT. */
 	public static final int SEARCHTEXTFIELDHEIGHT = 30;
-	// public static final int SEARCHTEXTFIELDMAXWIDTH = 600;
-	// public static final int SEARCHTEXTFIELDMAXHEIGHT = 40;
+
+	/** The Constant EPISODESLISTWIDTH. */
 	public static final int EPISODESLISTWIDTH = 400;
+
+	/** The Constant EPISODESLISTHEIGHT. */
 	public static final int EPISODESLISTHEIGHT = 400;
-	// public static final int EPISODESLISTWIDTH
-	// public static final int EPISODESLISTWIDTH
+
+	/** The Constant PODCASTLISTWIDTH. */
 	public static final int PODCASTLISTWIDTH = 400;
+
+	/** The Constant PODCASTLISTHEIGHT. */
 	public static final int PODCASTLISTHEIGHT = 400;
+
+	/** The Constant IMAGEWIDTH. */
 	public static final int IMAGEWIDTH = 25;
+
+	/** The Constant IMAGEHEIGHT. */
 	public static final int IMAGEHEIGHT = 25;
 
+	/**
+	 * Instantiates a new search bp decorator.
+	 */
 	public SearchBPDecorator() {
 
 	}
 
+	/**
+	 * Decorate factory.
+	 *
+	 * @param pane
+	 *            the pane
+	 * @return the pane
+	 */
 	public static Pane decorateFactory(final Pane pane) {
 		pane.setBackground(new Background(
 				new BackgroundFill(Color.web(BACKGROUNDCOLOR), new CornerRadii(BORDERPANEBORDERRADIUS), Insets.EMPTY)));

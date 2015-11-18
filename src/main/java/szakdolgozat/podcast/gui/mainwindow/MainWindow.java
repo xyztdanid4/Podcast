@@ -4,33 +4,32 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import szakdolgozat.podcast.gui.stage.LoginStage;
 
+/**
+ * The Class MainWindow.
+ * 
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class MainWindow extends Application {
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(final String[] args) {
 		launch(args);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(final Stage primaryStage) {
 		LoginStage.getInstance().show();
-		/*
-		 * final MongoClient mongoClient = new MongoClient(); final
-		 * MongoDatabase database = mongoClient.getDatabase("dani"); final
-		 * MongoCollection<Document> table = database.getCollection("Podcast");
-		 * 
-		 * final DB db = mongoClient.getDB("dani"); final DBObject command = new
-		 * BasicDBObject();
-		 * 
-		 * 
-		 * final String s =
-		 * "db.Podcast.update({'podcastEpisodes.image': 'http://www.dannicpodcast.com/foh001.jpg'},{$set:{"
-		 * + '"' + "podcastEpisodes.0.image" + '"' + ':' + '"' + " anyad" + '"'
-		 * + "}})"; System.out.println(s); final String s1 =
-		 * "db.Podcast.update({artistName: " + '"' + "Dannic" + '"' + "}" + ","
-		 * + "{$set:{artistName: " + '"' + "anyad" + '"' + "}})";
-		 * System.out.println(s1);
-		 * 
-		 * //final CommandResult r = db.command(s1); //System.out.println(r);
-		 * db.eval(s1);
-		 */
 	}
 }

@@ -7,39 +7,61 @@ import com.mongodb.MongoClient;
 
 import szakdolgozat.podcast.user.User;
 
+/**
+ * The Class MorphiaLoginConnector.
+ *
+ * @author Daniel Toth
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class MorphiaLoginConnector {
+
+	/** The data store. */
 	private static Datastore dataStore;
-	private static MorphiaLoginConnector instance = new MorphiaLoginConnector();
+
+	/** The instance. */
+	private static MorphiaLoginConnector instance = null;
+
+	/** The morphia. */
 	private static Morphia morphia;
 
-	private static Morphia morphia2;
-	// private static Datastore dataStore2;
-
+	/**
+	 * Instantiates a new morphia login connector.
+	 */
 	private MorphiaLoginConnector() {
 		morphia = new Morphia();
 		morphia.mapPackage("szakdolgozat.podcast.user");
-		dataStore = morphia.createDatastore(new MongoClient(), "Users");
-
-		// morphia2 = new Morphia();
-		// morphia2.mapPackage("szakdolgozat.podcast.user");
-
-		// dataStore2 = morphia2.createDatastore(
-		// new MongoClient(new
-		// MongoClientURI("mongodb://admin:admin@ds059702.mongolab.com:59702/users")),
-		// "users");
-
+		dataStore = morphia.createDatastore(new MongoClient("localhost", 27017), "Users");
 	}
 
+	/**
+	 * Gets the single instance of MorphiaLoginConnector.
+	 *
+	 * @return single instance of MorphiaLoginConnector
+	 */
 	public static MorphiaLoginConnector getInstance() {
+		if (instance == null) {
+			instance = new MorphiaLoginConnector();
+		}
 		return instance;
 	}
 
-	public static void save(User user) {
+	/**
+	 * Save.
+	 *
+	 * @param user
+	 *            the user
+	 */
+	public static void save(final User user) {
 		dataStore.save(user);
-		// dataStore2.save(user);
 	}
 
-	public static Datastore getDataStore() {
+	/**
+	 * Gets the data store.
+	 *
+	 * @return the data store
+	 */
+	public Datastore getDataStore() {
 		return dataStore;
 	}
 }

@@ -7,11 +7,28 @@ import javafx.scene.image.ImageView;
 import szakdolgozat.podcast.controller.NotificationBorderPaneController;
 import szakdolgozat.podcast.gui.borderpane.NotificationBorderPaneView;
 
+/**
+ * The Class NotificationTab.
+ * 
+ * * @author Daniel Toth
+ * 
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class NotificationTab extends ApplicationTab {
+
+	/** The Constant PODCASTLISTTAB_IMAGEPATH. */
 	private static final String PODCASTLISTTAB_IMAGEPATH = "appbar.page.0.png";
+
+	/** The Constant PODCASTLISTTAB_TITLE. */
 	private static final String PODCASTLISTTAB_TITLE = "Click here to manage your notifications!";
+
+	/** The counter. */
 	private static int counter;
 
+	/**
+	 * Instantiates a new notification tab.
+	 */
 	public NotificationTab() {
 		super(PODCASTLISTTAB_IMAGEPATH, PODCASTLISTTAB_TITLE);
 		adaptOnSelection();
@@ -31,6 +48,11 @@ public class NotificationTab extends ApplicationTab {
 				});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see szakdolgozat.podcast.gui.tab.ApplicationTab#adaptOnSelection()
+	 */
 	@Override
 	protected void adaptOnSelection() {
 		selectedProperty().addListener((InvalidationListener) observable -> {
@@ -41,6 +63,11 @@ public class NotificationTab extends ApplicationTab {
 		});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see szakdolgozat.podcast.gui.tab.ApplicationTab#onselection()
+	 */
 	@Override
 	protected void onselection() {
 		setContent(new NotificationBorderPaneView());

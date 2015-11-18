@@ -7,21 +7,45 @@ import com.google.gson.Gson;
 
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 
+/**
+ * The Class PodcastJsonParser.
+ * 
+ * * @author Daniel Toth
+ * 
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class PodcastJsonParser extends JsonParser {
+
+	/** The search result container. */
 	private PodcastContainer searchResultContainer;
 
+	/**
+	 * Instantiates a new podcast json parser.
+	 *
+	 * @param searchText
+	 *            the search text
+	 */
 	public PodcastJsonParser(final String searchText) {
 		super(searchText);
 		jsonToObject();
 		removeNotWorkingFeeds();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see szakdolgozat.podcast.jsonparser.JsonParser#jsonToObject()
+	 */
 	@Override
 	protected void jsonToObject() {
 		final Gson gson = new Gson();
 		this.searchResultContainer = gson.fromJson(this.result, PodcastContainer.class);
 	}
 
+	/**
+	 * Removes the not working feeds.
+	 */
 	protected void removeNotWorkingFeeds() {
 		for (int i = 0; i < this.searchResultContainer.getResults().size(); i++) {
 			final String feedUrl = this.searchResultContainer.getResults().get(i).getFeedUrl();
@@ -31,6 +55,13 @@ public class PodcastJsonParser extends JsonParser {
 		}
 	}
 
+	/**
+	 * Checks if is feed url exists.
+	 *
+	 * @param URLName
+	 *            the URL name
+	 * @return true, if is feed url exists
+	 */
 	private boolean isFeedUrlExists(final String URLName) {
 		try {
 			HttpURLConnection.setFollowRedirects(false);
@@ -44,6 +75,11 @@ public class PodcastJsonParser extends JsonParser {
 		}
 	}
 
+	/**
+	 * Gets the search result.
+	 *
+	 * @return the search result
+	 */
 	public PodcastContainer getSearchResult() {
 		return this.searchResultContainer;
 	}

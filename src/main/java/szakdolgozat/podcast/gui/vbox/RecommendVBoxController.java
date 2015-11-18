@@ -9,9 +9,22 @@ import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.jsonparser.SimilarPodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
+/**
+ * The Class RecommendVBoxController.
+ * 
+ * * @author Daniel Toth
+ * 
+ * @version 0.0.1
+ * @since 0.0.1
+ */
 public class RecommendVBoxController {
+
+	/** The recommend list items. */
 	private List<RecommendListItem> recommendListItems;
 
+	/**
+	 * Instantiates a new recommend v box controller.
+	 */
 	public RecommendVBoxController() {
 		this.recommendListItems = new ArrayList<RecommendListItem>();
 		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
@@ -34,15 +47,33 @@ public class RecommendVBoxController {
 
 	}
 
+	/**
+	 * Checks if is podcast subscribed.
+	 *
+	 * @param name
+	 *            the name
+	 * @return true, if is podcast subscribed
+	 */
 	private boolean isPodcastSubscribed(final String name) {
 		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
 				.isEmpty());
 	}
 
+	/**
+	 * Gets the recommend list items.
+	 *
+	 * @return the recommend list items
+	 */
 	public List<RecommendListItem> getRecommendListItems() {
 		return this.recommendListItems;
 	}
 
+	/**
+	 * Sets the recommend list items.
+	 *
+	 * @param recommendListItems
+	 *            the new recommend list items
+	 */
 	public void setRecommendListItems(final List<RecommendListItem> recommendListItems) {
 		this.recommendListItems = recommendListItems;
 	}
