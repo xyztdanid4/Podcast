@@ -32,7 +32,7 @@ public class PodcastListener {
 	 * Instantiates a new podcast listener.
 	 */
 	private PodcastListener() {
-
+		timerSubscriber = new Timer();
 	}
 
 	/**
@@ -64,6 +64,10 @@ public class PodcastListener {
 	 */
 	public Timer getTimer() {
 		return timerSubscriber;
+	}
+
+	public int getFrequency() {
+		return frequency;
 	}
 
 	/**

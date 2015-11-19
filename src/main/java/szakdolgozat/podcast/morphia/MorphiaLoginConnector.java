@@ -52,7 +52,7 @@ public class MorphiaLoginConnector {
 	 * @param user
 	 *            the user
 	 */
-	public static void save(final User user) {
+	public void save(final User user) {
 		dataStore.save(user);
 	}
 

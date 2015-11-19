@@ -3,12 +3,12 @@ package szakdolgozat.podcast.controller;
 import java.util.ArrayList;
 
 import javafx.application.Platform;
-import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.borderpane.SearchBorderPaneView;
+import szakdolgozat.podcast.gui.builder.HBoxBuilder;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
@@ -72,8 +72,8 @@ public class SearchBorderPaneController {
 	 * @return if the podcast is contained by the DB.
 	 */
 	public boolean isPodcastSubscribed(final String name) {
-		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
-				.isEmpty());
+		return !(MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class).filter("artistName = ", name)
+				.asList().isEmpty());
 	}
 
 	/**
@@ -85,8 +85,7 @@ public class SearchBorderPaneController {
 	public void subscribe(final Podcast podcast) {
 		final XmlParser xmlParser = new XmlParser(podcast.getFeedUrl());
 		podcast.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
-		MorphiaConnector.getInstance();
-		MorphiaConnector.getDataStore().save(podcast);
+		MorphiaConnector.getInstance().getDataStore().save(podcast);
 	}
 
 	/**

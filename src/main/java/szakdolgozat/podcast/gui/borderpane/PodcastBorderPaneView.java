@@ -13,12 +13,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import szakdolgozat.podcast.builder.HBoxBuilder;
-import szakdolgozat.podcast.builder.ListViewBuilder;
-import szakdolgozat.podcast.builder.VBoxBuilder;
 import szakdolgozat.podcast.controller.PodcastBoderPaneController;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.builder.HBoxBuilder;
+import szakdolgozat.podcast.gui.builder.ListViewBuilder;
+import szakdolgozat.podcast.gui.builder.VBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.PodcastBPDecorator;
 

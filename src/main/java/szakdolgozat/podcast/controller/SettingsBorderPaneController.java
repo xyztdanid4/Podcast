@@ -1,6 +1,6 @@
 package szakdolgozat.podcast.controller;
 
-import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.data.basicinformation.InformationContainer;
 import szakdolgozat.podcast.threads.PodcastListener;
 
 /**
@@ -33,7 +33,11 @@ public class SettingsBorderPaneController {
 	 */
 	public void setFrequency(final String frequency) {
 		PodcastListener.getInstance().setFrequency(Integer.parseInt(frequency));
-		PodcastListener.getInstance().getTimer().cancel();
+		try {
+			PodcastListener.getInstance().getTimer().cancel();
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 		PodcastListener.getInstance().startListeningToSubscribedPodcasts();
 	}
 }

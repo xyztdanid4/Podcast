@@ -5,7 +5,7 @@ import org.mongodb.morphia.Morphia;
 
 import com.mongodb.MongoClient;
 
-import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.data.basicinformation.InformationContainer;
 import szakdolgozat.podcast.data.podcast.Podcast;
 
 /**
@@ -80,7 +80,7 @@ public class MorphiaConnector {
 	 *
 	 * @return the data store
 	 */
-	public static Datastore getDataStore() {
+	public Datastore getDataStore() {
 		return dataStore;
 	}
 
@@ -92,16 +92,6 @@ public class MorphiaConnector {
 	 */
 	public static void save(final Podcast podcast) {
 		dataStore.save(podcast);
-	}
-
-	/**
-	 * Update.
-	 *
-	 * @param podcast
-	 *            the podcast
-	 */
-	public static void update(final Podcast podcast) {
-		// dataStore.update(key, ops);
 	}
 
 	/**
@@ -120,6 +110,9 @@ public class MorphiaConnector {
 	 * @return single instance of MorphiaConnector
 	 */
 	public static MorphiaConnector getInstance() {
+		if (instance == null) {
+			instance = new MorphiaConnector();
+		}
 		return instance;
 	}
 

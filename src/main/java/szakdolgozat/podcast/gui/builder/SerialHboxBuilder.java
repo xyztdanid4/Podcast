@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.builder;
+package szakdolgozat.podcast.gui.builder;
 
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;

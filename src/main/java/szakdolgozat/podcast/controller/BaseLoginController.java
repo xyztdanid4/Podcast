@@ -1,6 +1,6 @@
 package szakdolgozat.podcast.controller;
 
-import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.data.basicinformation.InformationContainer;
 
 /**
  * The Class BaseLoginController.

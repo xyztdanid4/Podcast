@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.builder;
+package szakdolgozat.podcast.gui.builder;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

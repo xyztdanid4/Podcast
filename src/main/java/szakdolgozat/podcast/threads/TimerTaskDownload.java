@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
-import szakdolgozat.podcast.basicinformation.InformationContainer;
+import szakdolgozat.podcast.data.basicinformation.InformationContainer;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 

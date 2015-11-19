@@ -19,7 +19,7 @@ import szakdolgozat.podcast.threads.PodcastListener;
  *        {@link Podcast#getPodcastEpisode()}.
  * 
  * @see {@link Podcast}
- * @ses {@link PodcastEpisode}
+ * @see {@link PodcastEpisode}
  * @see {@link MainStage}}
  *
  */
@@ -55,7 +55,7 @@ public class MainStageController {
 	 *
 	 * @return the MainStageController object.
 	 */
-	public static MainStageController create() {
+	public static MainStageController getInstance() {
 		if (instance == null) {
 			instance = new MainStageController();
 		}

@@ -10,12 +10,12 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import szakdolgozat.podcast.builder.SerialHboxBuilder;
-import szakdolgozat.podcast.builder.SerialListViewBuilder;
-import szakdolgozat.podcast.builder.SerialVBoxBuilder;
 import szakdolgozat.podcast.controller.PlayListController;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.builder.SerialHboxBuilder;
+import szakdolgozat.podcast.gui.builder.SerialListViewBuilder;
+import szakdolgozat.podcast.gui.builder.SerialVBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.PlayListBPDecorator;
 import szakdolgozat.podcast.gui.hbox.SerialHBox;
 

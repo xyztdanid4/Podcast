@@ -46,7 +46,7 @@ public class NewLoginGridPaneController extends BaseLoginController {
 	 *            the email
 	 */
 	public void saveUser(final String name, final String password, final String email) {
-		MorphiaLoginConnector.save(new User(name, password, email));
+		MorphiaLoginConnector.getInstance().save(new User(name, password, email));
 	}
 
 }

@@ -1,4 +1,4 @@
-package szakdolgozat.podcast.basicinformation;
+package szakdolgozat.podcast.data.basicinformation;
 
 /**
  * The Class InformationContainer.

@@ -27,7 +27,8 @@ public class RecommendVBoxController {
 	 */
 	public RecommendVBoxController() {
 		this.recommendListItems = new ArrayList<RecommendListItem>();
-		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
+		for (final Podcast podcast : MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class)
+				.asList()) {
 			final SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(
 					"https://www.tastekid.com/api/similar?q=" + podcast.getArtistName()
 							+ "&k=171743-podcasta-3P4R58KA&limit=2");
@@ -55,8 +56,8 @@ public class RecommendVBoxController {
 	 * @return true, if is podcast subscribed
 	 */
 	private boolean isPodcastSubscribed(final String name) {
-		return !(MorphiaConnector.getDataStore().createQuery(Podcast.class).filter("artistName = ", name).asList()
-				.isEmpty());
+		return !(MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class).filter("artistName = ", name)
+				.asList().isEmpty());
 	}
 
 	/**

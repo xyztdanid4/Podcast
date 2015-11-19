@@ -6,12 +6,12 @@ import java.util.TimerTask;
 import org.mongodb.morphia.query.Query;
 
 import javafx.application.Platform;
-import szakdolgozat.podcast.basicinformation.InformationContainer;
-import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.controller.NotificationBorderPaneController;
+import szakdolgozat.podcast.data.basicinformation.InformationContainer;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastContainer;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
+import szakdolgozat.podcast.gui.builder.HBoxBuilder;
 import szakdolgozat.podcast.jsonparser.PodcastJsonParser;
 import szakdolgozat.podcast.mail.MailSender;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
@@ -55,7 +55,8 @@ public class TimerTaskPodcast extends TimerTask {
 		// amikor ujra feláll a rednszer akkor is nézi, hogy mik az ujak és azt
 		// is kirakja.
 
-		for (final Podcast podcast : MorphiaConnector.getDataStore().createQuery(Podcast.class).asList()) {
+		for (final Podcast podcast : MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class)
+				.asList()) {
 			final int prev = Integer.parseInt(podcast.getTrackCount());
 			// System.out.println(podcast.getArtistName() + " prev: " + prev);
 
@@ -79,15 +80,15 @@ public class TimerTaskPodcast extends TimerTask {
 				// System.out.println("FRISSITES");
 				// 1, el kell menteni a dbbe az uj részt
 				// törlés
-				final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
-						.filter("artistName =", podcast.getArtistName());
-				MorphiaConnector.getDataStore().delete(deletePodcast);
+				final Query<Podcast> deletePodcast = MorphiaConnector.getInstance().getDataStore()
+						.createQuery(Podcast.class).filter("artistName =", podcast.getArtistName());
+				MorphiaConnector.getInstance().getDataStore().delete(deletePodcast);
 
 				// ujra vissza kell rakni a db be
 				final XmlParser xmlParser = new XmlParser(actual.getFeedUrl());
 				actual.setPodcastEpisode(new ArrayList<PodcastEpisode>(xmlParser.readFeed()));
 				MorphiaConnector.getInstance();
-				MorphiaConnector.getDataStore().save(actual);
+				MorphiaConnector.getInstance().getDataStore().save(actual);
 				// 2, ki kell tenni a notificationlistbe
 				final int difference = current - prev;
 				for (int i = 1; i <= difference; i++) {

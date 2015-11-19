@@ -36,7 +36,7 @@ public class MainStage extends BaseStage {
 		final Scene mainScene = new Scene(MainBorderPaneView.getInstance(), DEFAULTHSIZE, DEFAULTVSIZE);
 		mainScene.getStylesheets().add("listcell.css");
 		setScene(mainScene);
-		MainStageController.create();
+		MainStageController.getInstance();
 	}
 
 	/**

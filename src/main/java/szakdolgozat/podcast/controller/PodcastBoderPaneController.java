@@ -5,11 +5,11 @@ import java.util.List;
 import org.mongodb.morphia.query.Query;
 
 import javafx.application.Platform;
-import szakdolgozat.podcast.builder.HBoxBuilder;
 import szakdolgozat.podcast.data.podcast.Podcast;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
 import szakdolgozat.podcast.gui.borderpane.PodcastBorderPaneView;
+import szakdolgozat.podcast.gui.builder.HBoxBuilder;
 import szakdolgozat.podcast.gui.mediaplayer.MediaControlPodcast;
 import szakdolgozat.podcast.morphia.MorphiaConnector;
 
@@ -42,7 +42,7 @@ public class PodcastBoderPaneController {
 	 * reads data from the DB.
 	 */
 	public void readfromDB() {
-		this.podcastsFromDBList = MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
+		this.podcastsFromDBList = MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class).asList();
 	}
 
 	/**
@@ -61,9 +61,9 @@ public class PodcastBoderPaneController {
 	 *            parameter, we recognize items in DB by name
 	 */
 	public void removefromDB(final String name) {
-		final Query<Podcast> deletePodcast = MorphiaConnector.getDataStore().createQuery(Podcast.class)
+		final Query<Podcast> deletePodcast = MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class)
 				.filter("artistName =", name);
-		MorphiaConnector.getDataStore().delete(deletePodcast);
+		MorphiaConnector.getInstance().getDataStore().delete(deletePodcast);
 	}
 
 	/**

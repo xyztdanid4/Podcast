@@ -104,6 +104,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		<dependency>
+			<groupId>de.saxsys</groupId>
+			<artifactId>jfx-testrunner</artifactId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
 	
 </project>

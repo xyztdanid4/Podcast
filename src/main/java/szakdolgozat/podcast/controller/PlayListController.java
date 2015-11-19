@@ -135,7 +135,7 @@ public class PlayListController {
 	 * @return the list of the database objects.
 	 */
 	public List<Podcast> readfromDB() {
-		return MorphiaConnector.getDataStore().createQuery(Podcast.class).asList();
+		return MorphiaConnector.getInstance().getDataStore().createQuery(Podcast.class).asList();
 	}
 
 }

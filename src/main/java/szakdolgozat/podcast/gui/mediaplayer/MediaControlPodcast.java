@@ -17,15 +17,15 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import szakdolgozat.podcast.builder.CheckBoxBuilder;
-import szakdolgozat.podcast.builder.HBoxBuilder;
-import szakdolgozat.podcast.builder.LabelBuilder;
-import szakdolgozat.podcast.builder.MediaButtonBuilder;
-import szakdolgozat.podcast.builder.SliderBuilder;
-import szakdolgozat.podcast.builder.TextBuilder;
 import szakdolgozat.podcast.controller.PlayListController;
 import szakdolgozat.podcast.data.podcast.PodcastEpisode;
 import szakdolgozat.podcast.gui.borderpane.MainBorderPaneView;
+import szakdolgozat.podcast.gui.builder.CheckBoxBuilder;
+import szakdolgozat.podcast.gui.builder.HBoxBuilder;
+import szakdolgozat.podcast.gui.builder.LabelBuilder;
+import szakdolgozat.podcast.gui.builder.MediaButtonBuilder;
+import szakdolgozat.podcast.gui.builder.SliderBuilder;
+import szakdolgozat.podcast.gui.builder.TextBuilder;
 import szakdolgozat.podcast.gui.decorator.MediaControlDecorator;
 
 /**
