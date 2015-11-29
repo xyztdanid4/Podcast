@@ -70,6 +70,8 @@ public class LoginGridPaneView extends BaseLoginView {
 	/** The login grid pane controller. */
 	final LoginGridPaneController loginGridPaneController;
 
+	private static final String NODB = "Check DB!";
+
 	/**
 	 * Instantiates a new login grid pane view.
 	 */

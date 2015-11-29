@@ -35,6 +35,10 @@ public class PodcastListener {
 		timerSubscriber = new Timer();
 	}
 
+	public Timer getTimerDownloader() {
+		return timerDownloader;
+	}
+
 	/**
 	 * Sets the frequency.
 	 *

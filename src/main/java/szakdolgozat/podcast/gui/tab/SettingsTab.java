@@ -1,6 +1,6 @@
 package szakdolgozat.podcast.gui.tab;
 
-import szakdolgozat.podcast.gui.borderpane.SettingsBorderPane;
+import szakdolgozat.podcast.gui.borderpane.SettingsBorderPaneView;
 
 /**
  * The Class SettingsTab.
@@ -26,7 +26,7 @@ public class SettingsTab extends ApplicationTab {
 	 */
 	public SettingsTab() {
 		super(SETTINGSTAB_IMAGEPATH, SETTINGSTAB_TITLE);
-		setContent(new SettingsBorderPane());
+		setContent(new SettingsBorderPaneView());
 	}
 
 	/*
@@ -36,7 +36,7 @@ public class SettingsTab extends ApplicationTab {
 	 */
 	@Override
 	protected void onselection() {
-		setContent(new SettingsBorderPane());
+		setContent(new SettingsBorderPaneView());
 	}
 
 	/**

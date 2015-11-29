@@ -4,7 +4,6 @@ import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.hbox.SerialHBox;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SerialHboxBuilder.
  * 

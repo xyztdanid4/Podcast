@@ -31,6 +31,7 @@ public class LoginGridPaneController extends BaseLoginController {
 	public boolean checkUserAndPassword(final String name, final String password) {
 		return !(MorphiaLoginConnector.getInstance().getDataStore().createQuery(User.class).filter("name = ", name)
 				.filter("password = ", password).asList().isEmpty());
+
 	}
 
 	/**

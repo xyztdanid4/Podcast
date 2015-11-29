@@ -1,6 +1,5 @@
 package szakdolgozat.podcast.data.podcast;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SimilarPodcastContainer.
  * 

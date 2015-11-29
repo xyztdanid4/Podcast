@@ -31,7 +31,7 @@ public class RecommendVBoxController {
 				.asList()) {
 			final SimilarPodcastJsonParser similarPodcastJsonParser = new SimilarPodcastJsonParser(
 					"https://www.tastekid.com/api/similar?q=" + podcast.getArtistName()
-							+ "&k=171743-podcasta-3P4R58KA&limit=2");
+							+ "&k=171743-podcasta-3P4R58KA&limit=5");
 			if (isPodcastSubscribed(podcast.getArtistName())) {
 				for (final SimilarPodcastItem item : similarPodcastJsonParser.getSearchResult().getSimilar()
 						.getResults()) {

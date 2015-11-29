@@ -70,7 +70,6 @@ public class PodcastJsonParser extends JsonParser {
 			return (connection.getResponseCode() == HttpURLConnection.HTTP_OK);
 		} catch (final Exception e) {
 			e.printStackTrace();
-			// System.out.println("catch");
 			return false;
 		}
 	}

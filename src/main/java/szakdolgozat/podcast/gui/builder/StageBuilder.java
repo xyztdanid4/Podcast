@@ -28,7 +28,7 @@ public class StageBuilder implements Builder {
 	/**
 	 * Instantiates a new stage builder.
 	 */
-	public StageBuilder() {
+	private StageBuilder() {
 
 	}
 

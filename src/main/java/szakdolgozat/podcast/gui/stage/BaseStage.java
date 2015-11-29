@@ -29,7 +29,6 @@ public class BaseStage extends Stage {
 	 */
 	private void setOnCloseAction() {
 		setOnCloseRequest(event -> {
-			System.out.println("exiting");
 			Platform.exit();
 			System.exit(0);
 		});

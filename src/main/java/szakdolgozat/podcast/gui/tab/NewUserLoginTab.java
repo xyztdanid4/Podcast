@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import szakdolgozat.podcast.gui.gridpane.NewLoginGridPaneView;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class NewUserLoginTab.
  */

@@ -49,6 +49,8 @@ public class LoginGridPaneControllerTest {
 	/**
 	 * test for the checkUserAndPassword method
 	 * 
+	 * @throws Exception
+	 * 
 	 * @see {@link LoginGridPaneController#checkUserAndPassword(String, String)}
 	 * @see {@link MorphiaLoginConnector#getInstance()}
 	 * @see {@link MorphiaLoginConnector}
@@ -56,7 +58,7 @@ public class LoginGridPaneControllerTest {
 	 * 
 	 */
 	@Test
-	public void checkUserAndPasswordTest1() {
+	public void checkUserAndPasswordTest1() throws Exception {
 		MorphiaLoginConnector.getInstance().save(new User("test", "test", "test@test.test"));
 		assertEquals(true, this.loginGridPaneController.checkUserAndPassword("test", "test"));
 	}
@@ -64,11 +66,13 @@ public class LoginGridPaneControllerTest {
 	/**
 	 * test for the checkUserAndPassword method
 	 * 
+	 * @throws Exception
+	 * 
 	 * @see {@link LoginGridPaneController#checkUserAndPassword(String, String)}
 	 * 
 	 */
 	@Test
-	public void checkUserAndPasswordTest2() {
+	public void checkUserAndPasswordTest2() throws Exception {
 		assertEquals(false, this.loginGridPaneController.checkUserAndPassword("qwertzuiop", "qwertzuiop"));
 	}
 

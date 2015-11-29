@@ -17,7 +17,7 @@ import szakdolgozat.podcast.gui.builder.VBoxBuilder;
 import szakdolgozat.podcast.gui.decorator.Decorator;
 import szakdolgozat.podcast.gui.decorator.SettingsBPDecorator;
 
-public class SettingsBorderPane extends BorderPane {
+public class SettingsBorderPaneView extends BorderPane {
 	private static final String SUBSCRIBED_PODCAST_REFRESH_FREQUENCY_IN_HOURS = "Subscribed Podcast Refresh Frequency in hours:";
 	private static final String UPDATE_FREQUENCY = "Update Frequency";
 	private static final String FREQUENCY = "Frequency";
@@ -29,7 +29,7 @@ public class SettingsBorderPane extends BorderPane {
 	private final SettingsBorderPaneController settingsBorderPaneController;
 	private final VBox settingsVBox;
 
-	public SettingsBorderPane() {
+	public SettingsBorderPaneView() {
 		this.settingsBorderPaneController = new SettingsBorderPaneController();
 		//-.-off
 		this.emailCheckBox = CheckBoxBuilder.create()
@@ -87,7 +87,7 @@ public class SettingsBorderPane extends BorderPane {
 
 	private void setUpdateButtonAction() {
 		this.updateButton.setOnAction(event -> {
-			this.settingsBorderPaneController.setFrequency(SettingsBorderPane.this.frequencyTextField.getText());
+			this.settingsBorderPaneController.setFrequency(SettingsBorderPaneView.this.frequencyTextField.getText());
 		});
 	}
 
