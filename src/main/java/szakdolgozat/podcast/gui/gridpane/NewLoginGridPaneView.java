@@ -64,7 +64,7 @@ public class NewLoginGridPaneView extends BaseLoginView {
 	private static final String ERRORMESSAGE = "This name or e-mail address is in use!";
 
 	/** The Constant ERRORPASSWORD. */
-	private static final String ERRORPASSWORD = "The two password is different!";
+	private static final String ERRORPASSWORD = "Passwords mismatch!";
 
 	/** The Constant ERRORMAILFORMAT. */
 	private static final String ERRORMAILFORMAT = "Wrong e-mail format!";
